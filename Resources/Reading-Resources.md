@@ -52,4 +52,5 @@ Other stuff goes here, maybe I'll categorize them properly later.
 - [Inspiration Code](https://codereview.stackexchange.com/questions/105272/writing-computer-generated-music-to-a-wav-file-in-c?fbclid=IwAR1cnRkABS7SPgRw8Y42T_tQQdTYVBx_B4JSp0KGCv3vafLlWpVej7Hw4do)
   - This C code is a nice base that we can reference off with our code.
   - [The final iteration](https://codereview.stackexchange.com/questions/106137/writing-computer-generated-music-to-a-wav-file-in-c-follow-up-2)
-- 
+- [Haskell School of Music](https://github.com/ParadoxChains/Clean-Music-Generator/blob/master/Resources/Haskell_School_of_Music_2012.pdf)
+  - I guess someone wrote a whole book on what we're doing? I'll take a look into it and see what can help us.
