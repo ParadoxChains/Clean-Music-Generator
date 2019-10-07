@@ -53,4 +53,6 @@ Other stuff goes here, maybe I'll categorize them properly later.
   - This C code is a nice base that we can reference off with our code.
   - [The final iteration](https://codereview.stackexchange.com/questions/106137/writing-computer-generated-music-to-a-wav-file-in-c-follow-up-2)
 - [Haskell School of Music](https://github.com/ParadoxChains/Clean-Music-Generator/blob/master/Resources/Haskell_School_of_Music_2012.pdf)
-  - I guess someone wrote a whole book on what we're doing? I'll take a look into it and see what can help us.
+  - A very in depth foray into how to create a real time music synthesizer working with MIDI input from the foundations. Probably a bit out of scope for us, but an excellent read.
+- [Functional Languages for Computer Music](https://www.frontiersin.org/articles/10.3389/fdigh.2018.00026/full)
+  - A nice article detailing why Functional is great for music.
