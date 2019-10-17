@@ -44,6 +44,8 @@ Aside from knowing basic sound theory, we need to understand the basics of digit
   - A nice short rticle about the .wav format which we will be using. Nice diagram is nice.
 - [Demystifying the Wav Format \[Microsoft Developer\]](https://blogs.msdn.microsoft.com/dawate/2009/06/23/intro-to-audio-programming-part-2-demystifying-the-wav-format/)
   - Official blog from Microsoft about their own file format lol. But overall the best article so far on how to write .wav files.
+- [Generating Sound Files Using Wavetables](https://www.ji5.nl/GeneratingSoundFiles.html)
+  - Nice writeup from another Clean user on how to implement wave tables.
 
 ## Others
 Other stuff goes here, maybe I'll categorize them properly later.

@@ -1,0 +1,21 @@
+# Task Division
+## 2019-10-17
+- Next Meeting at 2019-10-22 from 14:00pm to 16:00pm
+- Hossam
+  - Writing to file in little endian.
+  - Researching big endian format.
+- Nicola
+  - Converting waveform values from [-1.0,1.0] scale to byte format [-127,127]
+  - Prototyping on buffer processing. Input type will be either `[[Real]]` or `[[[Real]]]`
+- Tringa and the Georgians
+  - Create a wavetable for basic Sine function
+    - Create list of 2205 sample points.
+    - 4800 samples if ambitious.
+  - Implement record type for wave signatures.
+    - List of Harmonic values
+    - List of amplitude (timbre) values.
+- Nghia
+  - Help Hossam :P
+- Evan
+  - Researching big endian
+  - Implementing wave tables in C++ for demonstration and to show code.
