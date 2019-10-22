@@ -43,4 +43,5 @@ getValue r waveTable
 interpolate :: Real Int Int [Real] -> Real
 interpolate r x0 x1 waveTable = (waveTable!!x0) + (r-toReal(x0)) * (waveTable!!x0 - waveTable!!x1) / toReal(x1-x0)
 
-// Start = getSubset (generateSine 1.0) (getIndexes 100 3)
+// Start = getSubset (generateSine 1.0) (getIndexes 440 3)
+// Start = getIndexes 440 3
