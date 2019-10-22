@@ -12,7 +12,8 @@ WriteFile file outString
 	where 
 		//outData = [alphaToInt newChar (dictionary alphabet alphaNum)\\newChar<-fromString outString] //converting String to Int then writing out
         //outData = [1..100] //just writing out numbers 1 to 100
-		outData = [32..122]
+		//outData = [32..122] //ASCII Keyboard numbers
+		outData = [16391,1073741824]//numbers suggested by Nghia 2^14+7 and 2^30
 
 ourString :: String
 ourString = "a"
