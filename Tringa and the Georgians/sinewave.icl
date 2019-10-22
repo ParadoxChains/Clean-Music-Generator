@@ -22,12 +22,25 @@ where
 
 // Start = generateSine 1.0
 
-getSubset :: [Real] [Int] -> [Real]
-getSubset waveTable indexes = [waveTable!!i \\ i <- indexes]
+floor :: Real -> Int
+floor r
+| toReal (toInt r) > r = (toInt r) - 1
+= toInt r
 
-getIndexes :: Int Int -> [Int]
-getIndexes frequency harmonic = take newRate [0, newRate..]
+getSubset :: [Real] [Real] -> [Real]
+getSubset waveTable indexes = [(getValue i waveTable) \\ i <- indexes]
+
+getIndexes :: Int Int -> [Real]
+getIndexes frequency harmonic = takeWhile (\x = (toInt x) < tableSize) [0.0, newRate..]
 where
-    newRate = SAMPLING_RATE/(harmonic*frequency)                  // Linear Interpolation needed 
+    newRate = toReal(SAMPLING_RATE)/toReal(harmonic*frequency) 
 
-// Start = getIndexes 440 3
+getValue :: Real [Real] -> Real
+getValue r waveTable
+| toReal (floor r) == r = waveTable!!(floor r)
+= interpolate r (floor r) ((floor r) + 1) waveTable
+
+interpolate :: Real Int Int [Real] -> Real
+interpolate r x0 x1 waveTable = (waveTable!!x0) + (r-toReal(x0)) * (waveTable!!x0 - waveTable!!x1) / toReal(x1-x0)
+
+// Start = getSubset (generateSine 1.0) (getIndexes 100 3)
