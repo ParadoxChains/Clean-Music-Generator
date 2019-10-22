@@ -10,8 +10,9 @@ WriteFile file outString
 # file = foldl (\x y = x <<< y <<< ' ') file outData
 = file
 	where 
-		//outData = [alphaToInt newChar (dictionary alphabet alphaNum)\\newChar<-fromString outString]
-        outData = [1..100]
+		//outData = [alphaToInt newChar (dictionary alphabet alphaNum)\\newChar<-fromString outString] //converting String to Int then writing out
+        //outData = [1..100] //just writing out numbers 1 to 100
+		outData = [32..122]
 
 ourString :: String
 ourString = "a"
