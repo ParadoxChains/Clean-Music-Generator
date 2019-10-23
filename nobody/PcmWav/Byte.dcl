@@ -5,4 +5,4 @@ definition module PcmWav.Byte
 // Converts a non-negative integer to a given amount of bytes in little-endian
 // The first parameter is the number of bytes
 // The second parameter is the integer to be converted
-neIntToBytesLE :: !Int !Int -> [Byte]
+natToBytesLE :: !Int !Int -> [Byte]
