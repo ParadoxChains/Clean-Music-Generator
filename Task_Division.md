@@ -19,3 +19,17 @@
 - Evan
   - Researching big endian
   - Implementing wave tables in C++ for demonstration and to show code.
+## 2019-10-22
+- Next Meeting at 2019-11-11 from 14:00pm to 16:00pm
+- Hossam & Szumi
+  - Writing bits to file
+    - 8bit/16bit/32bit
+  - More research on big endian
+- Nicola and Nicola
+  - Linear interpolation on previous conversion
+  - More prototyping on buffer. 
+  - Checking types.
+- Tringa and the Georgians
+  - Implement other waveforms
+    - Square wave first
+  - Implement Linear Interpolation

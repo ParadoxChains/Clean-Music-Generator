@@ -1,6 +1,7 @@
 module testWrite
 
 import StdEnv
+import sinewave
 
 
 WriteFile :: *File String -> *File
@@ -13,7 +14,14 @@ WriteFile file outString
 		//outData = [alphaToInt newChar (dictionary alphabet alphaNum)\\newChar<-fromString outString] //converting String to Int then writing out
         //outData = [1..100] //just writing out numbers 1 to 100
 		//outData = [32..122] //ASCII Keyboard numbers
-		outData = [16391,1073741824]//numbers suggested by Nghia 2^14+7 and 2^30
+		//outData = [16391,1073741824]//numbers suggested by Nghia 2^14+7 and 2^30
+		outData = reverseMap
+
+newSine :: [Int]
+newSine = map toInt (map ((+)(((122.0 - 97.0)/2.0) + 97.0)) (generateSine ((122.0 - 97.0)/2.0)))
+
+reverseMap :: [{#Char}]
+reverseMap = [alphabet!!(x-97)\\x<-newSine]
 
 ourString :: String
 ourString = "a"
@@ -22,7 +30,7 @@ alphabet :: [{#Char}]
 alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
 
 alphaNum :: [Int]
-alphaNum = [91..122]
+alphaNum = [97..122]
 
 dictionary :: [{#Char}] [Int] -> [({#Char},Int)] 
 dictionary alpha num = zip2 alpha num
