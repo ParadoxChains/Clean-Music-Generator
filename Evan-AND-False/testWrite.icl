@@ -8,7 +8,7 @@ WriteFile :: *File String -> *File
 WriteFile file outString
 //# file = file <<< "TEST HEADER\n"
 // Write a [Int] to a file
-# file = foldl (\x y = x <<< y <<< ' ') file outData
+# file = foldl (\x y = x <<< y) file outData
 = file
 	where 
 		//outData = [alphaToInt newChar (dictionary alphabet alphaNum)\\newChar<-fromString outString] //converting String to Int then writing out
