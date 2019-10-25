@@ -31,5 +31,11 @@
   - Checking types.
 - Tringa and the Georgians
   - Implement other waveforms
-    - Square wave first
+    - Square wave
+    - Triangle
+    - Noise
+ - Zuk and Zuk
+  - Implement other waveforms
+    - Sawtooth
+    - Pulse
   - Implement Linear Interpolation
