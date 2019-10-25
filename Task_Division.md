@@ -34,7 +34,7 @@
     - Square wave
     - Triangle
     - Noise
- - Zuk and Zuk
+- Zuk and Zuk
   - Implement other waveforms
     - Sawtooth
     - Pulse
