@@ -42,15 +42,15 @@ writeFormat p f
   = f
 
 // The first parameter is the length of the data in bytes
-writeData :: !Int !{#Byte} !*File -> *File
+writeData :: !Int [Byte] !*File -> *File
 writeData l d f
   #! f = fwrites "data" f
   #! f = writeNat 4 l f
-  #! f = fwrites d f
+  #! f = writeBytes d f
   | isEven l = f
   = fwritec '\0' f
 
-writePcmWav :: !PcmWavParams !{#Byte} !*File -> *File
+writePcmWav :: !PcmWavParams [Byte] !*File -> *File
 writePcmWav p d f
   #! l = p.bytesPerSample * p.numChannels * p.numBlocks
   #! f = writeHeader (l + if (isEven l) 36 37) f
@@ -66,7 +66,7 @@ test w
       , numBlocks      = 3 * 44100
       , samplingRate   = 44100
       , bytesPerSample = 1
-      } (createArray (3 * 44100) '\0') f
+      } (repeatn (3 * 44100) '\0') f
   #! (_, w) = fclose f w
   = w
 
