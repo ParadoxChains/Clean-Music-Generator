@@ -7,4 +7,5 @@ import constants
 getValues :: [Real] Int Int -> [Real]
 
 
-
+// Takes wavetable, list of harmonics, list of amplitudes and frequency
+get :: [Real] [Real] [Real] Int -> [[Real]]
