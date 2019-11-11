@@ -25,6 +25,7 @@ We're going to be playing with sound and generating it, so it's good to understa
   - [Sawtooth Wave](https://en.wikipedia.org/wiki/Sawtooth_wave)
   - [Various Noise Types](https://en.wikipedia.org/wiki/Colors_of_noise)
 - Synthesis 101. This is a good set of articles briefly covering various aspects of sound synthesis from a purely analog aspect. I will only post the ones relevant to what we will do.
+  - [Oregon University EMI](https://pages.uoregon.edu/emi/9.php) Good site with formula broken down.
   - [In Search of the Perfect Wave](https://en.audiofanzine.com/getting-started/editorial/articles/in-search-of-the-perfect-wave.html)
   - [Make Some Noise!](https://en.audiofanzine.com/sound-synthesis/editorial/articles/make-some-noise.html)
   - [Filter It Out!](https://en.audiofanzine.com/sound-synthesis/editorial/articles/filter-it-out.html)
