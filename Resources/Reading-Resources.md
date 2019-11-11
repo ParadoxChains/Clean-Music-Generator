@@ -47,10 +47,14 @@ Aside from knowing basic sound theory, we need to understand the basics of digit
   - Official blog from Microsoft about their own file format lol. But overall the best article so far on how to write .wav files.
 - [Generating Sound Files Using Wavetables](https://www.ji5.nl/GeneratingSoundFiles.html)
   - Nice writeup from another Clean user on how to implement wave tables.
-- [Official MIDI Specification]()
-- [MIDI Implementation Chart]()
+- [Official MIDI Specification](https://github.com/ParadoxChains/Clean-Music-Generator/blob/master/Resources/complete_midi_96-1-3.pdf)
+  - Official full MIDI 1.0 specification from the MIDI organization
+- [MIDI Implementation Chart](https://github.com/ParadoxChains/Clean-Music-Generator/blob/master/Resources/midi_chart-v2.pdf)
+  - Good list of MIDI messages.
 - [David's MIDI Spec](https://www.cs.cmu.edu/~music/cmsip/readings/davids-midi-spec.htm)
   - A good in-a-nutshell version of the MIDI specification.
+- [MIDI Specification](https://github.com/ParadoxChains/Clean-Music-Generator/blob/master/Resources/The_MIDI_Specification.pdf)
+  - Also the Midi specification, written differently.
 
 
 ## Others
