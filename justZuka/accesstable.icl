@@ -1,17 +1,9 @@
 implementation module accesstable
 import StdEnv
 import constants
+import utils
 
 
-floor :: Real -> Int
-floor r
-| toReal (toInt r) > r = (toInt r) - 1
-= toInt r
-
-myRem :: Real Real -> Real
-myRem a b = b * abs(c - toReal(floor c))
-where 
-    c = a / b
 
 
 // Takes wavetable, frequency and harmonic and gets us desired values from wavetable. 
@@ -42,5 +34,5 @@ interpolate r x0 x1 waveTable = (waveTable!!x0) + (r-toReal(x0)) * (waveTable!!x
 get :: [Real] [Real] [Real] Int -> [[Real]]
 get waveTable harmonics amplitudes freq = [map (\x = x * ampl) l \\ l <- values & ampl <- amplitudes]
 where
-    values = [getValues waveTable (toInt(har)) freq \\ har <- harmonics]
+    values = [getValues waveTable freq (toInt(har)) \\ har <- harmonics]
 
