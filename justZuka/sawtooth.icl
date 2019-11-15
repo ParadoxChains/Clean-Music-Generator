@@ -1,23 +1,14 @@
-module sawtooth
+implementation module sawtooth
 import StdEnv
 import constants
 import accesstable
 import sinewave
-
-:: Wave = {
-            timbre :: [Real],
-            harmonics :: [Real]
-          }
+import utils
 
 
 sineTable = generateSine 1.0
 h = [1.0,2.0..50.0]
 a = [toReal((-1)^(((toInt k) rem 2) + 1)) * (1.0 / k) \\ k <- h]
-
-sumLists :: [Real] [Real] -> [Real]
-sumLists [] [] = []
-sumLists [a] [b] = [a+b]
-sumLists [x:xs] [y:ys] = [x+y] ++ (sumLists xs ys)
 
 generateSawTooth :: [Real] 
 generateSawTooth = foldr sumLists (repeatn (length (l!!0)) 0.0) l
