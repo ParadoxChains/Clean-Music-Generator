@@ -24,8 +24,8 @@ We're going to be playing with sound and generating it, so it's good to understa
   - [Triangle Wave](https://en.wikipedia.org/wiki/Triangle_wave)
   - [Sawtooth Wave](https://en.wikipedia.org/wiki/Sawtooth_wave)
   - [Various Noise Types](https://en.wikipedia.org/wiki/Colors_of_noise)
+- [Oregon University EMI](https://pages.uoregon.edu/emi/9.php) Good site with formula broken down.
 - Synthesis 101. This is a good set of articles briefly covering various aspects of sound synthesis from a purely analog aspect. I will only post the ones relevant to what we will do.
-  - [Oregon University EMI](https://pages.uoregon.edu/emi/9.php) Good site with formula broken down.
   - [In Search of the Perfect Wave](https://en.audiofanzine.com/getting-started/editorial/articles/in-search-of-the-perfect-wave.html)
   - [Make Some Noise!](https://en.audiofanzine.com/sound-synthesis/editorial/articles/make-some-noise.html)
   - [Filter It Out!](https://en.audiofanzine.com/sound-synthesis/editorial/articles/filter-it-out.html)
@@ -47,6 +47,15 @@ Aside from knowing basic sound theory, we need to understand the basics of digit
   - Official blog from Microsoft about their own file format lol. But overall the best article so far on how to write .wav files.
 - [Generating Sound Files Using Wavetables](https://www.ji5.nl/GeneratingSoundFiles.html)
   - Nice writeup from another Clean user on how to implement wave tables.
+- [Official MIDI Specification](https://github.com/ParadoxChains/Clean-Music-Generator/blob/master/Resources/complete_midi_96-1-3.pdf)
+  - Official full MIDI 1.0 specification from the MIDI organization
+- [MIDI Implementation Chart](https://github.com/ParadoxChains/Clean-Music-Generator/blob/master/Resources/midi_chart-v2.pdf)
+  - Good list of MIDI messages.
+- [David's MIDI Spec](https://www.cs.cmu.edu/~music/cmsip/readings/davids-midi-spec.htm)
+  - A good in-a-nutshell version of the MIDI specification.
+- [MIDI Specification](https://github.com/ParadoxChains/Clean-Music-Generator/blob/master/Resources/The_MIDI_Specification.pdf)
+  - Also the Midi specification, written differently.
+
 
 ## Others
 Other stuff goes here, maybe I'll categorize them properly later.

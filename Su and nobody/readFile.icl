@@ -3,10 +3,6 @@ module readFile
 import StdEnv
 import StdFile
 
-//byte order:big endian
-byteToInt :: [Char] -> Int
-byteToInt [c:cs] = toInt c 
-
 readBytes :: *File -> ([Char], *File)
 readBytes oldF 
 	#! (b, c, newF) = freadc oldF
@@ -22,4 +18,4 @@ read oldW
 	#! (b, newW2) = fclose newF newW
 	= (newW2, l)
 	
-Start w = read w
+//Start w = read w
