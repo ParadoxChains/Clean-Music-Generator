@@ -8,6 +8,12 @@ floor r
 | toReal (toInt r) > r = (toInt r) - 1
 = toInt r
 
+myRem :: Real Real -> Real
+myRem a b = b * abs(c - toReal(floor c))
+where 
+    c = a / b
+
+
 // Takes wavetable, frequency and harmonic and gets us desired values from wavetable. 
 getValues :: [Real] Int Int -> [Real]
 getValues waveTable frequency harmonic = [(getValue i waveTable) \\ i <- indexes]
@@ -16,13 +22,16 @@ where
 
 // Takes frequency and and harmonic as parameters and generates list of points 
 getIndexes :: Int Int -> [Real]
-getIndexes frequency harmonic = takeWhile (\x = (toInt x) < tableSize) [0.0, newRate..]
+getIndexes frequency harmonic = map (\x = myRem x (toReal tableSize)) (take (SAMPLING_RATE/20) [0.0, rate..])
 where
-    newRate = toReal(SAMPLING_RATE)/toReal(harmonic*frequency) 
+    newRate = toReal(SAMPLING_RATE)/toReal(harmonic*frequency)
+    rate = toReal(tableSize)/newRate
+
 
 getValue :: Real [Real] -> Real
 getValue r waveTable
 | toReal (floor r) == r = waveTable!!(floor r)
+| (floor r) == tableSize - 1 = interpolate r (floor r) 0 waveTable
 = interpolate r (floor r) ((floor r) + 1) waveTable
 
 interpolate :: Real Int Int [Real] -> Real
