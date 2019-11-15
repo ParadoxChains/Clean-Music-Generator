@@ -18,3 +18,15 @@ myRem :: Real Real -> Real
 myRem a b = b * abs(c - toReal(floor c))
 where 
     c = a / b
+
+sumLists :: [Real] [Real] -> [Real]
+sumLists [] [] = []
+sumLists [a] [b] = [a+b]
+sumLists [x:xs] [y:ys] = [x+y] ++ (sumLists xs ys)
+
+
+subtractLists :: [Real] [Real] -> [Real]
+subtractLists [] [] = []
+subtractLists [a] [b] = [a-b]
+subtractLists [x:xs] [y:ys] = [x-y] ++ (subtractLists xs ys)
+

@@ -8,3 +8,8 @@ floor :: Real -> Int
 
 
 myRem :: Real Real -> Real
+
+
+sumLists :: [Real] [Real] -> [Real]
+
+subtractLists :: [Real] [Real] -> [Real]
