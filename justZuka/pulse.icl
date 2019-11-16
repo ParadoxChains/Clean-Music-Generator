@@ -11,7 +11,8 @@ import sawtooth
 sawWave = generateSawTooth
 // shifted = phaseShift sawWave (SAMPLING_RATE/(4*freq))
 
-
-// Start = subtractLists shifted sawWave
 // Start = sawWave
-Start = length (take 2000 sawWave)
+// Start = length (sawWave)
+sineWave = generateSine 1.0
+
+// Start = length sineWave
