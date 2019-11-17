@@ -2,5 +2,6 @@
 *.out
 *.prp
 *.prj
-
+*.o
+*.abc
 Clean System Files/
