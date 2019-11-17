@@ -16,7 +16,7 @@ randoms = map (\x = x rem 30) (take 5000 (genRandInt 1))
 
 
 // TODO:
-// Figure out why it gives Heap Full.         HELP MEEEEEEEEEEEEEEEEE
+// Figure out why it gives Heap Full.
 // Split into definition and implementation modules
 
 

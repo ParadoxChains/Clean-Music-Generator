@@ -9,7 +9,7 @@ import sawtooth
 
 
 // TODO:
-// Figure out why it gives Heap Full.         HELP MEEEEEEEEEEEEEEEEE
+// Figure out why it gives Heap Full.
 // Split into definition and implementation modules
 
 sawWave = generateSawTooth
