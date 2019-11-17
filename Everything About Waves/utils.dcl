@@ -14,3 +14,6 @@ sumLists :: [Real] [Real] -> [Real]
 
 // subtracts two lists
 subtractLists :: [Real] [Real] -> [Real]
+
+// sum all lists
+sumAll :: [[Real]] -> [Real]
