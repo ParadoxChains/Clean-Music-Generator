@@ -8,6 +8,10 @@ import utils
 import sawtooth
 
 
+// TODO:
+// Figure out why it gives Heap Full 
+// Split into definition and implementation modules
+
 sawWave = generateSawTooth
 // shifted = phaseShift sawWave (SAMPLING_RATE/(4*freq))
 

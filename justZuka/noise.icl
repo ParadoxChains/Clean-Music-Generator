@@ -14,6 +14,12 @@ randoms = map (\x = x rem 30) (take 5000 (genRandInt 1))
 
 
 
+
+// TODO:
+// Figure out why it gives Heap Full 
+// Split into definition and implementation modules
+
+
 generateNoise :: [Real] 
 generateNoise = foldr sumLists (repeatn (length (l!!0)) 0.0) l
 where 
