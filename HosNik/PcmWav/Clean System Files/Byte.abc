@@ -1,0 +1,146 @@
+.comp 920 0001110100100
+.start _nostart_
+.depend "_SystemEnumStrict" "20180913120454"
+.depend "_SystemStrictLists" "20180913120454"
+.depend "StdStrictLists" "20180913120454"
+.depend "_SystemEnum" "20180913120454"
+.depend "StdEnum" "20180913120454"
+.depend "StdMisc" "20180913120454"
+.depend "StdFunctions" "20180913120454"
+.depend "StdCharList" "20180913120454"
+.depend "StdTuple" "20180913120454"
+.depend "StdOrdList" "20180913120454"
+.depend "StdList" "20180913120454"
+.depend "StdClass" "20180913120454"
+.depend "StdFile" "20180913120454"
+.depend "StdString" "20180913120454"
+.depend "_SystemArray" "20180913120454"
+.depend "StdArray" "20180913120454"
+.depend "StdChar" "20180913120454"
+.depend "StdReal" "20180913120454"
+.depend "StdInt" "20180913120454"
+.depend "StdOverloaded" "20180913120454"
+.depend "StdBool" "20180913120454"
+.depend "StdEnv" "20180913120454"
+.depend "PcmWav.Byte" "20191028110203"
+.module m_PcmWav.Byte "PcmWav.Byte" "20191028120151"
+.endinfo
+.impmod _system
+.implab _cycle_in_spine
+.implab _type_error
+.implab _hnf
+.impdesc e_system_dind
+.implab e_system_nind e_system_eaind
+.impdesc e_system_dif
+.implab e_system_nif e_system_eaif
+.implab e_system_sif
+.impdesc e_system_dAP
+.implab e_system_nAP e_system_eaAP
+.implab e_system_sAP
+.impdesc ARRAY
+.impdesc _Nil
+.impdesc _Cons
+.impdesc _Conss
+.implab n_Conss ea_Conss
+.impdesc _Consts
+.implab n_Consts ea_Consts
+.impdesc _Conssts
+.implab n_Conssts ea_Conssts
+.impdesc _Tuple
+.impdesc d_S.1
+.implab n_S.1 ea_S.1
+.impdesc d_S.2
+.implab n_S.2 ea_S.2
+.impdesc d_S.3
+.implab n_S.3 ea_S.3
+.impdesc d_S.4
+.implab n_S.4 ea_S.4
+.impdesc d_S.5
+.implab n_S.5 ea_S.5
+.impdesc d_S.6
+.implab n_S.6 ea_S.6
+.implab _driver
+.impmod StdList
+.implab e_StdList_stake
+.impmod StdChar
+.implab e_StdChar_stoChar;21
+.impmod StdInt
+.implab e_StdInt_sbitand
+.impdesc e_StdInt_d>>
+.implab e_StdInt_n>>
+.export e_PcmWav.Byte_snatToBytesLE
+.export e_PcmWav.Byte_eanatToBytesLE
+.descexp e_PcmWav.Byte_dnatToBytesLE e_PcmWav.Byte_nnatToBytesLE e_PcmWav.Byte_lnatToBytesLE 2 0 "natToBytesLE"
+.a 2 e_PcmWav.Byte_eanatToBytesLE
+.o 2 0
+e_PcmWav.Byte_lnatToBytesLE
+	push_args 0 1 1
+	update_a 2 1
+	create
+	update_a 0 3
+	pop_a 1
+.d 3 0
+	jmp e_PcmWav.Byte_eanatToBytesLE
+.n 2 e_PcmWav.Byte_dnatToBytesLE e_PcmWav.Byte_eanatToBytesLE
+.o 1 0
+e_PcmWav.Byte_nnatToBytesLE
+	push_node _cycle_in_spine 2
+.o 3 0
+e_PcmWav.Byte_eanatToBytesLE
+	jsr_eval 1
+	jsr_eval 0
+	pushI_a 1
+	pushI_a 0
+	pop_a 2
+.o 1 2 ii
+e_PcmWav.Byte_snatToBytesLE
+.o 1 2 ii
+s1
+	buildI_b 1
+	build _ 1 n2
+	push_b 0
+	updatepop_b 0 2
+.d 2 1 i
+	jmp e_StdList_stake
+.n 1 _ ea2
+.o 1 0
+n2
+	push_node _cycle_in_spine 1
+.o 2 0
+ea2
+.o 2 0
+s2
+	buildI 8
+	push_a 1
+	build _ 2 e_StdInt_n>>
+	build _ 1 n2
+	push_a 1
+	build _ 1 n5
+	fillh _Cons 2 3
+	pop_a 1
+.d 1 0
+	rtn
+.n 1 _ ea5
+.o 1 0
+n5
+	push_node _cycle_in_spine 1
+.o 2 0
+ea5
+.o 2 0
+s5
+	push_a 0
+	jsr_eval 0
+	pushI_a 1
+	pop_a 1
+	pushI 255
+	push_b 1
+	update_b 1 2
+	update_b 0 1
+	pop_b 1
+	and%
+	pop_a 1
+	ItoC
+	fillC_b 0 0
+	pop_b 1
+.d 1 0
+	rtn
