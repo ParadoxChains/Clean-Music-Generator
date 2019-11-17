@@ -10,7 +10,7 @@ import rand
 
 // sawtooth wave
 hSawtooth = [1.0,2.0..50.0]
-aSawtooth = [toReal((-1)^(((toInt k) rem 2) + 1)) * (1.0 / k) \\ k <- hSawtooth]
+aSawtooth = [ (-1.0)^(k+1.0) * (1.0 / k) \\ k <- hSawtooth]
 
 sawtooth :: [Real]
 sawtooth = wave hSawtooth aSawtooth
@@ -26,7 +26,7 @@ square = wave hSquare aSquare
 
 // triangle wave
 hTriangle = [1.0,3.0..100.0]
-aTriangle = [ (1.0/(x^2.0)) * (-1.0)^y \\ x <- hTriangle & y <- [1.0..] ]
+aTriangle = [ (-1.0)^(i + 1.0) * (1.0/(k^2.0)) \\ k <- hTriangle & i <- [1.0..] ]
 
 triangle :: [Real] 
 triangle = wave hTriangle aTriangle
