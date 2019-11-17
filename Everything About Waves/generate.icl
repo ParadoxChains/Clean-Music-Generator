@@ -8,6 +8,7 @@ import wave
 import rand
 
 
+
 // sawtooth wave
 hSawtooth = [1.0,2.0..50.0]
 aSawtooth = [ (-1.0)^(k+1.0) * (1.0 / k) \\ k <- hSawtooth]
@@ -33,20 +34,21 @@ triangle = wave hTriangle aTriangle
 
 
 // noise wave
-hNoise = map (\x = x * 36.0) (take 500 (genRandReal 1))
-aNoise = repeatn 500 1.0
-randoms = map (\x = x rem 30) (take 5000 (genRandInt 1))
+// requires VERY large heap  --  100M is enough
+hNoise = map (\x = x * 36.0) (take 100 (genRandReal 1))
+aNoise = repeatn 100 1.0
+randoms = map (\x = x rem 30) (take 100 (genRandInt 1))
 
 noise :: [Real] 
-noise = foldr sumLists (repeatn tableSize 0.0) l
-where 
-    l =  take 2 [phaseShift list i \\ list <- (get (generateSine 1.0) hNoise aNoise freq) & i <- randoms]
-//       ^^^^^^      works only with take 2 
+noise =  sumAll l
+where
+    l = [phaseShift list i \\ list <- (get (generateSine 1.0) hNoise aNoise freq) & i <- randoms]
+
 
 
 // pulse wave
-
+// requires VERY large heap  --  100M is enough
 pulse :: [Real]
-pulse = subtractLists (phaseShift saw (SAMPLING_RATE/(4*freq))) saw
-where                                   //            ^^^^^^ works only with 4*freq or more
+pulse = subtractLists (phaseShift saw (SAMPLING_RATE/(2*freq))) saw
+where
     saw = sawtooth
