@@ -3,6 +3,7 @@ implementation module PcmWav
 import StdEnv
 import StdFile
 import PcmWav.Byte
+import midlayer
 
 :: PcmWavParams =
   { numChannels    :: !Int
@@ -70,7 +71,7 @@ test w
       , numBlocks      = 3 * 44100
       , samplingRate   = 44100
       , bytesPerSample = 1
-      } (repeatn (3 * 44100) '\0') f
+      } (sineToByte 0.5 100 3) f
   #! (_, w) = fclose f w
   = w
 
