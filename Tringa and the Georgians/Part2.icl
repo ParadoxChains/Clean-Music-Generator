@@ -1,30 +1,27 @@
 module Part2
 import StdEnv
-import constants
-import sinewave
-import accesstable
-import utils
 
 
-
-oddHarmonics= [(1.0),(3.0)..(100.0)]
+oddHarmonics= [(1.0),(3.0)..]
 
 generateSquareAmp:: [Real]
-generateSquareAmp = [1.0/x \\x<-oddHarmonics]
+generateSquareAmp = take 1000 [1.0/x \\x<-oddHarmonics]
 
+//Start = generateSquareAmp
 
 generateTriangleAmp :: [Real]
-generateTriangleAmp = [(1.0/(x^2.0))*(-1.0)^y\\x<-oddHarmonics & y<-[1.0..]]
+generateTriangleAmp = take 100 [(1.0/(x^2.0))*(-1.0)^y\\x<-oddHarmonics & y<-[1.0..]]
+//Start = generateTriangleAmp
 
+PI :: Real
+PI = 3.1415926535898
 
-generateTriangle :: [Real]
-generateTriangle = foldr sumLists (repeatn tableSize 0.0) l
-where
-    l = (get (generateSine 1.0) oddHarmonics generateTriangleAmp freq)
+trialSquare::[Real]
+trialSquare =[(4.0/PI)*sum([(1.0/x)*sin(2.0*PI*440.0 * x*amp)\\x<-take 100 oddHarmonics])\\amp<-generateSquareAmp]
 
+//Start =trialSquare
 
-generateSquare :: [Real]
-generateSquare = foldr sumLists (repeatn tableSize 0.0) l
-where
-    l = (get (generateSine 1.0) oddHarmonics generateSquareAmp freq)
+trialTriangle :: [Real]
+trialTriangle = [PI/4.0 * sum([(1.0/(x^2.0))*(-1.0)^y * sin(2.0*PI*440.0*x*amp)\\x<-take 100 oddHarmonics & y<-[1.0..100.0]])\\amp<-generateTriangleAmp]
 
+//Start = trialTriangle
