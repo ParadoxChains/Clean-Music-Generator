@@ -1,0 +1,6 @@
+*.exe
+*.out
+*.prp
+*.prj
+
+Clean System Files/
