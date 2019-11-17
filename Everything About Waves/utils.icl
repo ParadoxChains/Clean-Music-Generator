@@ -23,15 +23,13 @@ where
 
 // sums up two lists
 sumLists :: [Real] [Real] -> [Real]
-sumLists a b = [i + j \\ i <- a & j <- b]
+sumLists [] [] = []
+sumLists [a] [b] = [a+b]
+sumLists [x:xs] [y:ys] = [x+y] ++ (sumLists xs ys)
 
 // subtracts two lists
 subtractLists :: [Real] [Real] -> [Real]
-subtractLists a b = [i - j \\ i <- a & j <- b]
+subtractLists [] [] = []
+subtractLists [a] [b] = [a-b]
+subtractLists [x:xs] [y:ys] = [x-y] ++ (subtractLists xs ys)
 
-
-// sums all lists
-sumAll :: [[Real]] -> [Real]
-sumAll [] = []
-sumAll [a] = a
-sumAll [x:xs] = sumLists x (sumAll xs)
