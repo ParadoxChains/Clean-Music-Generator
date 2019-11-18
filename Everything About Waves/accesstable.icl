@@ -23,9 +23,9 @@ where
 // If neccessary uses linear interpolation
 getValue :: Real [Real] -> Real
 getValue r waveTable
-| toReal (floor r) == r = waveTable!!(floor r)
-| (floor r) == tableSize - 1 = interpolate r (floor r) 0 waveTable
-= interpolate r (floor r) ((floor r) + 1) waveTable
+    | toReal (floor r) == r = waveTable!!(floor r)
+    | (floor r) == tableSize - 1 = interpolate r (floor r) 0 waveTable
+    = interpolate r (floor r) ((floor r) + 1) waveTable
 
 // linear interpolation
 interpolate :: Real Int Int [Real] -> Real

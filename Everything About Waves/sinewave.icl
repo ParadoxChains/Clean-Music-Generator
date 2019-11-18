@@ -2,7 +2,6 @@ implementation module sinewave
 import StdEnv
 import constants
 import accesstable
-import sinewave
 
 
 // Takes amplitude as parameter and generates Sine wave table.

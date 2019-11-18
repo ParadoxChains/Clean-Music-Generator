@@ -33,17 +33,19 @@ triangle :: [Real]
 triangle = wave hTriangle aTriangle
 
 
+Start = triangle
+
 // noise wave
 // requires VERY large heap  --  100M is enough
 hNoise = map (\x = x * 36.0) (take 100 (genRandReal 1))
 aNoise = repeatn 100 1.0
 randoms = map (\x = x rem 30) (take 100 (genRandInt 1))
 
+
 noise :: [Real] 
 noise =  sumAll l
 where
     l = [phaseShift list i \\ list <- (get (generateSine 1.0) hNoise aNoise freq) & i <- randoms]
-
 
 
 // pulse wave
