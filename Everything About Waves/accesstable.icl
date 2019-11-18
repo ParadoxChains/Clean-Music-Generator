@@ -14,7 +14,7 @@ where
 
 // Takes frequency and and harmonic as parameters and generates list of points 
 getIndexes :: Int Int -> [Real]
-getIndexes frequency harmonic = map (\x = myRem x (toReal tableSize)) (take (SAMPLING_RATE/20) [0.0, rate..])
+getIndexes frequency harmonic = map (\x = realRem x (toReal tableSize)) (take (SAMPLING_RATE/20) [0.0, rate..])
 where
     newRate = toReal(SAMPLING_RATE)/toReal(harmonic*frequency)
     rate = toReal(tableSize)/newRate

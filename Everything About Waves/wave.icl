@@ -2,11 +2,11 @@ implementation module wave
 import StdEnv
 import constants
 import accesstable
-import sinewave
+import wavetable
 import utils
 
 
-sineTable :== (generateSine 1.0)
+sineTable :== (wavetable 1.0)
 
 
 // takes harmonics and amplitudes as parameter and generates wave

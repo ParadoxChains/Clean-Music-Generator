@@ -2,12 +2,12 @@ implementation module utils
 import StdEnv
 
 // Rotate a list N places to the left. 
-phaseShift :: [Real] Int -> [Real]
-phaseShift [] _ = []
-phaseShift x 0 = x
-phaseShift x y
-| y > 0 = phaseShift (tl x ++ [hd x]) (y-1)
-= phaseShift [last x: init x] (y+1)
+shiftLeft :: [Real] Int -> [Real]
+shiftLeft [] _ = []
+shiftLeft x 0 = x
+shiftLeft x y
+| y > 0 = shiftLeft (tl x ++ [hd x]) (y-1)
+= shiftLeft [last x: init x] (y+1)
 
 // floor function
 floor :: Real -> Int
@@ -16,8 +16,8 @@ floor r
 = toInt r
 
 // rem for Real numbers
-myRem :: Real Real -> Real
-myRem a b = b * abs(c - toReal(floor c))
+realRem :: Real Real -> Real
+realRem a b = b * abs(c - toReal(floor c))
 where 
     c = a / b
 

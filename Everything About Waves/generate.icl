@@ -2,7 +2,7 @@ implementation module generate
 import StdEnv
 import constants
 import accesstable
-import sinewave
+import wavetable
 import utils
 import wave
 import rand
@@ -17,6 +17,7 @@ sawtooth :: [Real]
 sawtooth = wave hSawtooth aSawtooth
 
 
+// Start = sawtooth
 // square wave
 hSquare = [1.0,3.0..100.0]
 aSquare = [1.0 / x \\ x <- hSquare]
@@ -33,8 +34,6 @@ triangle :: [Real]
 triangle = wave hTriangle aTriangle
 
 
-Start = triangle
-
 // noise wave
 // requires VERY large heap  --  100M is enough
 hNoise = map (\x = x * 36.0) (take 100 (genRandReal 1))
@@ -45,12 +44,12 @@ randoms = map (\x = x rem 30) (take 100 (genRandInt 1))
 noise :: [Real] 
 noise =  sumAll l
 where
-    l = [phaseShift list i \\ list <- (get (generateSine 1.0) hNoise aNoise freq) & i <- randoms]
+    l = [shiftLeft list i \\ list <- (get (wavetable 1.0) hNoise aNoise freq) & i <- randoms]
 
-
+// Start = noise
 // pulse wave
 // requires VERY large heap  --  100M is enough
 pulse :: [Real]
-pulse = subtractLists (phaseShift saw (SAMPLING_RATE/(2*freq))) saw
+pulse = subtractLists (shiftLeft saw (SAMPLING_RATE/(2*freq))) saw
 where
     saw = sawtooth

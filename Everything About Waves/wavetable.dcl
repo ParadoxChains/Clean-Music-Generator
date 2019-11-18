@@ -1,4 +1,4 @@
-definition module sinewave
+definition module wavetable
 
 // Takes amplitude as parameter and generates Sine wave table.
-generateSine :: Real -> [Real] 
+wavetable :: Real -> [Real] 
