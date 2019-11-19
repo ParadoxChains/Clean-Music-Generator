@@ -15,3 +15,4 @@ wave h a = sumAll l
 where 
     l = (get sineTable h a freq)
 
+

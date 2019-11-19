@@ -1,8 +1,6 @@
 definition module generate
+import wave
 
 
-sawtooth :: [Real]
-square :: [Real] 
-triangle :: [Real] 
-noise :: [Real]
-pulse :: [Real]
+// Takes wave and generates 
+generate :: Wave -> [Real]
