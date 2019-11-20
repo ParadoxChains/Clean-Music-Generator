@@ -1,6 +1,8 @@
 implementation module chunks
 
 import StdEnv
+import utils
+
 
 //midi is consists of chunks there are two types of chunks there
 
@@ -11,7 +13,15 @@ isHeader l
 	#! type = toString (take 4 l)
 	|type == "MThd" = True
 	= False
-
+	
+//check if it is track chunk
+isTrack :: [Char] -> Bool
+isTrack l
+	|length l < 4 = False 
+	#! type = toString (take 4 l)
+	|type == "MTrk" = True
+	= False
+	
 //read the format info in header
 calcFormat :: [Char] -> Int
 calcFormat l = byteToInt l
@@ -28,12 +38,15 @@ isTrack l
 	|type == "MTrk" = True
 	= False
 
+//byte to int function for calculating delta time
 deltaByteToInt :: [Char] -> Int
 deltaByteToInt [] = 0
 deltaByteToInt [c:cs]
 	#! len = length cs
 	= toInt c * 2 ^ (7*len) + deltaByteToInt cs
 
+//filter bytes that contain delta time info
+//read next byte only if the previous byte has 1 as its first digit 
 deltaTimeList :: [Char] -> [Char]
 deltaTimeList [] = []
 deltaTimeList [c:cs]
@@ -42,33 +55,33 @@ deltaTimeList [c:cs]
 	= [c:deltaTimeList cs]
 
 //read delta time of an event
+//fst:delta time
+//snd: length of bytes that uses to store delta time info
 deltaTime :: [Char] -> (Int,Int)
-deltaTime l = 
-	#! result = deltaByteToInt (deltaTimeList l)
-	= (result, length result)
-
+deltaTime l 
+	#! deltaL = deltaTimeList l
+	#! result = deltaByteToInt deltaL
+	= (result, length deltaL)
 //events of track chunks
 
 //Note on event
 isNoteOn :: Char -> Bool
 isNoteOn c 
 	#! status = toInt c / 16
-	|status == 8 = True
-	= False
+	= status == 8
 
 //Note off event
 isNoteOff :: Char -> Bool
 isNoteOff c 
 	#! status = toInt c / 16
-	|status == 9 = True
-	= False
+	= status == 9 
 
 //return channel information
 getChannel :: Char -> Int
-getChannel c = toInt c mod 16
+getChannel c = (toInt c) rem 16
 
 //return frequency information which comes from note number
-getFrequency :: Char -> Int
+getFrequency :: Char -> Real
 getFrequency c 
 	#! n = toInt c
 	|n >= 0 || n <= 127 = 440.0 * 2.0 ^ (toReal(n-69) / 12.0)
