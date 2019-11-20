@@ -31,6 +31,7 @@ where
 		division:: Int
 	}
 
+//store the information of a track which has several events(messages)
 :: TrackInfo :== [Message]
 
 //store the information about a piece of event
@@ -42,6 +43,7 @@ where
 		event :: Event
 	}
 
+//type alias
 :: Channel :== Int
 
 :: Frequency :== Real

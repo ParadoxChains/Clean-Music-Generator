@@ -30,14 +30,6 @@ calcFormat l = byteToInt l
 calcDivision :: [Char] -> Int
 calcDivision l = byteToInt l
 
-//check if it is track chunk
-isTrack :: [Char] -> Bool
-isTrack l
-	|length l < 4 = False 
-	#! type = toString (take 4 l)
-	|type == "MTrk" = True
-	= False
-
 //byte to int function for calculating delta time
 deltaByteToInt :: [Char] -> Int
 deltaByteToInt [] = 0
