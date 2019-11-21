@@ -4,12 +4,19 @@ import StdEnv
 
 :: Byte :== Char
 
+uintToBytesBE :: !Int !Int -> [Byte]
+uintToBytesBE i n = go i n [] where
+  go i n bs
+    | i <= 0 = bs
+             = go (i - 1) (n >> 8) [toChar (n bitand 255) : bs]
 
-/*
-Transfiring an Int to a list of bytes
-First parameter is the number of bytes we want to take and the second is the number we want to
-tranfer 
-*/
-natToBytesLE :: !Int !Int -> [Byte]
-natToBytesLE i n = take i (go n) where
-  go n = [toChar (n bitand 255) : go (n >> 8)]
+uintToBytesLE :: !Int !Int -> [Byte]
+uintToBytesLE i n
+  | i <= 0 = []
+           = [toChar (n bitand 255) : uintToBytesLE (i - 1) (n >> 8)]
+
+bytesToUintBE :: ![Byte] -> Int
+bytesToUintBE bs = foldl (\n b. toInt b bitor (n << 8)) 0 bs
+
+bytesToUintLE :: ![Byte] -> Int
+bytesToUintLE bs = foldr (\b n. toInt b bitor (n << 8)) 0 bs

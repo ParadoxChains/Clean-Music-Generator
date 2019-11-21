@@ -4,8 +4,8 @@ import StdEnv
 import StdFile
 import Wav.Pcm
 
-test :: !*World -> *World
-test w
+wavTest :: !*World -> *World
+wavTest w
   #! (_, f, w) = fopen "test.wav" FWriteData w
   #! f = writePcmWav
       { numChannels    = 1
@@ -16,4 +16,4 @@ test w
   #! (_, w) = fclose f w
   = w
 
-Start w = test w
+Start w = wavTest w
