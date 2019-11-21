@@ -1,4 +1,4 @@
-implementation module PcmWav.Byte
+implementation module Data.Byte
 
 import StdEnv
 

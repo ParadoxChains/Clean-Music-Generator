@@ -1,6 +1,6 @@
-definition module PcmWav
+definition module Wav.Pcm
 
-import PcmWav.Byte
+import Data.Byte
 
 :: PcmWavParams =
   { numChannels    :: !Int // Number of channels

@@ -1,8 +1,8 @@
-implementation module PcmWav
+implementation module Wav.Pcm
 
 import StdEnv
 import StdFile
-import PcmWav.Byte
+import Data.Byte
 
 :: PcmWavParams =
   { numChannels    :: !Int
@@ -61,17 +61,3 @@ writePcmWav p d f
   #! f = writeFormat p f
   #! f = writeData l d f
   = f
-
-test :: !*World -> *World
-test w
-  #! (_, f, w) = fopen "test.wav" FWriteData w
-  #! f = writePcmWav
-      { numChannels    = 1
-      , numBlocks      = 3 * 44100
-      , samplingRate   = 44100
-      , bytesPerSample = 1
-      } (repeatn (3 * 44100) '\0') f
-  #! (_, w) = fclose f w
-  = w
-
-Start w = test w

@@ -1,4 +1,4 @@
-definition module PcmWav.Byte
+definition module Data.Byte
 
 :: Byte :== Char
 
