@@ -21,7 +21,12 @@ isTrack l
 	#! type = toString (take 4 l)
 	|type == "MTrk" = True
 	= False
-	
+
+//calculate the length of current track chunk
+//4 bytes for length information
+trackChunkLen :: [Char] -> Int
+trackChunkLen l = byteToInt (take 4 l)
+
 //read the format info in header
 calcFormat :: [Char] -> Int
 calcFormat l = byteToInt l
@@ -56,21 +61,23 @@ deltaTime l
 	= (result, length deltaL)
 //events of track chunks
 
+firstHalfStatus :: Char -> Int
+firstHalfStatus c = toInt c / 16
+
+secondHalfStatus :: Char -> Int
+secondHalfStatus c = toInt c rem 16
+
 //Note on event
 isNoteOn :: Char -> Bool
-isNoteOn c 
-	#! status = toInt c / 16
-	= status == 8
+isNoteOn c = firstHalfStatus c == 9
 
 //Note off event
 isNoteOff :: Char -> Bool
-isNoteOff c 
-	#! status = toInt c / 16
-	= status == 9 
+isNoteOff c = firstHalfStatus c == 8
 
 //return channel information
 getChannel :: Char -> Int
-getChannel c = (toInt c) rem 16
+getChannel c = secondHalfStatus c
 
 //return frequency information which comes from note number
 getFrequency :: Char -> Real

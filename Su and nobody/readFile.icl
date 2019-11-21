@@ -2,27 +2,30 @@ module readFile
 
 import StdEnv
 import StdFile
-import StdDebug
+//import StdMaybe
 import chunks
 
 
-SysexEventF0 :== 240
-SysexEventF7 :== 247
+:: Maybe x
+	= Just x
+	| Nothing
 
 //calculate the length of each event
-eventLen::[Char]->Int
-eventLen event = sum [((toInt x) rem 128)*pw 
-					\\ x<-lengthData & pw<-(reverse (map (\x=2^((x-1)*7))[1,2..(length lengthData)]))]
-where
-	eventType = toInt (hd event) // Event type - First byte
-	lengthData 											// Length data
-		| (eventType == SysexEventF0 || eventType == SysexEventF7) 
-		   = (takeWhile (\x=((toInt x)/128)==1) (drop 1 event)) 
-		   	++ (take 1 (dropWhile (\x=((toInt x)/128)==1) (drop 1 event)))// Extract time for Sysex events
-		= (takeWhile (\x=((toInt x)/128)==1) (drop 2 event)) 
-			++ (take 1 (dropWhile (\x=((toInt x)/128)==1) (drop 2 event))) // Extract time for Meta events
-
+eventLen:: Int [Char]->Int
+eventLen lastLen l
+	#! n1 = firstHalfStatus (hd l)
+	#! n2 = secondHalfStatus (hd l)
+	//meta events -- status byte, type byte, length byte
+	|n1 >= 15 && n2 == 15 = toInt(l !! 2) + 3
+	//system exclusive events -- status byte, length byte
+	|n1 >= 15 && n2 >=0 && n2 <= 7 = toInt(l !! 1) + 2
+	//midi events
+	|n1 == 12 || n1 == 13 = 2
+	|(n1 >= 8 && n1 <= 11) || n1 == 14 = 3
+	|n1 < 8 = lastLen - 1
+	= abort (toString n2)
 //store the useful information of header chunk		
+
 :: HeaderInfo = 
 	{
 		//MIDI file format,valid:0,1,2
@@ -81,34 +84,43 @@ processHeader l =
 
 //read information in the track chunk
 processTrack :: [Char] -> [TrackInfo]
+processTrack [] = []
 processTrack l 
-	|isTrack l = processTrackHead l
+	//4bytes:type of chunk-mtrk
+	|isTrack l = processTrackBody (drop 4 l)
 	= processTrackBody l
 
-//process track chunk from the beginning
-processTrackHead :: [Char] -> [TrackInfo]
-processTrackHead l
-	//4bytes:type of chunk-mtrk
-	//4bytes length of track trunk-useless since there's always a type indication 
-	//len-length of delta time
-	//resultL
-	#! resultL = drop 8 l
-	#! (result,len) =  deltaTime resultL
-	#! processL = drop len resultL 
-	= [{
-		deltaTime = result,
-		event = processEvent processL
-	}:processTrack (drop (eventLen processL) processL)]
-
-//process track chunk with information beginning at chunk body	
+//process track chunk with information beginning with chunk head dropped
+//list of list of Message
 processTrackBody :: [Char] -> [TrackInfo]
-
+processTrackBody l
+	//4 bytes for length information
+	#! chunkLen = trackChunkLen l
+	#! chunkBody = drop 4 l
+	//delete delta time info bytes
+	#! nextChunk = drop chunkLen chunkBody 
+	= [processMessage 0 chunkBody: processTrack nextChunk]
+	
+processMessage :: Int [Char] -> TrackInfo
+processMessage lastEventLen [] = []
+processMessage lastEventLen l 
+	#! (result,deltaLen) =  deltaTime l
+	#! chunkbody = drop deltaLen l
+	#! eventLen = eventLen lastEventLen chunkbody
+	= case processEvent chunkbody of 
+		Just correctEvent -> [{
+			deltaTime = result,
+			event = correctEvent
+			}: processMessage eventLen (drop eventLen chunkbody)]
+		Nothing -> processMessage eventLen (drop eventLen chunkbody)
+	
 //read information about events in the track chunks
-processEvent :: [Char] -> Event
+//give back events or
+processEvent :: [Char] -> Maybe Event
 processEvent [c:cs] 
-	|isNoteOn c = NoteOn (getChannel c) (getFrequency c) 
-	|isNoteOff c = NoteOff (getChannel c) (getFrequency c) 
-	= abort "unknow event"
+	|isNoteOn c = Just(NoteOn (getChannel c) (getFrequency c))
+	|isNoteOff c = Just(NoteOff (getChannel c) (getFrequency c))
+	= Nothing
 
 readBytes :: *File -> ([Char], *File)
 readBytes oldF 
@@ -119,7 +131,7 @@ readBytes oldF
 
 read :: !*World -> (*World, Info)
 read oldW
-	#! (b, oldF, newW) = fopen "minimal.mid" FReadData oldW
+	#! (b, oldF, newW) = fopen "simple.mid" FReadData oldW
 	|not b = (newW, abort"can not open file")
 	#! (l, newF) = readBytes oldF
 	#! (b, newW2) = fclose newF newW

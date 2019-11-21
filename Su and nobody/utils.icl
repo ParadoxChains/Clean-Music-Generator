@@ -3,6 +3,7 @@ implementation module utils
 import StdEnv
 
 //byte order in MIDI:big endian (MSB first)
+//convert a list of bytes to one integer
 byteToInt :: [Char] -> Int
 byteToInt [] = 0
 byteToInt [c:cs]
