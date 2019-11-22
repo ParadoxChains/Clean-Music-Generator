@@ -1,6 +1,5 @@
-implementation module test2
+implementation module Output.test2
 import StdEnv
-import Input.test3
+import util.Rand
 
-funcY :: Int
-funcY = 2
+Start = genRandInt 1

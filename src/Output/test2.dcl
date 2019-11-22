@@ -1,5 +1,3 @@
-definition module test2
-import StdEnv
-import Input.test3
+definition module Output.test2
 
-funcY :: Int
+import StdEnv
