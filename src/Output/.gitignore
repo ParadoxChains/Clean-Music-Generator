@@ -1,0 +1,14 @@
+### Clean ###
+# Binaries
+*.exe
+*.out
+
+# Project files
+*.prj
+*.prp
+
+# Directory used to store object files, abc files and assembly files
+Clean System Files/
+
+# Test files
+test.wav
