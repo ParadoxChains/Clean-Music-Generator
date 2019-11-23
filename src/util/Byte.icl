@@ -1,4 +1,4 @@
-implementation module Data.Byte
+implementation module util.Byte
 
 import StdEnv
 

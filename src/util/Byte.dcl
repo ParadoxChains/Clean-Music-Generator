@@ -1,4 +1,4 @@
-definition module Data.Byte
+definition module util.Byte
 
 // A byte is a character
 :: Byte :== Char
