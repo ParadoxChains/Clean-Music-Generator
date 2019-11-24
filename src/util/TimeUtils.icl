@@ -19,4 +19,3 @@ where
 	beatLength = 60.0 / tempo
 	totalTime = beats * beatLength
 
-Start = noteToSamples (1, 1) {barVal = 4, noteVal = 4} 120.0
