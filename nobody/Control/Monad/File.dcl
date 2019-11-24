@@ -4,9 +4,9 @@ import Control.Monad
 
 :: FileM a =: FileM (*File -> *(!a, !*File))
 
-instance Monad FileM
-
 runFileM :: !(FileM a) !*File -> (a, !*File)
+
+instance Monad FileM
 
 readChar :: FileM (!Bool, !Char)
 readFile :: FileM [Char]

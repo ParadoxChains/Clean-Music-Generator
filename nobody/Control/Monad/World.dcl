@@ -5,8 +5,8 @@ import Control.Monad.File
 
 :: WorldM a =: WorldM (*World -> *(!a, !*World))
 
-instance Monad WorldM
-
 runWorldM :: !(WorldM a) !*World -> (a, !*World)
+
+instance Monad WorldM
 
 withFile :: !String !Int !(FileM a) -> WorldM a

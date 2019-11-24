@@ -1,5 +1,8 @@
 implementation module Control.Monad
 
+import StdEnv
+import StdMaybe
+
 when :: !Bool (m a) -> m () | Monad m
 when b m
   | b = m >>> pure ()
@@ -20,3 +23,17 @@ mapM_ f xs = go xs where
     f x >>>
     go xs >>>
     pure ()
+
+replicateM :: !Int !(m a) -> m [a] | Monad m
+replicateM i m = go i where
+  go i
+    | i <= 0 = pure []
+    = m >>= \x.
+      go (i - 1) >>= \xs.
+      pure [x:xs]
+
+instance Monad Maybe where
+  pure a = Just a
+  (>>=) m f = case m of
+    Nothing -> Nothing
+    Just a  -> f a

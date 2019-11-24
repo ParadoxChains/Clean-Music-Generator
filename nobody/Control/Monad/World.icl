@@ -4,14 +4,14 @@ import StdFile
 import Control.Monad
 import Control.Monad.File
 
+runWorldM :: !(WorldM a) !*World -> (a, !*World)
+runWorldM (WorldM f) w = f w
+
 instance Monad WorldM where
   pure a = WorldM \w. (a, w)
   (>>=) (WorldM f) g = WorldM \w0. let
     (a, w1) = f w0
     in runWorldM (g a) w1
-
-runWorldM :: !(WorldM a) !*World -> (a, !*World)
-runWorldM (WorldM f) w = f w
 
 withFile :: !String !Int !(FileM a) -> WorldM a
 withFile fn mode (FileM f) = WorldM \w0. let

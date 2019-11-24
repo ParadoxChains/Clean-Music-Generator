@@ -3,15 +3,15 @@ implementation module Control.Monad.File
 import StdFile
 import Control.Monad
 
+runFileM :: !(FileM a) !*File -> (a, !*File)
+runFileM (FileM f) file = f file
+
 instance Monad FileM where
   pure a = FileM \f. (a, f)
   (>>=) :: !(FileM a) (a -> FileM b) -> FileM b
   (>>=) (FileM f) g = FileM \f0. let
     (a, f1) = f f0
     in runFileM (g a) f1
-
-runFileM :: !(FileM a) !*File -> (a, !*File)
-runFileM (FileM f) file = f file
 
 readChar :: FileM (!Bool, !Char)
 readChar = FileM \f0. let
