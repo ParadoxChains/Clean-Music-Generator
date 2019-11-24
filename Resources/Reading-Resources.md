@@ -57,7 +57,7 @@ Aside from knowing basic sound theory, we need to understand the basics of digit
   - Also the Midi specification, written differently.
 - [SoundFont Wikipedia](https://en.wikipedia.org/wiki/SoundFont)
   - Brief read on the Soundfont File Type
-- [Soundfont File Specification]()
+- [Soundfont File Specification](https://github.com/ParadoxChains/Clean-Music-Generator/blob/master/Resources/sfspec24.pdf)
   - Incredibly detailed red of the Soundfont file specification and implementation details.
 
 
