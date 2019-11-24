@@ -1,4 +1,4 @@
-implementation module chunks
+implementation module Input.chunks
 
 import StdEnv
 import util.Byte
