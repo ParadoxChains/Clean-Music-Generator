@@ -1,15 +1,13 @@
 implementation module util.TimeUtils
 import StdEnv
 import util.ListUtils
+import util.Constants
 
 timeToSeconds :: Time -> Real
 timeToSeconds t = t.minutes*60.0 + t.seconds
 
-sampleRate :: Int
-sampleRate = 44100
-
 secondsToSamples :: Real -> Int
-secondsToSamples seconds = floor (seconds * (toReal sampleRate))
+secondsToSamples seconds = floor (seconds * (toReal SAMPLING_RATE))
 
 timeToSamples :: Time -> Int
 timeToSamples t = secondsToSamples (timeToSeconds t)
@@ -21,4 +19,4 @@ where
 	beatLength = 60.0 / tempo
 	totalTime = beats * beatLength
 
-//Start = noteToSamples (1, 1) {barVal = 4, noteVal = 4} 120.0
+Start = noteToSamples (1, 1) {barVal = 4, noteVal = 4} 120.0

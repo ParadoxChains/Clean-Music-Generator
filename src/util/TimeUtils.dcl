@@ -1,18 +1,15 @@
 definition module util.TimeUtils
 
 :: Time = {minutes :: Real
-		  ,seconds :: Real
-		  }
+          ,seconds :: Real
+          }
 
 :: TimeSignature = {barVal :: Int
-				   ,noteVal :: Int
-				   }
+                   ,noteVal :: Int
+                   }
 
 // Gets Time and converts to seconds
 timeToSeconds :: Time -> Real
-
-// Samples per second
-sampleRate :: Int
 
 // Gets seconds and returns number of samples
 secondsToSamples :: Real -> Int
