@@ -1,8 +1,8 @@
-implementation module Wav.Pcm
+implementation module Output.Pcm
 
 import StdEnv
 import StdFile
-import Data.Byte
+import util.Byte
 
 :: PcmWavParams =
   { numChannels    :: !Int
