@@ -55,6 +55,10 @@ Aside from knowing basic sound theory, we need to understand the basics of digit
   - A good in-a-nutshell version of the MIDI specification.
 - [MIDI Specification](https://github.com/ParadoxChains/Clean-Music-Generator/blob/master/Resources/The_MIDI_Specification.pdf)
   - Also the Midi specification, written differently.
+- [SoundFont Wikipedia](https://en.wikipedia.org/wiki/SoundFont)
+  - Brief read on the Soundfont File Type
+- [Soundfont File Specification]()
+  - Incredibly detailed red of the Soundfont file specification and implementation details.
 
 
 ## Others
