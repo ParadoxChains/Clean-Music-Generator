@@ -1,6 +1,7 @@
-definition module Output.Pcm
+definition module Wav.Monadic
 
-import util.Byte
+import Control.Monad.File
+import Data.Byte
 
 :: PcmWavParams =
   { numChannels    :: !Int // Number of channels
@@ -9,4 +10,4 @@ import util.Byte
   , bytesPerSample :: !Int // Number of bytes in each sample
   }
 
-writePcmWav :: !PcmWavParams ![Byte] !*File -> *File
+writePcmWav :: !PcmWavParams ![Byte] -> FileM ()
