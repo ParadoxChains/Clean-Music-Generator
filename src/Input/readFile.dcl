@@ -1,8 +1,5 @@
 definition module Input.readFile
-
-:: Maybe x
-	= Just x
-	| Nothing
+import StdMaybe
 
 //store the useful information of header chunk		
 :: HeaderInfo = 
@@ -25,7 +22,6 @@ definition module Input.readFile
 		event :: Event
 	}
 
-//type alias
 :: Channel :== Int
 
 :: Frequency :== Real
@@ -42,20 +38,29 @@ definition module Input.readFile
 		//so it is basically a list of list of record
 		trackInfo :: [TrackInfo]
 	}
-	
-eventLen:: Int [Char]->Int
+
 
 process :: [Char] -> Info
 
+//read information in the header chunk
 processHeader :: [Char] -> HeaderInfo
 
+//read information in the track chunk
 processTrack :: [Char] -> [TrackInfo]
 
+//process track chunk with chunk type dropped
+//return a list of list of Message
 processTrackBody :: [Char] -> [TrackInfo]
 
+//give back a piece of message info in track chunk
 processMessage :: Int [Char] -> TrackInfo
-
+	
+//read events information in track chunks
+//give back events or nothing
 processEvent :: [Char] -> Maybe Event
+	
+//calculate the length of each event which depends on the event type
+eventLen:: Int [Char]->Int
 
 readBytes :: *File -> ([Char], *File)
 
