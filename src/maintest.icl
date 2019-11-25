@@ -30,7 +30,7 @@ read oldW
 	#! (b, newW2) = fclose newF newW
 	= (newW2, process l)
 		
-Start w = read w
+//Start w = read w
 
 //import synthesis.Wave, synthesis.Generate
 
