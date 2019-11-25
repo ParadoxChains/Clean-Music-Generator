@@ -1,15 +1,15 @@
-definition module util.Parser
+definition module util.Monad.Parser
 
-import StdMaybe
 import util.Monad
+import util.Monad.Result
 
 :: Parser a
 
 instance Monad Parser
 
-parse :: !(Parser a) ![Char] -> Maybe a
+parse :: !(Parser a) ![Char] -> Result a
 
-fail :: Parser a
+fail :: String -> Parser a
 (<|>) infixl 3 :: !(Parser a) (Parser a) -> Parser a
 
 eof     :: Parser ()
@@ -18,3 +18,6 @@ char    :: !Char   -> Parser Char
 string  :: !String -> Parser String
 
 takeP :: !Int -> Parser [Char]
+
+uintBE :: !Int -> Parser Int
+uintLE :: !Int -> Parser Int

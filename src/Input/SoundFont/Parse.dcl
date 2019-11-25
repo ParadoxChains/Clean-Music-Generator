@@ -1,8 +1,8 @@
 definition module Input.SoundFont.Parse
 
-import StdMaybe
+import util.Monad.Result
 import util.Byte
 
 :: SoundFont = Todo Int
 
-parseSoundFont :: [Byte] -> Maybe SoundFont
+parseSoundFont :: [Byte] -> Result SoundFont

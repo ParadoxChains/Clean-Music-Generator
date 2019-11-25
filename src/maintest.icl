@@ -33,7 +33,7 @@ read oldW
 		
 //Start w = read w
 
-//Start = parseSoundFont (fromString "RIFF\0\2\0\0sfbk")
+Start = parseSoundFont (fromString "RIFF\0\2\0\0sfbk")
 
 //import synthesis.Wave, synthesis.Generate
 
