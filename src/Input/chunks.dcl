@@ -23,3 +23,5 @@ isNoteOff :: Char -> Bool
 getChannel :: Char -> Int
 
 getFrequency :: Char -> Real
+
+getVelocity :: Char -> Int
