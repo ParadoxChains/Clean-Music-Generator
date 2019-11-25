@@ -22,13 +22,13 @@ wavTest w
 
 //Start w = wavTest w
 
-read :: !*World -> (*World, Info)
+read :: !*World -> (*World, [Note])
 read oldW
 	#! (b, oldF, newW) = fopen "Input/MIDI/simple.mid" FReadData oldW
 	|not b = (newW, abort"can not open file")
 	#! (l, newF) = readBytes oldF
 	#! (b, newW2) = fclose newF newW
-	= (newW2, process l)
+	= (newW2, readFile l)
 		
 Start w = read w
 

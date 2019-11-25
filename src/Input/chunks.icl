@@ -85,3 +85,10 @@ getFrequency c
 	#! n = toInt c
 	|n >= 0 || n <= 127 = 440.0 * 2.0 ^ (toReal(n-69) / 12.0)
 	= abort "incorrect MIDI note number"
+
+getVelocity :: Char -> Int
+getVelocity c = toInt c
+	
+	
+	
+	

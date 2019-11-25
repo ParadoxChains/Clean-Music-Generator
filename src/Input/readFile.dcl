@@ -26,10 +26,14 @@ import StdMaybe
 
 :: Frequency :== Real
 
-//note on,note off events and relative useful information
-::Event = NoteOn Channel Frequency| NoteOff Channel Frequency
+:: Velocity :== Int
 
-//the final information that read from the file
+:: Duration :== Int
+
+//note on,note off events and relative useful information
+::Event = NoteOn Channel Frequency Velocity| NoteOff Channel Frequency Velocity
+
+//the information that read from the file
 :: Info = 
 	{
 		//a record which store the information of header chunk 
@@ -39,7 +43,24 @@ import StdMaybe
 		trackInfo :: [TrackInfo]
 	}
 
+:: Note = 
+	{
+		channel :: Channel,
+		frequency :: Frequency,
+		veolocity :: Velocity,
+		duration :: Duration
+	}
 
+//return processed infromation
+readFile :: [Char] -> [Note]
+
+processInfo :: Info -> [Note]
+
+note :: TrackInfo -> [Note]
+
+findDeltaTime :: Real TrackInfo -> Int
+
+//start to process midi file
 process :: [Char] -> Info
 
 //read information in the header chunk
@@ -63,5 +84,3 @@ processEvent :: [Char] -> Maybe Event
 eventLen:: Int [Char]->Int
 
 readBytes :: *File -> ([Char], *File)
-
-read :: !*World -> (*World, Info)
