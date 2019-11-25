@@ -4,6 +4,7 @@ import StdEnv
 import StdFile
 import util.Byte
 import Input.readFile
+import Input.SoundFont.Parse
 import Output.Pcm
 import Output.middle_layer
 import synthesis.Wavetable
@@ -31,6 +32,8 @@ read oldW
 	= (newW2, process l)
 		
 //Start w = read w
+
+//Start = parseSoundFont (fromString "RIFF\0\2\0\0sfbk")
 
 //import synthesis.Wave, synthesis.Generate
 
