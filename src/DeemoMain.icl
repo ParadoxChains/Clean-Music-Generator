@@ -42,4 +42,4 @@ where
 SquareProfile :: SynthProfile
 SquareProfile = {type = Square, env = {attack=(1.0/32.0), decay=(1.0/64.0), sustain = 0.2, release = 0.25}}
 */
-Start = convStrToFreq "C#4"
+Start = -0 == 0

@@ -53,7 +53,7 @@ where
 generate Pulse freq dur = subtractLists (shiftLeft saw (SAMPLING_RATE/(2*freq))) saw
 where
     saw = generate Sawtooth freq dur
-
+generate Silence _ dur = [abs(x*0.0)\\x<-(wave [1.0] [0.0] 440 dur)]
 
 // Start = generate Square
 
