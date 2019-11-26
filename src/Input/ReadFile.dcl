@@ -82,5 +82,3 @@ processEvent :: [Char] -> Maybe Event
 	
 //calculate the length of each event which depends on the event type
 eventLen:: Int [Char]->Int
-
-readBytes :: *File -> ([Char], *File)

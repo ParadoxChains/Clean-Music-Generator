@@ -4,7 +4,8 @@ import StdEnv
 import StdFile
 import StdMaybe
 import Input.Chunks
-	
+import Util.Byte
+
 :: HeaderInfo = 
 	{
 		format :: Int,
@@ -141,11 +142,3 @@ eventLen lastLen l
 	|(n1 >= 8 && n1 <= 11) || n1 == 14 = 3
 	|n1 < 8 = lastLen - 1
 	= abort (toString n2)
-
-readBytes :: *File -> ([Char], *File)
-readBytes oldF 
-	#! (b, c, newF) = freadc oldF
-	|not b = ([], newF)
-	#! (l, f) = readBytes newF
-	= ([c:l], f)
-
