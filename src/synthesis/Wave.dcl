@@ -3,7 +3,7 @@ definition module synthesis.Wave
 
 :: Wave = Square | Triangle | Noise | Pulse | Sawtooth
 
-// takes harmonics and amplitudes as parameter and generates wave
-wave :: [Real] [Real] -> [Real] 
+// takes harmonics, amplitudes and frequency as parameter and generates wave
+wave :: [Real] [Real] Int -> [Real] 
 
 

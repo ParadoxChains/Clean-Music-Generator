@@ -7,6 +7,8 @@ import Input.readFile
 import Output.Pcm
 import Output.middle_layer
 import synthesis.Wavetable
+import synthesis.Generate
+import synthesis.Wave
 
 wavTest :: !*World -> *World
 wavTest w
@@ -34,4 +36,4 @@ read oldW
 
 //import synthesis.Wave, synthesis.Generate
 
-//Start = generate Sawtooth
+Start = generate Sawtooth 440

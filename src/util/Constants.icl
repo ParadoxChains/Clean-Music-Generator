@@ -10,5 +10,3 @@ SAMPLING_RATE = 44100
 tableSize :: Int
 tableSize = 2205
 
-freq :: Int
-freq = 440

@@ -10,8 +10,8 @@ sineTable :== (wavetable 1.0)
 
 
 // takes harmonics and amplitudes as parameter and generates wave
-wave :: [Real] [Real] -> [Real] 
-wave h a = sumAll l
+wave :: [Real] [Real] Int -> [Real] 
+wave h a freq = sumAll l
 where 
     l = (get sineTable h a freq)
 
