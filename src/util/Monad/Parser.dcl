@@ -9,7 +9,8 @@ instance Monad Parser
 
 parse :: !(Parser a) ![Char] -> Result a
 
-fail :: String -> Parser a
+fail :: !String -> Parser a
+(<?>) infix 0  :: !(Parser a) String     -> Parser a
 (<|>) infixl 3 :: !(Parser a) (Parser a) -> Parser a
 
 eof     :: Parser ()

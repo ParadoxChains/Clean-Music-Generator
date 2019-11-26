@@ -19,26 +19,37 @@ instance Monad Parser where
 parse :: !(Parser a) ![Char] -> Result a
 parse (Parser p) s = fst <$> p s
 
-fail :: String -> Parser a
-fail s = Parser \_. Err s
+fail :: !String -> Parser a
+fail e = Parser \_. Err e
+
+(<?>) infix 0 :: !(Parser a) String -> Parser a
+(<?>) (Parser p) e = Parser \s. case p s of
+  Err _ -> Err e
+  r     -> r
 
 (<|>) infixl 3 :: !(Parser a) (Parser a) -> Parser a
-(<|>) (Parser p) (Parser q) = Parser \s0. case p s0 of
-  Err _ -> q s0
-  m     -> m
+(<|>) (Parser p) (Parser q) = Parser \s. case p s of
+  Err e0 -> case q s of
+    Err e1 -> Err (e0 +++ "\n" +++ e1)
+    r      -> r
+  r     -> r
 
 eof :: Parser ()
-eof = Parser \s. if (isEmpty s) (Ok ((), s)) (Err "Expected eof")
+eof = Parser \s. case s of
+  []     -> Ok ((), s)
+  [c:cs] -> err (toString c) "eof"
 
 anyChar :: Parser Char
 anyChar = Parser \s. case s of
-  []     -> Err "Unexpected eof"
+  []     -> err "eof" "char"
   [c:cs] -> Ok (c, cs)
 
 char :: !Char -> Parser Char
 char c0 = Parser \s. case s of
-  [c:cs] | c0 == c -> Ok (c, cs)
-  _ -> Err ("Expected " +++ toString c0)
+  [] -> err "eof" (toString c0)
+  [c:cs]
+    | c0 == c -> Ok (c, cs)
+    -> err (toString c) (toString c0)
 
 string :: !String -> Parser String
 string s = s <$ mapM_ char (fromString s)
@@ -51,3 +62,6 @@ uintBE n = bytesToUintBE <$> takeP n
 
 uintLE :: !Int -> Parser Int
 uintLE n = bytesToUintLE <$> takeP n
+
+err :: !String !String -> Result a
+err u e = Err ("Unexpected " +++ u +++ ", expected " +++ e)
