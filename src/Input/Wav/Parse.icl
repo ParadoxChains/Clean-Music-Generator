@@ -1,5 +1,6 @@
 implementation module Input.Wav.Parse
 
+import StdEnv
 import Util.Monad
 import Util.Monad.Parser
 import Util.Monad.Result
@@ -20,13 +21,13 @@ wave =
 fmt :: Parser ()
 fmt =
   string "fmt " >>>
-  uintBE 4 >>= \n.
+  uintLE 4 >>= \n.
   takeP n >>>
   pure ()
 
 data :: Parser [Byte]
 data =
   string "data" >>>
-  uintBE 4 >>= \n.
+  uintLE 4 >>= \n.
   takeP n >>= \bs.
   pure bs

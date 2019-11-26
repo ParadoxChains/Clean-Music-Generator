@@ -13,12 +13,13 @@ import Synthesis.Wavetable
 wavTest :: !*World -> *World
 wavTest w
   #! (_, f, w) = fopen "test.wav" FWriteData w
+  #! data = transform (wavetable 0.5) 0.5
   #! f = writePcmWav
       { numChannels    = 1
-      , numBlocks      = 3 * 44100
+      , numBlocks      = length data
       , samplingRate   = 44100
       , bytesPerSample = 1
-      } (transform (wavetable 0.5) 0.5) f
+      } data f
   #! (_, w) = fclose f w
   = w
 
@@ -38,7 +39,8 @@ read oldW
 
 parseTestWav :: !*World -> (!Result Wav, !*World)
 parseTestWav w
-  #! (_, f, w) = fopen "test.wav" FReadData w
+  #! (b, f, w) = fopen "test.wav" FReadData w
+  | not b = abort "File not found"
   #! (bs, f) = readBytes f
   #! (_, w) = fclose f w
   = (parseWav bs, w) 
