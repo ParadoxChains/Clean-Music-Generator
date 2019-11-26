@@ -13,11 +13,11 @@ secondsToSamples seconds = floor (seconds * (toReal SAMPLING_RATE))
 timeToSamples :: Time -> Int
 timeToSamples t = secondsToSamples (timeToSeconds t)
 
-noteToSamples :: Beat TimeSignature Real -> Int
-noteToSamples b timeSig tempo = secondsToSamples totalTime
+noteToSamples :: Beat TimeSignature Tempo -> Int
+noteToSamples b timeSig t = secondsToSamples totalTime
 where
 	beats = ((toReal (b.p*timeSig.noteVal)) / (toReal b.q))
-	beatLength = 60.0 / tempo
+	beatLength = 60.0 / t
 	totalTime = beats * beatLength
 
 simplifyBeat :: Beat -> Beat
