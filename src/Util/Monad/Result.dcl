@@ -1,4 +1,4 @@
-definition module util.Monad.Result
+definition module Util.Monad.Result
 
 import Util.Monad
 

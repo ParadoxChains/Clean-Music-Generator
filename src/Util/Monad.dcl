@@ -1,4 +1,4 @@
-definition module util.Monad
+definition module Util.Monad
 
 import StdMaybe
 

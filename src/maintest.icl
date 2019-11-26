@@ -3,7 +3,7 @@ module maintest
 import StdEnv
 import StdFile
 import Util.Byte
-import Input.readFile
+import Input.ReadFile
 import Input.SoundFont.Parse
 import Input.Wav.Parse
 import Output.Pcm

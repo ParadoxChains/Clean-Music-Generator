@@ -1,4 +1,4 @@
-definition module util.Monad.Parser
+definition module Util.Monad.Parser
 
 import Util.Monad
 import Util.Monad.Result

@@ -1,9 +1,9 @@
 implementation module Input.Wav.Parse
 
-import util.Monad
-import util.Monad.Parser
-import util.Monad.Result
-import util.Byte
+import Util.Monad
+import Util.Monad.Parser
+import Util.Monad.Result
+import Util.Byte
 
 parseWav :: [Byte] -> Result Wav
 parseWav bs = parse wave bs

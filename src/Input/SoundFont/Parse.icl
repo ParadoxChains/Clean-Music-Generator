@@ -1,8 +1,8 @@
 implementation module Input.SoundFont.Parse
 
-import util.Monad.Parser
-import util.Monad.Result
-import util.Byte
+import Util.Monad.Parser
+import Util.Monad.Result
+import Util.Byte
 
 parseSoundFont :: [Byte] -> Result SoundFont
 parseSoundFont bs = parse sfbk bs

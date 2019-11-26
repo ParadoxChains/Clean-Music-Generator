@@ -1,4 +1,4 @@
-implementation module util.Monad
+implementation module Util.Monad
 
 import StdEnv
 import StdMaybe

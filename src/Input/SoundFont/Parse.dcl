@@ -1,7 +1,7 @@
 definition module Input.SoundFont.Parse
 
-import util.Monad.Result
-import util.Byte
+import Util.Monad.Result
+import Util.Byte
 
 :: SoundFont = Todo Int
 

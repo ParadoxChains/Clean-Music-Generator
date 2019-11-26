@@ -1,4 +1,4 @@
-implementation module util.Monad.Parser
+implementation module Util.Monad.Parser
 
 import StdEnv
 import Util.Monad
