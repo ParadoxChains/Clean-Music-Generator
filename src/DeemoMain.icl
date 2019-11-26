@@ -3,7 +3,7 @@ import StdEnv
 
 //Custom library imports
 import Synthesis.Accesstable, Synthesis.Generate, Synthesis.Wave, Synthesis.Wavetable
-import Util.Byte, Util.Constants, Util.ListUtils, Util.Rand, Util.TimeUtils
+import Util.Byte, Util.Constants, Util.ListUtils, Util.Rand, Util.TimeUtils, Util.Pitch
 import Input.Chunks, Input.ReadFile
 import Output.MiddleLayer, Output.Pcm
 /*
@@ -42,4 +42,4 @@ where
 SquareProfile :: SynthProfile
 SquareProfile = {type = Square, env = {attack=(1.0/32.0), decay=(1.0/64.0), sustain = 0.2, release = 0.25}}
 */
-Start = 1
+Start = convStrToFreq "C#4"

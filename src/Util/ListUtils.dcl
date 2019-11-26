@@ -17,3 +17,7 @@ subtractLists :: [Real] [Real] -> [Real]
 
 // sum all lists
 sumAll :: [[Real]] -> [Real]
+
+
+//array to list
+strToList :: String -> [Char]
