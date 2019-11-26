@@ -43,16 +43,16 @@ randoms = map (\x = x rem 40) (take 100 (genRandInt 1))
 
 
 
-generate :: Wave -> [Real]
-generate Square = wave hSquare aSquare
-generate Sawtooth = wave hSawtooth aSawtooth
-generate Triangle = wave hTriangle aTriangle
-generate Noise = sumAll l
+generate :: Wave Int Int -> [Real]
+generate Square freq dur = wave hSquare aSquare freq dur
+generate Sawtooth freq dur = wave hSawtooth aSawtooth freq dur
+generate Triangle freq dur = wave hTriangle aTriangle freq dur
+generate Noise freq dur = sumAll l
 where 
-    l = [shiftLeft list i \\ list <- (get (wavetable 1.0) hNoise aNoise freq) & i <- randoms]
-generate Pulse = subtractLists (shiftLeft saw (SAMPLING_RATE/(2*freq))) saw
+    l = [shiftLeft list i \\ list <- (get (wavetable 1.0) hNoise aNoise freq dur) & i <- randoms]
+generate Pulse freq dur = subtractLists (shiftLeft saw (SAMPLING_RATE/(2*freq))) saw
 where
-    saw = generate Sawtooth
+    saw = generate Sawtooth freq dur
 
 
 // Start = generate Square
