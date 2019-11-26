@@ -1,5 +1,5 @@
-definition module synthesis.Generate
-import synthesis.Wave
+definition module Synthesis.Generate
+import Synthesis.Wave
 
 
 // Takes wave and frequency as parameters and generates 

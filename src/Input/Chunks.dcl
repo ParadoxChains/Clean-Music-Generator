@@ -1,4 +1,4 @@
-definition module Input.chunks
+definition module Input.Chunks
 
 isHeader :: [Char] -> Bool
 
@@ -23,3 +23,5 @@ isNoteOff :: Char -> Bool
 getChannel :: Char -> Int
 
 getFrequency :: Char -> Real
+
+getVelocity :: Char -> Int

@@ -1,4 +1,4 @@
-implementation module Output.middle_layer
+implementation module Output.MiddleLayer
 import StdEnv
 
 transform ::[Real] Real->[Char]

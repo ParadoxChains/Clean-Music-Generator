@@ -1,4 +1,4 @@
-definition module util.Constants
+definition module Util.Constants
 
 PI :: Real
 SAMPLING_RATE :: Int

@@ -1,11 +1,11 @@
-implementation module synthesis.Generate
+implementation module Synthesis.Generate
 import StdEnv
-import util.Constants
-import synthesis.Accesstable
-import synthesis.Wavetable
-import util.ListUtils
-import synthesis.Wave
-import util.Rand
+import Util.Constants
+import Synthesis.Accesstable
+import Synthesis.Wavetable
+import Util.ListUtils
+import Synthesis.Wave
+import Util.Rand
 
 
 

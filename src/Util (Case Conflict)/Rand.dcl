@@ -1,4 +1,4 @@
-definition module util.Rand
+definition module Util.Rand
 /**
 * This module provides a pseudo random generator based
 * on the Mersenne Twister algorithm

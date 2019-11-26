@@ -1,9 +1,9 @@
-implementation module Input.readFile
+implementation module Input.ReadFile
 
 import StdEnv
 import StdFile
 import StdMaybe
-import Input.chunks
+import Input.Chunks
 	
 :: HeaderInfo = 
 	{
@@ -23,7 +23,11 @@ import Input.chunks
 
 :: Frequency :== Real
 
-::Event = NoteOn Channel Frequency| NoteOff Channel Frequency
+:: Velocity :== Int
+
+:: Duration :== Int
+
+::Event = NoteOn Channel Frequency Velocity| NoteOff Channel Frequency Velocity
 
 
 :: Info = 
@@ -31,6 +35,48 @@ import Input.chunks
 		headerInfo :: HeaderInfo,
 		trackInfo :: [TrackInfo]
 	}
+
+:: Note = 
+	{
+		channel :: Channel,
+		frequency :: Frequency,
+		veolocity :: Velocity,
+		duration :: Duration
+	}
+
+readFile :: [Char] -> [Note]
+readFile l = processInfo(process l)
+
+processInfo :: Info -> [Note]
+processInfo {headerInfo,trackInfo} 
+	= flatten(map note trackInfo)
+
+note :: TrackInfo -> [Note] 
+note [] = []
+note l
+	#! {deltaTime,event} = hd l 
+	= case event of
+		NoteOn ch bgFre veo -> [{
+				channel = ch,
+				frequency = bgFre,
+				veolocity = veo,
+				duration = findDeltaTime bgFre (tl l)
+			} : note (tl l)]
+		NoteOff _ _ _-> note (tl l)
+	
+		
+//return delta time to calculate the duration
+findDeltaTime :: Real TrackInfo -> Int
+findDeltaTime f l
+	#! {deltaTime,event} = hd l  
+	#! fre = case event of
+		NoteOff a b c -> b
+		NoteOn a b c -> -1.0
+	|f == fre = deltaTime
+	= deltaTime + findDeltaTime f (tl l)
+
+//calculate the duration of an event
+//calcDuration ::
 
 process :: [Char] -> Info
 process l
@@ -61,8 +107,7 @@ processTrackBody l
 	#! chunkLen = trackChunkLen l
 	#! chunkBody = drop 4 l
 	//delete delta time info bytes
-	#! nextChunk = drop chunkLen chunkBody 
-	= [processMessage 0 chunkBody: processTrack nextChunk]
+	= [processMessage 0 (take chunkLen chunkBody): processTrack (drop chunkLen chunkBody)]
 	
 processMessage :: Int [Char] -> TrackInfo
 processMessage lastEventLen [] = []
@@ -78,9 +123,9 @@ processMessage lastEventLen l
 		Nothing -> processMessage eventLen (drop eventLen chunkbody)
 
 processEvent :: [Char] -> Maybe Event
-processEvent [c:cs] 
-	|isNoteOn c = Just(NoteOn (getChannel c) (getFrequency c))
-	|isNoteOff c = Just(NoteOff (getChannel c) (getFrequency c))
+processEvent l
+	|isNoteOn (l!!0) = Just(NoteOn (getChannel (l!!0)) (getFrequency (l!!1)) (getVelocity (l!!2)))
+	|isNoteOff (l!!0) = Just(NoteOff (getChannel (l!!0)) (getFrequency (l!!1)) (getVelocity (l!!2)))
 	= Nothing
 
 eventLen:: Int [Char]->Int
@@ -104,12 +149,3 @@ readBytes oldF
 	#! (l, f) = readBytes newF
 	= ([c:l], f)
 
-read :: !*World -> (*World, Info)
-read oldW
-	#! (b, oldF, newW) = fopen "simple.mid" FReadData oldW
-	|not b = (newW, abort"can not open file")
-	#! (l, newF) = readBytes oldF
-	#! (b, newW2) = fclose newF newW
-	= (newW2, process l)
-		
-Start w = read w

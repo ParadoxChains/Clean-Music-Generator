@@ -1,4 +1,4 @@
-implementation module util.ListUtils
+implementation module Util.ListUtils
 import StdEnv
 
 // Rotate a list N places to the left. 

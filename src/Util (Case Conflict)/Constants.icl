@@ -1,4 +1,4 @@
-implementation module util.Constants
+implementation module Util.Constants
 
 
 PI :: Real
