@@ -2,7 +2,7 @@ implementation module Output.Pcm
 
 import StdEnv
 import StdFile
-import util.Byte
+import Util.Byte
 
 :: PcmWavParams =
   { numChannels    :: !Int

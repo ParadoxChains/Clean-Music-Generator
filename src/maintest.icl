@@ -2,13 +2,13 @@ module maintest
 
 import StdEnv
 import StdFile
-import util.Byte
+import Util.Byte
 import Input.readFile
 import Input.SoundFont.Parse
 import Input.Wav.Parse
 import Output.Pcm
-import Output.middle_layer
-import synthesis.Wavetable
+import Output.MiddleLayer
+import Synthesis.Wavetable
 
 wavTest :: !*World -> *World
 wavTest w
@@ -24,13 +24,13 @@ wavTest w
 
 //Start w = wavTest w
 
-read :: !*World -> (*World, Info)
+read :: !*World -> (*World, [Note])
 read oldW
 	#! (b, oldF, newW) = fopen "Input/MIDI/simple.mid" FReadData oldW
 	|not b = (newW, abort"can not open file")
 	#! (l, newF) = readBytes oldF
 	#! (b, newW2) = fclose newF newW
-	= (newW2, process l)
+	= (newW2, readFile l)
 		
 //Start w = read w
 
