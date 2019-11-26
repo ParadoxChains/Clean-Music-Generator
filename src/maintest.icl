@@ -5,6 +5,7 @@ import StdFile
 import util.Byte
 import Input.readFile
 import Input.SoundFont.Parse
+import Input.Wav.Parse
 import Output.Pcm
 import Output.middle_layer
 import synthesis.Wavetable
@@ -33,7 +34,16 @@ read oldW
 		
 //Start w = read w
 
-Start = parseSoundFont (fromString "RIFF\0\2\0\0sfbk")
+//Start = parseSoundFont (fromString "RIFF\0\2\0\0sfbk")
+
+parseTestWav :: !*World -> (!Result Wav, !*World)
+parseTestWav w
+  #! (_, f, w) = fopen "test.wav" FReadData w
+  #! (bs, f) = readBytes f
+  #! (_, w) = fclose f w
+  = (parseWav bs, w) 
+
+//Start w = parseTestWav w 
 
 //import synthesis.Wave, synthesis.Generate
 

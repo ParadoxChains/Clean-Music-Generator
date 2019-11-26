@@ -11,13 +11,6 @@ import util.Byte
   , bytesPerSample :: !Int
   }
 
-//Taking a list of bytes and a file, writing this list into the file
-writeBytes :: [Byte] !*File -> *File
-writeBytes []     f = f
-writeBytes [b:bs] f 
-  #! f = fwritec b f
-  = writeBytes bs f
-
 //This function is responsible for writing a single int to the file
 //Taking two integers and a file, writing into the file using writeBytes function 
 writeUint :: !Int !Int !*File -> *File

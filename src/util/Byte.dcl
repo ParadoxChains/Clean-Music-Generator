@@ -18,3 +18,7 @@ bytesToUintBE :: ![Byte] -> Int
 
 // Converts a list of bytes to a non-negative integer in little-endian
 bytesToUintLE :: ![Byte] -> Int
+
+readBytes :: !*File -> ([Byte], !*File)
+
+writeBytes :: ![Byte] !*File -> *File

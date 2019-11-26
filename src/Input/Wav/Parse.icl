@@ -13,4 +13,20 @@ wave =
   string "RIFF" >>>
   takeP 4 >>>
   string "WAVE" >>>
-  pure Todo
+  fmt >>>
+  data >>= \bs.
+  pure bs
+
+fmt :: Parser ()
+fmt =
+  string "fmt " >>>
+  uintBE 4 >>= \n.
+  takeP n >>>
+  pure ()
+
+data :: Parser [Byte]
+data =
+  string "data" >>>
+  uintBE 4 >>= \n.
+  takeP n >>= \bs.
+  pure bs

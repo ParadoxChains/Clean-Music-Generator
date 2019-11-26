@@ -1,6 +1,7 @@
 implementation module util.Byte
 
 import StdEnv
+import StdFile
 
 :: Byte :== Char
 
@@ -20,3 +21,16 @@ bytesToUintBE bs = foldl (\n b. toInt b bitor (n << 8)) 0 bs
 
 bytesToUintLE :: ![Byte] -> Int
 bytesToUintLE bs = foldr (\b n. toInt b bitor (n << 8)) 0 bs
+
+readBytes :: !*File -> ([Byte], !*File)
+readBytes f
+  #! (b, c, f) = freadc f
+  | not b = ([], f)
+  #! (cs, f) = readBytes f
+  = ([c:cs], f)
+
+writeBytes :: ![Byte] !*File -> *File
+writeBytes []     f = f
+writeBytes [b:bs] f 
+  #! f = fwritec b f
+  = writeBytes bs f
