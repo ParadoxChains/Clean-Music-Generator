@@ -1,4 +1,4 @@
-definition module Input.readFile
+definition module Input.ReadFile
 import StdMaybe
 
 //store the useful information of header chunk		

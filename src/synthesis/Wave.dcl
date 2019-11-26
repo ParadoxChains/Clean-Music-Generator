@@ -1,4 +1,4 @@
-definition module synthesis.Wave
+definition module Synthesis.Wave
 
 
 :: Wave = Square | Triangle | Noise | Pulse | Sawtooth

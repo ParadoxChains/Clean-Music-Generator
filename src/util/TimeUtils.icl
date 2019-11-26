@@ -1,7 +1,7 @@
-implementation module util.TimeUtils
+implementation module Util.TimeUtils
 import StdEnv
-import util.ListUtils
-import util.Constants
+import Util.ListUtils
+import Util.Constants
 
 timeToSeconds :: Time -> Real
 timeToSeconds t = t.minutes*60.0 + t.seconds

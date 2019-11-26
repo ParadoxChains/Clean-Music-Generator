@@ -1,4 +1,4 @@
-implementation module util.Rand
+implementation module Util.Rand
 
 import StdArray, StdBool, StdEnum, StdInt, StdList, StdMisc, StdReal, StdString
 

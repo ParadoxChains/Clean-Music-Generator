@@ -1,4 +1,4 @@
-definition module util.TimeUtils
+definition module Util.TimeUtils
 
 :: Time = {minutes :: Real
           ,seconds :: Real

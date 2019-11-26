@@ -1,9 +1,9 @@
-implementation module synthesis.Wave
+implementation module Synthesis.Wave
 import StdEnv
-import util.Constants
-import synthesis.Accesstable
-import synthesis.Wavetable
-import util.ListUtils
+import Util.Constants
+import Synthesis.Accesstable
+import Synthesis.Wavetable
+import Util.ListUtils
 
 
 sineTable :== (wavetable 1.0)

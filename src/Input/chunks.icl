@@ -1,7 +1,7 @@
-implementation module Input.chunks
+implementation module Input.Chunks
 
 import StdEnv
-import util.Byte
+import Util.Byte
 
 
 //midi is consists of chunks there are two types of chunks there

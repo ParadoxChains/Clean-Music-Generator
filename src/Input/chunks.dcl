@@ -1,4 +1,4 @@
-definition module Input.chunks
+definition module Input.Chunks
 
 isHeader :: [Char] -> Bool
 

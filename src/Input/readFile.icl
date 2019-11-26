@@ -1,9 +1,9 @@
-implementation module Input.readFile
+implementation module Input.ReadFile
 
 import StdEnv
 import StdFile
 import StdMaybe
-import Input.chunks
+import Input.Chunks
 	
 :: HeaderInfo = 
 	{
