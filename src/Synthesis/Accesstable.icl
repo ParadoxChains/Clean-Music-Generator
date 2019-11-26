@@ -1,7 +1,7 @@
-implementation module synthesis.Accesstable
+implementation module Synthesis.Accesstable
 import StdEnv
-import util.Constants
-import util.ListUtils
+import Util.Constants
+import Util.ListUtils
 
 
 

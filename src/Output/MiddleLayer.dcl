@@ -1,4 +1,4 @@
-definition module Output.middle_layer
+definition module Output.MiddleLayer
 import StdEnv
 
 

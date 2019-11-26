@@ -1,7 +1,7 @@
-implementation module util.TimeUtils
+implementation module Util.TimeUtils
 import StdEnv
-import util.ListUtils
-import util.Constants
+import Util.ListUtils
+import Util.Constants
 
 timeToSeconds :: Time -> Real
 timeToSeconds t = t.minutes*60.0 + t.seconds
@@ -15,7 +15,7 @@ timeToSamples t = secondsToSamples (timeToSeconds t)
 noteToSamples :: (Int, Int) TimeSignature Real -> Int
 noteToSamples (p, q) timeSig tempo = secondsToSamples totalTime
 where
-	beats = ((toReal (p*q)) / (toReal timeSig.noteVal))
+	beats = ((toReal (p*timeSig.noteVal)) / (toReal q))
 	beatLength = 60.0 / tempo
 	totalTime = beats * beatLength
 

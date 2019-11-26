@@ -1,7 +1,7 @@
-implementation module synthesis.Wavetable
+implementation module Synthesis.Wavetable
 import StdEnv
-import util.Constants
-import synthesis.Accesstable
+import Util.Constants
+import Synthesis.Accesstable
 
 
 // Takes amplitude as parameter and generates Sine wave table.

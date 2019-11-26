@@ -1,4 +1,4 @@
-definition module util.ListUtils
+definition module Util.ListUtils
 
 // Rotate a list N places to the left. 
 shiftLeft :: [Real] Int -> [Real]

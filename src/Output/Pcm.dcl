@@ -1,6 +1,6 @@
 definition module Output.Pcm
 
-import util.Byte
+import Util.Byte
 
 :: PcmWavParams =
   { numChannels    :: !Int // Number of channels
