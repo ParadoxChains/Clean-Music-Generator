@@ -9,6 +9,8 @@ import Input.Wav.Parse
 import Output.Pcm
 import Output.MiddleLayer
 import Synthesis.Wavetable
+import Synthesis.Generate
+import Synthesis.Wave
 
 wavTest :: !*World -> *World
 wavTest w
@@ -49,4 +51,4 @@ parseTestWav w
 
 //import synthesis.Wave, synthesis.Generate
 
-//Start = generate Sawtooth
+Start = generate Sawtooth 440 (44100/20)

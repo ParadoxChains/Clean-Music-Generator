@@ -1,4 +1,7 @@
 definition module Util.TimeUtils
+import Input.ReadFile
+
+:: Tempo :== Real
 
 :: Time = {minutes :: Real
           ,seconds :: Real
@@ -7,6 +10,9 @@ definition module Util.TimeUtils
 :: TimeSignature = {barVal :: Int
                    ,noteVal :: Int
                    }
+
+:: Beat = {p :: Int,
+           q :: Int}
 
 // Gets Time and converts to seconds
 timeToSeconds :: Time -> Real
@@ -18,4 +24,10 @@ secondsToSamples :: Real -> Int
 timeToSamples :: Time -> Int
 
 // Gets notelength, time signature and tempo and returns number of samples
-noteToSamples :: (Int, Int) TimeSignature Real -> Int
+noteToSamples :: Beat TimeSignature Tempo -> Int
+
+simplifyBeat :: Beat -> Beat
+
+convertDurToBeats :: Duration TimeSignature -> Beat
+
+convertBeatsToDur :: Beat TimeSignature -> Duration
