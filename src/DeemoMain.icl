@@ -23,12 +23,12 @@ RightHand :: Melody
 RightHand = [
                 On (genNote("E5",1,16)), On (genNote("D#5",1,16)),
                 On (genNote("E5",1,16)), On (genNote("D#5",1,16)), On (genNote("E5",1,16)), On (genNote("B4",1,16)), On (genNote("D5",1,16)), On (genNote("C5",1,16)),
-                On (genNote("A4",1,8)), Off {p=1, q=16}, On (genNote("C5",1,16)), On (genNote("E5",1,16)), On (genNote("A4",1,16)),
+                On (genNote("A4",1,8)), Off {p=1, q=16}, On (genNote("C4",1,16)), On (genNote("E4",1,16)), On (genNote("A4",1,16)),
                 On (genNote("B4",1,8)), Off {p=1, q=16}, On (genNote("E4",1,16)), On (genNote("G#4",1,16)), On (genNote("B4",1,16)),
                 On (genNote("C5",1,8)), Off {p=1, q=16}, On (genNote("E4",1,16)), On (genNote("E5",1,16)), On (genNote("D#5",1,16)),
                 //halfway point
                 On (genNote("E5",1,16)), On (genNote("D#5",1,16)), On (genNote("E5",1,16)), On (genNote("B4",1,16)), On (genNote("D5",1,16)), On (genNote("C5",1,16)),
-                On (genNote("A4",1,8)), Off {p=1, q=16}, On (genNote("C5",1,16)), On (genNote("E5",1,16)), On (genNote("A4",1,16)),
+                On (genNote("A4",1,8)), Off {p=1, q=16}, On (genNote("C4",1,16)), On (genNote("E4",1,16)), On (genNote("A4",1,16)),
                 On (genNote("B4",1,8)), Off {p=1, q=16}, On (genNote("E4",1,16)), On (genNote("C5",1,16)), On (genNote("B4",1,16)),
                 On (genNote("A4",3,8))
             ]
@@ -37,12 +37,12 @@ LeftHand :: Melody
 LeftHand = [
                 Off {p=1,q=8},
                 Off {p=3,q=8},
-                On (genNote("B2",1,16)), On (genNote("E3",1,16)), On (genNote("A3",1,16)), Off {p=1,q=16}, Off {p=1,q=8},
+                On (genNote("A2",1,16)), On (genNote("E3",1,16)), On (genNote("A3",1,16)), Off {p=1,q=16}, Off {p=1,q=8},
                 On (genNote("E2",1,16)), On (genNote("E3",1,16)), On (genNote("G#3",1,16)), Off {p=1,q=16}, Off {p=1,q=8},
                 On (genNote("A2",1,16)), On (genNote("E3",1,16)), On (genNote("A3",1,16)), Off {p=1,q=16}, Off {p=1,q=8},
                 //halfway point
                 Off {p=3,q=8},
-                On (genNote("B2",1,16)), On (genNote("E3",1,16)), On (genNote("A3",1,16)), Off {p=1,q=16}, Off {p=1,q=8},
+                On (genNote("A2",1,16)), On (genNote("E3",1,16)), On (genNote("A3",1,16)), Off {p=1,q=16}, Off {p=1,q=8},
                 On (genNote("E2",1,16)), On (genNote("E3",1,16)), On (genNote("G#3",1,16)), Off {p=1,q=16}, Off {p=1,q=8},
                 On (genNote("A2",1,16)), On (genNote("E3",1,16)), On (genNote("A3",1,16)), Off {p=1,q=16}, Off {p=1,q=8}
            ]
@@ -100,11 +100,11 @@ FurEliseSamples :: Int
 FurEliseSamples = (noteToSamples {p=3,q=8} {barVal = 3,noteVal = 8} 120.00) + (noteToSamples FurEliseLength {barVal = 3,noteVal = 8} 120.00)
 
 newData :: [Char]
-newData = transform newRender 1.0
+newData = transform (extendedRender++extendedRender) 1.0
 
 wavTest :: !*World -> *World
 wavTest w
-  #! (_, f, w) = fopen "test.wav" FWriteData w
+  #! (_, f, w) = fopen "FurElise.wav" FWriteData w
   #! f = writePcmWav newParams newData f
   #! (_, w) = fclose f w
   = w
@@ -113,5 +113,5 @@ wavTest w
 //Start = checkLengths FurElise
 //Start = generateSong FurElise
 //Start = 1
-Start = rawRender
-//Start w = wavTest w
+//Start = rawRender
+Start w = wavTest w
