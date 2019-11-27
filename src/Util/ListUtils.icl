@@ -5,9 +5,11 @@ import StdEnv
 shiftLeft :: [Real] Int -> [Real]
 shiftLeft [] _ = []
 shiftLeft x 0 = x
-shiftLeft x y
-| y > 0 = shiftLeft (tl x ++ [hd x]) (y-1)
-= shiftLeft [last x: init x] (y+1)
+shiftLeft x y = (drop shift x) ++ (take shift x)
+where
+    shift 
+        | y > 0 = (y rem (length x))
+        = ((length x)-((~y) rem (length x)))
 
 // Old floor function
 
