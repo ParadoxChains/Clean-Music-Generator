@@ -9,11 +9,20 @@ shiftLeft x y
 | y > 0 = shiftLeft (tl x ++ [hd x]) (y-1)
 = shiftLeft [last x: init x] (y+1)
 
-// floor function
+// Old floor function
+/*
 floor :: Real -> Int
 floor r
 | toReal (toInt r) > r = (toInt r) - 1
 = toInt r
+*/
+
+//New floor function
+floor::Real->Int
+floor x
+|toReal(toInt x)-x>=0.0=toInt(x)-1
+=toInt(x)
+
 
 // rem for Real numbers
 realRem :: Real Real -> Real
