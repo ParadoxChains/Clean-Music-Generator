@@ -6,7 +6,7 @@ transform8 ::[Real] Real->[Char]
 transform8 list max =map (\x=toChar(toInt(255.0*((x/(1.0*max)+0.5))))) list 
 
 transform8_what_if :: [[Real]] Real -> [[Char]]
-transform8_what_if list max = map (\x = transform x max) list 
+transform8_what_if list max = map (\x = transform8 x max) list 
 
 aux32::Real Real->Int
 aux32 x max

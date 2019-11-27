@@ -100,11 +100,11 @@ FurEliseSamples :: Int
 FurEliseSamples = (noteToSamples {p=3,q=8} {barVal = 3,noteVal = 8} 120.00) + (noteToSamples FurEliseLength {barVal = 3,noteVal = 8} 120.00)
 
 newData :: [Char]
-newData = transform extendedRender 1.0
+newData = transform8 extendedRender 1.0
 
 wavTest :: !*World -> *World
 wavTest w
-  #! (_, f, w) = fopen "FurElise.wav" FWriteData w
+  #! (_, f, w) = fopen "test03.wav" FWriteData w
   #! f = writePcmWav newParams newData f
   #! (_, w) = fclose f w
   = w
