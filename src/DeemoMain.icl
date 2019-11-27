@@ -48,7 +48,7 @@ LeftHand = [
            ]
 
 generateSong :: (Melody,Melody,TimeSignature,Tempo) -> [Real]
-generateSong (rh, lh, ts, tmp) = sumAll[rhGenerated,lhGenerated]
+generateSong (rh, lh, ts, tmp) = map (\x = x* 0.5) (sumAll[rhGenerated,lhGenerated])
 where
     renderNote :: (Next, TimeSignature, Tempo) -> [Real]
     renderNote ((On {note = n, duration = d}),ts, tmp) = generate Square freq dur
