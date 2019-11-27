@@ -15,6 +15,7 @@ import Output.MiddleLayer, Output.Pcm
 SquareProfile :: SynthProfile
 SquareProfile = {type = Square, env = {attack=(1.0/32.0), decay=(1.0/64.0), sustain = 0.2, release = 0.25}}
 */
+
 FurElise :: (Melody,Melody,TimeSignature,Tempo)
 FurElise = (RightHand, LeftHand, {barVal = 3,noteVal = 8}, 120.00)
 
@@ -35,15 +36,35 @@ RightHand = [
 LeftHand :: Melody
 LeftHand = [
                 Off {p=1,q=8},
-                Off {p=1,q=1},
+                Off {p=3,q=8},
                 On (genNote("B2",1,16)), On (genNote("E3",1,16)), On (genNote("A3",1,16)), Off {p=1,q=16}, Off {p=1,q=8},
                 On (genNote("E2",1,16)), On (genNote("E3",1,16)), On (genNote("G#3",1,16)), Off {p=1,q=16}, Off {p=1,q=8},
                 On (genNote("A2",1,16)), On (genNote("E3",1,16)), On (genNote("A3",1,16)), Off {p=1,q=16}, Off {p=1,q=8},
                 //halfway point
-                Off {p=1,q=1},
+                Off {p=3,q=8},
                 On (genNote("B2",1,16)), On (genNote("E3",1,16)), On (genNote("A3",1,16)), Off {p=1,q=16}, Off {p=1,q=8},
                 On (genNote("E2",1,16)), On (genNote("E3",1,16)), On (genNote("G#3",1,16)), Off {p=1,q=16}, Off {p=1,q=8},
                 On (genNote("A2",1,16)), On (genNote("E3",1,16)), On (genNote("A3",1,16)), Off {p=1,q=16}, Off {p=1,q=8}
            ]
 
-Start = FurElise
+generateSong :: (Melody,Melody,TimeSignature,Tempo) -> [Real]
+generateSong (rh, lh, ts, tmp) = sumAll[rhGenerated,lhGenerated]
+where
+    renderNote :: (Next, TimeSignature, Tempo) -> [Real]
+    renderNote ((On {note = n, duration = d}),ts, tmp) = generate Square freq dur
+        where
+        freq = convStrToFreq  n
+        dur = noteToSamples d ts tmp
+    renderNote ((Off d), ts, tmp) = generate Silence 420.420 dur
+        where
+            dur = noteToSamples d ts tmp
+
+    rhGenerated = flatten [renderNote (aNote, ts, tmp)\\aNote<-rh]
+    lhGenerated = flatten [renderNote (aNote, ts, tmp)\\aNote<-lh]
+
+checkLengths :: (Melody,Melody,TimeSignature,Tempo) -> Bool
+checkLengths (a,b,_,_) = getMelodyLength a == getMelodyLength b
+
+//Start = checkLengths FurElise
+Start = generateSong FurElise
+//Start = 1

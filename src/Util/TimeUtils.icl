@@ -4,6 +4,15 @@ import Util.ListUtils
 import Util.Constants
 import Input.ReadFile
 
+instance + Beat where + a b = simplifyBeat{p = (a.p*b.q)+(b.p*a.q), q = (a.q*b.q)}
+instance == Beat
+where
+    == a b = x.p == y.p && x.q == y.q
+    where
+        x = simplifyBeat a
+        y = simplifyBeat b
+instance zero Beat where zero = {p=0,q=1}
+
 timeToSeconds :: Time -> Real
 timeToSeconds t = t.minutes*60.0 + t.seconds
 

@@ -22,8 +22,6 @@ import Util.Byte
 
 :: Channel :== Int
 
-:: Frequency :== Real
-
 :: Velocity :== Int
 
 :: Duration :== Int

@@ -9,3 +9,5 @@ import Input.Chunks, Input.ReadFile
 :: Melody :== [Next]
 
 genNote :: (String,Int,Int) -> ManualNote
+
+getMelodyLength :: Melody -> Beat

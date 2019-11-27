@@ -6,7 +6,7 @@ import Synthesis.Wavetable
 import Util.ListUtils
 import Synthesis.Wave
 import Util.Rand
-
+import Util.TypeDefs
 
 
 
@@ -43,17 +43,17 @@ randoms = map (\x = x rem 40) (take 100 (genRandInt 1))
 
 
 
-generate :: Wave Int Int -> [Real]
+generate :: Wave Frequency Int -> [Real]
 generate Square freq dur = wave hSquare aSquare freq dur
 generate Sawtooth freq dur = wave hSawtooth aSawtooth freq dur
 generate Triangle freq dur = wave hTriangle aTriangle freq dur
 generate Noise freq dur = sumAll l
 where 
     l = [shiftLeft list i \\ list <- (get (wavetable 1.0) hNoise aNoise freq dur) & i <- randoms]
-generate Pulse freq dur = subtractLists (shiftLeft saw (SAMPLING_RATE/(2*freq))) saw
+generate Pulse freq dur = subtractLists (shiftLeft saw (SAMPLING_RATE/(2*(toInt freq)))) saw
 where
     saw = generate Sawtooth freq dur
-generate Silence _ dur = [abs(x*0.0)\\x<-(wave [1.0] [0.0] 440 dur)]
+generate Silence _ dur = [abs(x*0.0)\\x<-(wave [1.0] [0.0] 440.00 dur)]
 
 // Start = generate Square
 

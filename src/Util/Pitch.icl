@@ -3,9 +3,9 @@ import StdEnv
 
 //custom library imports
 import Input.Chunks
-import Util.ListUtils
+import Util.ListUtils, Util.TypeDefs
 
-convStrToFreq :: String -> Real
+convStrToFreq :: String -> Frequency
 convStrToFreq input = getFrequency(toChar(parseString input))
 
 

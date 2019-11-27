@@ -14,6 +14,10 @@ import Input.ReadFile
 :: Beat = {p :: Int,
            q :: Int}
 
+instance + Beat
+instance == Beat
+instance zero Beat
+
 // Gets Time and converts to seconds
 timeToSeconds :: Time -> Real
 
