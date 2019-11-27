@@ -3,12 +3,14 @@ module maintest
 import StdEnv
 import StdFile
 import Util.Byte
+import Util.ListUtils
 import Input.ReadFile
 import Output.Pcm
 import Output.MiddleLayer
 import Synthesis.Wavetable
 import Synthesis.Generate
 import Synthesis.Wave
+import Util.Constants
 
 wavTest :: !*World -> *World
 wavTest w
@@ -36,4 +38,9 @@ read oldW
 
 //import synthesis.Wave, synthesis.Generate
 
-Start = generate Sawtooth 440 (44100/20)
+saw = generate Sawtooth 220 2205
+
+shift = shiftLeft saw (SAMPLING_RATE/(440*2))
+// Start = saw
+
+Start = subtractLists shift saw
