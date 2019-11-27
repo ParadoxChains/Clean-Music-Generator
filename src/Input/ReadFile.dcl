@@ -1,5 +1,6 @@
 definition module Input.ReadFile
 import StdMaybe
+import Util.TypeDefs
 
 //store the useful information of header chunk		
 :: HeaderInfo = 
@@ -23,8 +24,6 @@ import StdMaybe
 	}
 
 :: Channel :== Int
-
-:: Frequency :== Real
 
 :: Velocity :== Int
 
@@ -82,5 +81,3 @@ processEvent :: [Char] -> Maybe Event
 	
 //calculate the length of each event which depends on the event type
 eventLen:: Int [Char]->Int
-
-readBytes :: *File -> ([Char], *File)

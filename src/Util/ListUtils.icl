@@ -33,3 +33,6 @@ sumAll :: [[Real]] -> [Real]
 sumAll [] = []
 sumAll [x] = x
 sumAll [x:xs] = sumLists x (sumAll xs)
+
+strToList :: String -> [Char]
+strToList arr = [x\\x<-:arr]

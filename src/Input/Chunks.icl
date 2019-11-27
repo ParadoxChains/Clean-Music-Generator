@@ -1,7 +1,7 @@
 implementation module Input.Chunks
 
 import StdEnv
-import Util.Byte
+import Util.Byte, Util.TypeDefs
 
 
 //midi is consists of chunks there are two types of chunks there
@@ -80,7 +80,7 @@ getChannel :: Char -> Int
 getChannel c = secondHalfStatus c
 
 //return frequency information which comes from note number
-getFrequency :: Char -> Real
+getFrequency :: Char -> Frequency
 getFrequency c 
 	#! n = toInt c
 	|n >= 0 || n <= 127 = 440.0 * 2.0 ^ (toReal(n-69) / 12.0)
