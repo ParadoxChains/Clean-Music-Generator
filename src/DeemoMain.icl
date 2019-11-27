@@ -100,7 +100,7 @@ FurEliseSamples :: Int
 FurEliseSamples = (noteToSamples {p=3,q=8} {barVal = 3,noteVal = 8} 120.00) + (noteToSamples FurEliseLength {barVal = 3,noteVal = 8} 120.00)
 
 newData :: [Char]
-newData = transform (extendedRender++extendedRender) 1.0
+newData = transform extendedRender 1.0
 
 wavTest :: !*World -> *World
 wavTest w
