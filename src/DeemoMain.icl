@@ -107,7 +107,7 @@ newData32 = transform32 extendedRender 1.0
 
 wavTest :: !*World -> *World
 wavTest w
-  #! (_, f, w) = fopen "test04_transform32.wav" FWriteData w
+  #! (_, f, w) = fopen "FurElise.wav" FWriteData w
   #! f = writePcmWav newParams newData8 f
   #! (_, w) = fclose f w
   = w
@@ -115,6 +115,6 @@ wavTest w
 //Start = FurEliseSamples
 //Start = checkLengths FurElise
 //Start = generateSong FurElise
-Start = 1
+//Start = 1
 //Start = rawRender
-//Start w = wavTest w
+Start w = wavTest w
