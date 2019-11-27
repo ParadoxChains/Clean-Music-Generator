@@ -65,6 +65,53 @@ where
 checkLengths :: (Melody,Melody,TimeSignature,Tempo) -> Bool
 checkLengths (a,b,_,_) = getMelodyLength a == getMelodyLength b
 
+gimmeLength :: (Melody,Melody,TimeSignature,Tempo) -> Beat
+gimmeLength (a,_,_,_) = getMelodyLength a
+
+rawRender ::[Real]
+rawRender = generateSong FurElise
+
+extendedRender :: [Real]
+extendedRender = rawRender ++ listSilence
+where
+    dur = noteToSamples {p=3,q=8} {barVal = 3,noteVal = 8} 120.00
+    listSilence = repeatn dur 0.00
+
+fakeDelay :: [Real]
+fakeDelay = map (\sample = sample * 0.5) (shiftLeft extendedRender (-1 * dur))
+where
+    dur = noteToSamples {p=1,q=128} {barVal = 3,noteVal = 8} 120.00
+
+fakeReverb :: [Real]
+fakeReverb = map (\sample = sample * 0.2) (shiftLeft extendedRender (-1 * dur))
+where
+    dur = noteToSamples {p=1,q=8} {barVal = 3,noteVal = 8} 120.00
+
+newRender :: [Real]
+newRender = sumAll [extendedRender,fakeDelay,fakeReverb]
+
+newParams :: PcmWavParams
+newParams = {numChannels = 1, numBlocks = FurEliseSamples, samplingRate = 44100, bytesPerSample = 1}
+
+FurEliseLength :: Beat
+FurEliseLength = gimmeLength FurElise
+
+FurEliseSamples :: Int
+FurEliseSamples = (noteToSamples {p=3,q=8} {barVal = 3,noteVal = 8} 120.00) + (noteToSamples FurEliseLength {barVal = 3,noteVal = 8} 120.00)
+
+newData :: [Char]
+newData = transform newRender 1.0
+
+wavTest :: !*World -> *World
+wavTest w
+  #! (_, f, w) = fopen "test.wav" FWriteData w
+  #! f = writePcmWav newParams newData f
+  #! (_, w) = fclose f w
+  = w
+//Start = FurEliseLength
+//Start = FurEliseSamples
 //Start = checkLengths FurElise
-Start = generateSong FurElise
+//Start = generateSong FurElise
 //Start = 1
+Start = rawRender
+//Start w = wavTest w
