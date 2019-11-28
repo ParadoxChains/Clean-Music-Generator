@@ -29,5 +29,7 @@ reverseArrAux a i n
 
 /*Function to circle rotate an array.
 Arguments: Array nRotations sizeOfArray*/
-shiftArr :: *(a e) Int Int-> *(a e) | Array a e
-shiftArr a i n = reverseArrAux (reverseArrAux (reverseArrAux a 0 (i-1)) i (n-1)) 0 (n-1)
+shiftArr :: *(a e) Int -> *(a e) | Array a e
+shiftArr a i
+    #!(l,a) = usize a
+    = reverseArrAux (reverseArrAux (reverseArrAux a 0 (i-1)) i (l-1)) 0 (l-1)
