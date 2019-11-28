@@ -5,15 +5,25 @@ import StdEnv
 shiftLeft :: [Real] Int -> [Real]
 shiftLeft [] _ = []
 shiftLeft x 0 = x
-shiftLeft x y
-| y > 0 = shiftLeft (tl x ++ [hd x]) (y-1)
-= shiftLeft [last x: init x] (y+1)
+shiftLeft x y = (drop shift x) ++ (take shift x)
+where
+    shift 
+        | y > 0 = (y rem (length x))
+        = ((length x)-((~y) rem (length x)))
 
-// floor function
+// Old floor function
+
 floor :: Real -> Int
 floor r
 | toReal (toInt r) > r = (toInt r) - 1
 = toInt r
+
+/*
+floor::Real->Int
+floor x
+|toReal(toInt x)-x>=0.0=toInt(x)-1
+=toInt(x)
+*/
 
 // rem for Real numbers
 realRem :: Real Real -> Real
