@@ -5,6 +5,9 @@ import StdFile
 
 :: Byte :== Char
 
+complement :: !Byte -> Byte
+complement b = toChar 255 - b
+
 uintToBytesBE :: !Int !Int -> [Byte]
 uintToBytesBE i n = go i n [] where
   go i n bs
@@ -21,6 +24,30 @@ bytesToUintBE bs = foldl (\n b. toInt b bitor (n << 8)) 0 bs
 
 bytesToUintLE :: ![Byte] -> Int
 bytesToUintLE bs = foldr (\b n. toInt b bitor (n << 8)) 0 bs
+
+intToBytesBE :: !Int !Int -> [Byte]
+intToBytesBE i n
+  | n >= 0 = uintToBytesBE i n
+           = map complement (uintToBytesBE i (~(n + 1)))
+
+intToBytesLE :: !Int !Int -> [Byte]
+intToBytesLE i n
+  | n >= 0 = uintToBytesLE i n
+           = map complement (uintToBytesLE i (~(n + 1)))
+
+bytesToIntBE :: ![Byte] -> Int
+bytesToIntBE bs
+  #! n = bytesToUintBE bs
+  #! p = 1 << ((length bs << 3) - 1)
+  | n bitor p == 0 = n
+                   = ~(bitnot n bitand (p - 1)) - 1
+
+bytesToIntLE :: ![Byte] -> Int
+bytesToIntLE bs
+  #! n = bytesToUintLE bs
+  #! p = 1 << ((length bs << 3) - 1)
+  | n bitor p == 0 = n
+                   = ~(bitnot n bitand (p - 1)) - 1
 
 readBytes :: !*File -> ([Byte], !*File)
 readBytes f
