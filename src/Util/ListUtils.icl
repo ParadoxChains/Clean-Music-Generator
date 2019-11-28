@@ -5,9 +5,11 @@ import StdEnv
 shiftLeft :: [Real] Int -> [Real]
 shiftLeft [] _ = []
 shiftLeft x 0 = x
-shiftLeft x y
-| y > 0 = shiftLeft (tl x ++ [hd x]) (y-1)
-= shiftLeft [last x: init x] (y+1)
+shiftLeft x n = shiftAux x (n rem (length x))
+shiftAux :: [Real] Int -> [Real]
+shiftAux xs n = bs ++ as
+where 
+    (as,bs) = splitAt n xs
 
 // floor function
 floor :: Real -> Int
