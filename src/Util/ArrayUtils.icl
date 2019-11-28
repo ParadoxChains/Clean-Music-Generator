@@ -24,6 +24,9 @@ reverseArr :: *(a e) -> *(a e) | Array a e
 //reverseArr :: *{a} -> *{a}
 reverseArr a = reverseArrAux a 0 ((lengthArr a)-1)
 */
+
+/*Function to reverse a portion of an array.
+Arguments: Array StartIndex EndIndex*/
 reverseArrAux :: *(a e) Int Int -> *(a e) | Array a e
 reverseArrAux a i n
     #! st = a.[i]
@@ -35,6 +38,8 @@ Start :: {Int}
 Start = reverseArrAux arr100000000 0 ((lengthArr arr100000000)-1)
 */
 
+/*Function to circle rotate an array.
+Arguments: Array nRotations sizeOfArray*/
 shiftArr :: *(a e) Int Int-> *(a e) | Array a e
 shiftArr a i n = reverseArrAux (reverseArrAux (reverseArrAux a 0 (i-1)) i (n-1)) 0 (n-1)
 /*
