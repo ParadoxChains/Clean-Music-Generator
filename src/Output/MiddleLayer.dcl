@@ -10,9 +10,18 @@ transform8 ::[Real] Real->[Char]
 transform8_what_if ::[[Real]] Real->[[Char]]
 
 //Takes a wavetable and the upper bound of the interval and converts
-//the signals to integers(32 bit version)
-transform32::[Real] Real->[Int]
+//the signals to Bytes(32 bit version)
+transform16 :: [Real] Real -> [Char]
 
 //Takes a list of wavetables and the upper bound of the interval and converts
-//lists of wavetables to lists of integers(32 bit version)
-transform32_what_if::[[Real]] Real->[[Int]]
+//lists of wavetables to lists of Bytes(16 bit version)
+transform16_what_if::[[Real]] Real->[[Char]]
+
+
+//Takes a wavetable and the upper bound of the interval and converts
+//the signals to Bytes(32 bit version)
+transform32::[Real] Real->[Char]
+
+//Takes a list of wavetables and the upper bound of the interval and converts
+//lists of wavetables to lists of Bytes(32 bit version)
+transform32_what_if::[[Real]] Real->[[Char]]
