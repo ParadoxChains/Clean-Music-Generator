@@ -10,12 +10,9 @@ arr10000 = {1\\x<-:arr100,y<-:arr100}
 arr100000000 :: *{Int}
 arr100000000 = {1\\x<-:arr10000,y<-:arr10000}
 
-lengthArr :: (a e) -> Int | Array a e
-lengthArr arr = sum[1\\x<-:arr]
-
-
+/*Function to reverse an entire array.
+Arguments: Array*/
 reverseArr :: *(a e) -> *(a e) | Array a e
-//reverseArr :: *{a} -> *{a}
 reverseArr a
     # (l, a) = usize a
     = reverseArrAux a 0 (l - 1)
@@ -25,8 +22,9 @@ Arguments: Array StartIndex EndIndex*/
 reverseArrAux :: *(a e) Int Int -> *(a e) | Array a e
 reverseArrAux a i n
     #! st = a.[i]
-    #! en = a.[n]
-    | i < n = reverseArrAux {a & [i] = en, [n] = st} (i+1) (n-1)
+    #!(en,a) = replace a n st
+    #!(x,a) = replace a i en
+    | i < n = reverseArrAux a (i + 1) (n - 1)
     = a
 
 /*Function to circle rotate an array.

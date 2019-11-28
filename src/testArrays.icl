@@ -10,4 +10,7 @@ arr10000 = {1\\x<-:arr100,y<-:arr100}
 arr100000000 :: *{Int}
 arr100000000 = {1\\x<-:arr10000,y<-:arr10000}
 
-Start = 1
+Start :: {Int}
+//Start = reverseArr {1,2,3,4,5}
+Start = reverseArr arr100000000
+//Start = 1
