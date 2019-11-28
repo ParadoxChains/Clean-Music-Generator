@@ -14,20 +14,6 @@ import Synthesis.Generate
 import Synthesis.Wave
 import Util.Constants
 
-<<<<<<< HEAD
-wavTest :: !*World -> *World
-wavTest w
-  #! (_, f, w) = fopen "test.wav" FWriteData w
-  #! data = transform8 (wavetable 0.5) 0.5
-  #! f = writePcmWav
-      { numChannels    = 1
-      , numBlocks      = length data
-      , samplingRate   = 44100
-      , bytesPerSample = 1
-      } data f
-  #! (_, w) = fclose f w
-  = w
-=======
 // wavTest :: !*World -> *World
 // wavTest w
 //   #! (_, f, w) = fopen "test.wav" FWriteData w
@@ -40,7 +26,6 @@ wavTest w
 //       } data f
 //   #! (_, w) = fclose f w
 //   = w
->>>>>>> array
 
 //Start w = wavTest w
 
