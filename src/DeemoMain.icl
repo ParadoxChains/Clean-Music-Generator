@@ -91,7 +91,7 @@ newRender :: [Real]
 newRender = sumAll [extendedRender,fakeDelay,fakeReverb]
 
 newParams :: PcmWavParams
-newParams = {numChannels = 1, numBlocks = FurEliseSamples, samplingRate = 44100, bytesPerSample = 8}
+newParams = {numChannels = 1, numBlocks = FurEliseSamples, samplingRate = 44100, bytesPerSample = 1}
 
 FurEliseLength :: Beat
 FurEliseLength = gimmeLength FurElise
@@ -114,7 +114,7 @@ wavTest w
 //Start = FurEliseLength
 //Start = FurEliseSamples
 //Start = checkLengths FurElise
-//Start = generateSong FurElise
+// Start = generateSong FurElise
 //Start = 1
 //Start = rawRender
 Start w = wavTest w
