@@ -39,7 +39,16 @@ import Util.Constants
 		
 //Start w = read w
 
-//Start = parseSoundFont (fromString "RIFF\0\2\0\0sfbk")
+// parseSF :: !*World -> (!Result SoundFont, !*World)
+// parseSF w
+//   #! (b, f, w) =
+//       fopen "../test_files/input/soundfont/cathedral.sf2" FReadData w
+//   | not b = abort "File not found"
+//   #! (bs, f) = readBytes f
+//   #! (_, w) = fclose f w
+//   = (parseSoundFont bs, w) 
+
+// Start = parseSoundFont (fromString "RIFF")
 
 // parseTestWav :: !*World -> (!Result Wav, !*World)
 // parseTestWav w

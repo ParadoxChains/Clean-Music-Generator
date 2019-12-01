@@ -1,5 +1,6 @@
 definition module Util.Monad.Parser
 
+import StdMaybe
 import Util.Monad
 import Util.Monad.Result
 
@@ -13,6 +14,8 @@ fail :: !String -> Parser a
 (<|>) infixl 3 :: !(Parser a) (Parser a) -> Parser a
 (<?>) infix  0 :: !(Parser a) String     -> Parser a
 
+optional :: !(Parser a) -> Parser (Maybe a)
+
 eof     :: Parser ()
 anyChar :: Parser Char
 char    :: !Char   -> Parser Char
@@ -22,3 +25,5 @@ takeP :: !Int -> Parser [Char]
 
 uintBE :: !Int -> Parser Int
 uintLE :: !Int -> Parser Int
+intBE  :: !Int -> Parser Int
+intLE  :: !Int -> Parser Int

@@ -39,6 +39,9 @@ fail e = Parser \s. Err (toString s.pos +++ ": " +++ e)
   Err _ -> Err (toString s.pos +++ ": " +++ e)
   r     -> r
 
+optional :: !(Parser a) -> Parser (Maybe a)
+optional p = Just <$> p <|> pure Nothing
+
 err :: !String !String -> Parser a
 err u e = fail ("unexpected " +++ u +++ ", expecting " +++ e)
 
@@ -75,3 +78,9 @@ uintBE n = bytesToUintBE <$> takeP n
 
 uintLE :: !Int -> Parser Int
 uintLE n = bytesToUintLE <$> takeP n
+
+intBE :: !Int -> Parser Int
+intBE n = bytesToIntBE <$> takeP n
+
+intLE :: !Int -> Parser Int
+intLE n = bytesToIntLE <$> takeP n
