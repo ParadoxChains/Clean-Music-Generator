@@ -1,5 +1,6 @@
 implementation module Input.SoundFont.Parse
 
+import StdEnv
 import Util.Monad.Parser
 import Util.Monad.Result
 import Util.Byte
@@ -41,7 +42,7 @@ parseSmpl :: Parser [Int]
 parseSmpl =
   string "smpl" >>>
   uintLE 4 >>= \l.
-  replicateM l (intLE 2) >>= \ns.
+  replicateM (l / 2) (intLE 2) >>= \ns.
   pure ns
 
 parseSm24 :: Parser [Int]
