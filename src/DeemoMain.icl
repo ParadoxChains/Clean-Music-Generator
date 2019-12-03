@@ -9,9 +9,7 @@ import Output.MiddleLayer, Output.Pcm
 
 /*
 :: Envelope = { attack :: Beat, decay :: Beat, sustain :: Real, release :: Real}
-
 :: SynthProfile = { type :: Wave, env :: Envelope}
-
 SquareProfile :: SynthProfile
 SquareProfile = {type = Square, env = {attack=(1.0/32.0), decay=(1.0/64.0), sustain = 0.2, release = 0.25}}
 */
@@ -91,7 +89,7 @@ newRender :: [Real]
 newRender = sumAll [extendedRender,fakeDelay,fakeReverb]
 
 newParams :: PcmWavParams
-newParams = {numChannels = 1, numBlocks = FurEliseSamples, samplingRate = 44100, bytesPerSample = 8}
+newParams = {numChannels = 1, numBlocks = FurEliseSamples, samplingRate = 44100, bytesPerSample = 1}
 
 FurEliseLength :: Beat
 FurEliseLength = gimmeLength FurElise
@@ -99,22 +97,19 @@ FurEliseLength = gimmeLength FurElise
 FurEliseSamples :: Int
 FurEliseSamples = (noteToSamples {p=3,q=8} {barVal = 3,noteVal = 8} 120.00) + (noteToSamples FurEliseLength {barVal = 3,noteVal = 8} 120.00)
 
-newData8 :: [Char]
-newData8 = transform8 extendedRender 1.0
-
-newData32 :: [Int]
-newData32 = transform32 extendedRender 1.0
+newData :: [Char]
+newData = transform8 (extendedRender++extendedRender) 1.0
 
 wavTest :: !*World -> *World
 wavTest w
   #! (_, f, w) = fopen "FurElise.wav" FWriteData w
-  #! f = writePcmWav newParams newData8 f
+  #! f = writePcmWav newParams newData f
   #! (_, w) = fclose f w
   = w
 //Start = FurEliseLength
 //Start = FurEliseSamples
 //Start = checkLengths FurElise
-// Start = generateSong FurElise
+//Start = generateSong FurElise
 //Start = 1
 //Start = rawRender
 Start w = wavTest w

@@ -7,7 +7,7 @@ shiftLeft [] _ = []
 shiftLeft x 0 = x
 shiftLeft x y = (drop shift x) ++ (take shift x)
 where
-    shift 
+    shift    
         | y > 0 = (y rem (length x))
         = ((length x)-((~y) rem (length x)))
 

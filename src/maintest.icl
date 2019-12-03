@@ -53,7 +53,7 @@ import Util.Constants
 
 //import synthesis.Wave, synthesis.Generate
 
-saw = generate Pulse 440.440 2205
+saw = generate Sawtooth 440.440 2205
 
 // shift = shiftLeft saw (SAMPLING_RATE/(440*2))
 Start = saw
