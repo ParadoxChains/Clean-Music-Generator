@@ -29,7 +29,7 @@ arrSeqAux :: (Int,Int,Int) Int Int *(a Int) -> *(a Int) | Array a Int
 //arrSeqAux (start,end,inc) len index arr = {arr & [i]=elem \\ elem <- [start,(start+inc)..end] & i <- [0..(len-1)]}
 
 arrSeqAux (start,end,inc) len index arr
-    | index > len = arr
+    | index >= len = arr
     = arrSeqAux (start,end,inc) len (index+1) (update arr index (start + (inc*index)))
 
 /*Function to reverse an entire array.
@@ -72,3 +72,25 @@ stackArr arr1 arr2 index
     # newArr = {update newArr z arr1.[z]\\z<-[0..(index-1)]}
     = newArr
 = stackArr arr2 arr1 (-1 * index)*/
+
+//Temporary array utilities
+//TODO:: make faster
+addArrAux :: Int {Real} {Real} -> Real
+addArrAux x a b 
+	| (x >= (size a)) = b.[x-(size a)]
+	= a.[x]
+
+// ++
+addArr :: {Real} {Real} -> {Real}
+addArr a b = { addArrAux x a b \\ x <- [0,1..((size a) + (size b) - 1)]}
+
+// last
+lastArr :: {Real} -> Real
+lastArr a = a.[(size a) - 1]
+
+// tale
+takeArr :: Int {Real} -> {Real} 
+takeArr x a
+	| x >= (size a) = a
+	= {a.[ind] \\ ind <- [0,1..((size a) - 1)]}
+
