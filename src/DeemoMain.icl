@@ -48,17 +48,17 @@ LeftHand = [
 generateSong :: (Melody,Melody,TimeSignature,Tempo) -> [Real]
 generateSong (rh, lh, ts, tmp) = map (\x = x* 0.5) (sumAll[rhGenerated,lhGenerated])
 where
-    renderNote :: (Next, TimeSignature, Tempo) -> [Real]
-    renderNote ((On {note = n, duration = d}),ts, tmp) = generate Square freq dur
+    renderNote :: Wave (Next, TimeSignature, Tempo) -> [Real]
+    renderNote wavetype ((On {note = n, duration = d}),ts, tmp) = generate wavetype freq dur
         where
         freq = convStrToFreq  n
         dur = noteToSamples d ts tmp
-    renderNote ((Off d), ts, tmp) = generate Silence 420.420 dur
+    renderNote _ ((Off d), ts, tmp) = generate Silence 420.420 dur
         where
             dur = noteToSamples d ts tmp
 
-    rhGenerated = flatten [renderNote (aNote, ts, tmp)\\aNote<-rh]
-    lhGenerated = flatten [renderNote (aNote, ts, tmp)\\aNote<-lh]
+    rhGenerated = flatten [renderNote Square (aNote, ts, tmp)\\aNote<-rh]
+    lhGenerated = flatten [renderNote Sine (aNote, ts, tmp)\\aNote<-lh]
 
 checkLengths :: (Melody,Melody,TimeSignature,Tempo) -> Bool
 checkLengths (a,b,_,_) = getMelodyLength a == getMelodyLength b
@@ -88,8 +88,15 @@ where
 newRender :: [Real]
 newRender = sumAll [extendedRender,fakeDelay,fakeReverb]
 
-newParams :: PcmWavParams
-newParams = {numChannels = 1, numBlocks = FurEliseSamples, samplingRate = 44100, bytesPerSample = 1}
+newParams8 :: PcmWavParams
+newParams8 = {numChannels = 1, numBlocks = FurEliseSamples, samplingRate = 44100, bytesPerSample = 1}
+
+newParams16 :: PcmWavParams
+newParams16 = {numChannels = 1, numBlocks = FurEliseSamples, samplingRate = 44100, bytesPerSample = 2}
+
+newParams32 :: PcmWavParams
+newParams32 = {numChannels = 1, numBlocks = FurEliseSamples, samplingRate = 44100, bytesPerSample = 4}
+
 
 FurEliseLength :: Beat
 FurEliseLength = gimmeLength FurElise
@@ -97,13 +104,19 @@ FurEliseLength = gimmeLength FurElise
 FurEliseSamples :: Int
 FurEliseSamples = (noteToSamples {p=3,q=8} {barVal = 3,noteVal = 8} 120.00) + (noteToSamples FurEliseLength {barVal = 3,noteVal = 8} 120.00)
 
-newData :: [Char]
-newData = transform8 (extendedRender++extendedRender) 1.0
+newData8 :: [Char]
+newData8 = transform8 extendedRender 1.0
+
+newData16 :: [Char]
+newData16 = transform16 extendedRender 1.0
+
+newData32 :: [Char]
+newData32 = transform32 extendedRender 1.0
 
 wavTest :: !*World -> *World
 wavTest w
-  #! (_, f, w) = fopen "FurElise.wav" FWriteData w
-  #! f = writePcmWav newParams newData f
+  #! (_, f, w) = fopen "test08.wav" FWriteData w
+  #! f = writePcmWav newParams32 newData32 f
   #! (_, w) = fclose f w
   = w
 //Start = FurEliseLength

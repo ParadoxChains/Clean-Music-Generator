@@ -1,6 +1,6 @@
 ### Clean ###
 # Binaries
-*.exe
+#*.exe ##Test binaries should be kept as .out. 
 *.out
 
 # Project files
@@ -11,4 +11,6 @@
 Clean System Files/
 
 # Test files
-test.wav
+#test.wav
+*.wav
+#We can eliminate all .wav renders for space saving.
