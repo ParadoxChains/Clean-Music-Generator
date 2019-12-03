@@ -9,9 +9,7 @@ import Output.MiddleLayer, Output.Pcm
 
 /*
 :: Envelope = { attack :: Beat, decay :: Beat, sustain :: Real, release :: Real}
-
 :: SynthProfile = { type :: Wave, env :: Envelope}
-
 SquareProfile :: SynthProfile
 SquareProfile = {type = Square, env = {attack=(1.0/32.0), decay=(1.0/64.0), sustain = 0.2, release = 0.25}}
 */
@@ -124,7 +122,7 @@ wavTest w
 //Start = FurEliseLength
 //Start = FurEliseSamples
 //Start = checkLengths FurElise
-// Start = generateSong FurElise
+//Start = generateSong FurElise
 //Start = 1
 //Start = rawRender
 Start w = wavTest w

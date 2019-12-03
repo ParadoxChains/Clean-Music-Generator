@@ -7,6 +7,7 @@ import Util.ListUtils
 import Synthesis.Wave
 import Util.Rand
 import Util.TypeDefs
+import Util.ArrayUtils
 
 //Sine wave
 hSine = [1.0]
@@ -46,7 +47,7 @@ randoms = map (\x = x rem 40) (take 100 (genRandInt 1))
 
 
 
-generate :: Wave Frequency Int -> [Real]
+generate :: Wave Frequency Samples -> [Real]
 generate Sine freq dur = wave hSine aSine freq dur
 generate Square freq dur = wave hSquare aSquare freq dur
 generate Sawtooth freq dur = wave hSawtooth aSawtooth freq dur

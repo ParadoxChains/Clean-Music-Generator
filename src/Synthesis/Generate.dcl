@@ -3,7 +3,7 @@ import Synthesis.Wave
 import Util.TypeDefs
 
 
-// Takes wave frequency and duration as parameters and generates 
-generate :: Wave Frequency Int -> [Real]
+// Takes wave frequency and number of samples as parameters and generates 
+generate :: Wave Frequency Samples -> [Real]
 
 
