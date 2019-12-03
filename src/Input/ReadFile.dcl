@@ -27,7 +27,7 @@ import Util.TypeDefs
 
 :: Velocity :== Int
 
-:: Duration :== Int
+// :: Duration :== Int
 
 //note on,note off events and relative useful information
 ::Event = NoteOn Channel Frequency Velocity| NoteOff Channel Frequency Velocity

@@ -6,14 +6,14 @@ import Util.TypeDefs
 
 
 
-// Takes wavetable, frequency and harmonic and gets us desired values from wavetable. 
-getValues :: {Real} Frequency Int Int -> [Real]
+// Takes wavetable, frequency, harmonic and duration and gets us desired values from wavetable. 
+getValues :: {Real} Frequency Int Duration -> [Real]
 getValues waveTable frequency harmonic dur = [(getValue i waveTable) \\ i <- indexes]
 where
     indexes = getIndexes frequency harmonic dur
 
 // Takes frequency harmonic and duration as parameters and generates list of points 
-getIndexes :: Frequency Int Int -> [Real]
+getIndexes :: Frequency Int Duration -> [Real]
 getIndexes frequency harmonic dur = map (\x = realRem x (toReal tableSize)) (take dur [0.0, rate..])
 where
     newRate = toReal(SAMPLING_RATE)/((toReal harmonic)*frequency)
@@ -33,7 +33,7 @@ interpolate r x0 x1 waveTable = (waveTable.[x0]) + (r-toReal(x0)) * (waveTable.[
 
 
 // Takes wavetable, list of harmonics, list of amplitudes, frequency and duration
-get :: {Real} [Real] [Real] Frequency Int -> [[Real]]
+get :: {Real} [Real] [Real] Frequency Duration -> [[Real]]
 get waveTable harmonics amplitudes freq dur = [map (\x = x * ampl) l \\ l <- values & ampl <- amplitudes]
 where
     values = [getValues waveTable freq (toInt(har)) dur \\ har <- harmonics]
