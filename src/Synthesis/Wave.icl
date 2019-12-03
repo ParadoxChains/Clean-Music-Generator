@@ -9,8 +9,8 @@ import Util.TypeDefs
 sineTable :== (wavetable 1.0)
 
 
-// takes harmonics and amplitudes as parameter and generates wave
-wave :: [Real] [Real] Frequency Duration -> [Real] 
+// takes harmonics, amplitudes, frequency and number of samples as parameter and generates wave
+wave :: [Real] [Real] Frequency Samples -> [Real] 
 wave h a freq dur = sumAll l
 where 
     l = (get sineTable h a freq dur)

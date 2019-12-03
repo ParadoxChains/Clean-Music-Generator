@@ -24,7 +24,7 @@ import Util.Byte
 
 :: Velocity :== Int
 
-// :: Duration :== Int
+:: Duration :== Int
 
 ::Event = NoteOn Channel Frequency Velocity| NoteOff Channel Frequency Velocity
 
