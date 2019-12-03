@@ -6,9 +6,6 @@ definition module Synthesis.Envelope
           ,rel :: Real
           }
 
-// Takes note duration and ADSR to generate envelope
-getADSR :: Real ADSR -> [Real]
-
 :: DAHDSR = {delay :: Real
             ,attack :: Real
             ,hold :: Real
@@ -17,8 +14,15 @@ getADSR :: Real ADSR -> [Real]
             ,release :: Real
             }
 
+// Conversion functions
+ADSRtoDAHDSR::ADSR ->DAHDSR
+DAHDSRtoADSR::DAHDSR->ADSR
+
+// Takes note duration and ADSR to generate envelope
+getADSR :: Real ADSR -> [Real]
+
 // Takes note duration and DAHDSR to generate envelope
 getDAHDSR :: Real DAHDSR -> [Real]
 
 // Get's wave and envelope and applies envelope to wave
-applyEnvelope :: [Real] [Real] -> [Real]
+applyEnvelope :: [Real] [Real] -> [Real] 
