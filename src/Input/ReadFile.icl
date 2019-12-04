@@ -20,12 +20,6 @@ import Util.Byte
 		event :: Event
 	}
 
-:: Channel :== Int
-
-:: Velocity :== Int
-
-:: Duration :== Int
-
 ::Event = NoteOn Channel Frequency Velocity| NoteOff Channel Frequency Velocity
 
 
