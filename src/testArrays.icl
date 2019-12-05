@@ -21,4 +21,5 @@ Start :: *{#Int}
 //Start = shiftArr arr100000000 10000
 //Start = stackArr testArr1 testArr2 4
 Start = shiftArr (arrSeq (1,100000000,1)) 5000000
+//Start = shiftArr {x\\x<-[1..100000000]} 5000000
 //Start = 1
