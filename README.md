@@ -21,6 +21,9 @@ Reading resources have been added, please check [this markdown document](https:/
 6. Super/Hypersaw
    1. Easy Difficulty
    2. Easy Math
-7. Live MIDI Input
+7. MP3 Encoding
+   1. Hard Difficulty
+   2. Hard Math
+8. Live MIDI Input
    1. Not gonna this is the hardest one.
    2. Math is trivial. That's not the hard part lol.
