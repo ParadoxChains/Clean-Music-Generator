@@ -73,8 +73,7 @@ stackArr arr1 arr2 index
     = newArr
 = stackArr arr2 arr1 (-1 * index)*/
 
-//Temporary array utilities
-//TODO:: make faster
+//Array utilities
 addArrAux :: Int {Real} {Real} -> Real
 addArrAux x a b 
 	| (x >= (size a)) = b.[x-(size a)]
@@ -92,5 +91,8 @@ lastArr a = a.[(size a) - 1]
 takeArr :: Int {Real} -> {Real} 
 takeArr x a
 	| x >= (size a) = a
-	= {a.[ind] \\ ind <- [0,1..((size a) - 1)]}
+	= {a.[ind] \\ ind <- (arrSeq 0 1 ((size a) - 1))}
 
+//list to array
+listToArr :: [a] -> {a}
+listToArr l = {x \\ x<-l}
