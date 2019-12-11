@@ -2,7 +2,7 @@ implementation module Util.ListUtils
 import StdEnv
 
 // Rotate a list N places to the left. 
-shiftLeft :: [Real] Int -> [Real]
+shiftLeft :: [a] Int -> [a]
 shiftLeft [] _ = []
 shiftLeft x 0 = x
 shiftLeft x y = (drop shift x) ++ (take shift x)
