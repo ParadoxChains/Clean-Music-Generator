@@ -4,50 +4,54 @@ import Util.TimeUtils
 import Util.Constants
 
 getCasioCZ :: Real CasioCZ -> [Real]
-getCasioCZ noteDur casio = shortenedEnv ++ releaseEnv // Release
+getCasioCZ noteDur casio = shortenedEnv ++ releaseEnv
 where
-    delaySamples = secondsToSamples casio.delayCZ
-	attack1Samples = (secondsToSamples (casio.attack1CZ+casio.delayCZ))
-	                  - delaySamples
-	holdSamples = (secondsToSamples (casio.attack1CZ+casio.delayCZ+casio.holdCZ))
-	               - delaySamples - attack1Samples
-	decay1Samples = (secondsToSamples (casio.attack1CZ+casio.delayCZ+casio.holdCZ+casio.decay1CZ))
-	                 - attack1Samples - delaySamples - holdSamples
-	decay2Samples = (secondsToSamples (casio.attack1CZ+casio.delayCZ+casio.holdCZ+casio.decay1CZ+casio.decay2CZ))
-	                 - attack1Samples - delaySamples - holdSamples - decay1Samples
-	decay3Samples = (secondsToSamples (casio.attack1CZ+casio.delayCZ+casio.holdCZ+casio.decay1CZ+casio.decay2CZ+casio.decay3CZ))
-	                 - attack1Samples - delaySamples - holdSamples - decay1Samples - decay2Samples
-	attack2Samples = (secondsToSamples (casio.attack1CZ+casio.delayCZ+casio.holdCZ+casio.decay1CZ+casio.decay2CZ+casio.decay3CZ+casio.attack2CZ))
-	                  - attack1Samples - delaySamples - holdSamples - decay1Samples - decay2Samples - decay3Samples
-	sustainSamples = (secondsToSamples noteDur)
-	                  - attack1Samples - delaySamples - holdSamples - decay1Samples - decay2Samples - decay3Samples - attack2Samples
-	wholeEnv = [0.0 \\ x <- [1,2..delaySamples]] // Delay
-	           ++ [1.0*((toReal x)/(casio.attack1CZ * (toReal SAMPLING_RATE))) \\ x <- [1,2..attack1Samples]] // 1st Attack
-	           ++ [1.0 \\ x <- [1,2..holdSamples]] // Hold
-	           ++ [1.0-((1.0-casio.breakpoint1CZ)*((toReal x)/(casio.decay1CZ * (toReal SAMPLING_RATE)))) \\ x <- [1,2..decay1Samples]] // 1st Decay
-	           ++ [casio.breakpoint1CZ-((casio.breakpoint1CZ-casio.breakpoint2CZ)*((toReal x)/(casio.decay2CZ * (toReal SAMPLING_RATE)))) \\ x <- [1,2..decay2Samples]] // 2nd Decay
-	           ++ [casio.breakpoint2CZ-((casio.breakpoint2CZ-casio.breakpoint3CZ)*((toReal x)/(casio.decay3CZ * (toReal SAMPLING_RATE)))) \\ x <- [1,2..decay3Samples]] // 3rd Decay
-	           ++ [casio.breakpoint3CZ + (casio.sustainCZ-casio.breakpoint3CZ)*((toReal x)/(casio.attack2CZ * (toReal SAMPLING_RATE))) \\ x <- [1,2..attack2Samples]] // 2nd Attack
-	           ++ [casio.sustainCZ \\ x <- [1,2..sustainSamples]] // Sustain
-	shortLength = (secondsToSamples noteDur)
-    shortenedEnv = take shortLength wholeEnv     
-    endValue | shortLength <= delaySamples = 0.0
-             | shortLength <= delaySamples + attack1Samples 
-               = 1.0*((toReal (shortLength-delaySamples))/(casio.attack1CZ * (toReal SAMPLING_RATE)))
-             | shortLength <= delaySamples + attack1Samples + holdSamples = 1.0
-             | shortLength <= delaySamples + attack1Samples + holdSamples + decay1Samples 
-               = 1.0-((1.0-casio.breakpoint1CZ)*((toReal (shortLength-delaySamples-attack1Samples-holdSamples))/(casio.decay1CZ * (toReal SAMPLING_RATE))))              
-	         | shortLength <= delaySamples + attack1Samples + holdSamples + decay1Samples + decay2Samples 
-	           = casio.breakpoint1CZ-((casio.breakpoint1CZ-casio.breakpoint2CZ)*((toReal (shortLength-delaySamples-attack1Samples-holdSamples-decay1Samples))/(casio.decay2CZ * (toReal SAMPLING_RATE))))
-	         | shortLength <= delaySamples + attack1Samples + holdSamples + decay1Samples + decay2Samples + decay3Samples 
-	           = casio.breakpoint2CZ-((casio.breakpoint2CZ-casio.breakpoint3CZ)*((toReal (shortLength-delaySamples-attack1Samples-holdSamples-decay1Samples-decay2Samples))/(casio.decay3CZ * (toReal SAMPLING_RATE)))) 
-	         | shortLength <= delaySamples + attack1Samples + holdSamples + decay1Samples + decay2Samples + decay3Samples + attack2Samples 
-	           = casio.breakpoint3CZ + (casio.sustainCZ-casio.breakpoint3CZ)*((toReal (shortLength-delaySamples-attack1Samples-holdSamples-decay1Samples-decay2Samples-decay3Samples))/(casio.attack2CZ * (toReal SAMPLING_RATE)))
-	         = casio.sustainCZ           
-	releaseDecaySamples = secondsToSamples casio.releaseDecayCZ
-	releaseAttackSamples = secondsToSamples casio.releaseAttackCZ
-	releaseSamples = secondsToSamples casio.releaseCZ
-	releaseEnv = [endValue-((endValue-casio.releaseBreakpoint1CZ)*((toReal x)/(casio.releaseDecayCZ * (toReal SAMPLING_RATE)))) \\ x <- [1,2..releaseDecaySamples]]
-				 ++ [casio.releaseBreakpoint1CZ+((casio.releaseBreakpoint2CZ-casio.releaseBreakpoint1CZ)*((toReal x)/(casio.releaseAttackCZ * (toReal SAMPLING_RATE)))) \\ x <- [1,2..releaseAttackSamples]]
-				 ++ [casio.releaseBreakpoint2CZ-((casio.releaseBreakpoint2CZ)*((toReal x)/(casio.releaseCZ * (toReal SAMPLING_RATE)))) \\ x <- [1,2..releaseSamples]]
+    noteSamples = secondsToSamples noteDur
+    rt1 | 0.0 > casio.level1 = ~(casio.rate1 / (toReal SAMPLING_RATE)) 
+	    = (casio.rate1 / (toReal SAMPLING_RATE))
+	rt2 | casio.level1 > casio.level2 = ~(casio.rate2 / (toReal SAMPLING_RATE)) 
+	    = (casio.rate2 / (toReal SAMPLING_RATE))
+	rt3 | casio.level2 > casio.level3 = ~(casio.rate3 / (toReal SAMPLING_RATE)) 
+	    = (casio.rate3 / (toReal SAMPLING_RATE))
+	rt4 | casio.level3 > casio.level4 = ~(casio.rate4 / (toReal SAMPLING_RATE)) 
+	    = (casio.rate4 / (toReal SAMPLING_RATE))
+	rt5 | casio.level4 > casio.level5 = ~(casio.rate5 / (toReal SAMPLING_RATE)) 
+	    = (casio.rate5 / (toReal SAMPLING_RATE))
+    line1 = generateLine rt1 0.0 casio.level1
+    line2 = generateLine rt2 (casio.level1-rt2*(snd line1)) casio.level2
+    line3 = generateLine rt3 (casio.level2-rt3*(snd line2)) casio.level3
+    line4 = generateLine rt4 (casio.level3-rt4*(snd line3)) casio.level4
+    line5 = generateLine rt5 (casio.level4-rt5*(snd line4)) casio.level5
+    frontEnv = (fst line1) ++ (fst line2) ++ (fst line3) ++ (fst line4) ++ (fst line5)
+	sustain = [casio.level5 \\ x <-[1,2..(noteSamples-(length frontEnv))]]
+	shortenedEnv = take noteSamples (frontEnv ++ sustain)
+	offset = last shortenedEnv
+	rt6 | offset > casio.level6 = ~(casio.rate6 / (toReal SAMPLING_RATE)) 
+	    = (casio.rate6 / (toReal SAMPLING_RATE))
+	rt7 | casio.level6 > casio.level7 = ~(casio.rate7 / (toReal SAMPLING_RATE)) 
+	    = (casio.rate7 / (toReal SAMPLING_RATE))
+	rt8 | casio.level7 > casio.level8 = ~(casio.rate8 / (toReal SAMPLING_RATE)) 
+	    = (casio.rate8 / (toReal SAMPLING_RATE)) 
+	line6 = generateLine rt6 offset casio.level6
+	line7 = generateLine rt7 (casio.level6-rt7*(snd line6)) casio.level7
+	line8 = generateLine rt8 (casio.level7-rt8*(snd line7)) casio.level8
+	releaseEnv = (fst line6) ++ (fst line7) ++ (fst line8)
 	
+	
+generateLine :: Real Real Real -> ([Real], Real)
+generateLine rt level1 level2 = (line, lst)
+where
+	line = [level1+rt,level1+2.0*rt..level2]
+	llst = last line
+	lst | llst == level2 = 0.0
+		= ((level2-llst)/rt)
+
+/*Start = getCasioCZ 10.0025 {rate1 = 0.5, level1 = 0.9
+						  ,rate2 = 0.1, level2 = 0.6
+						  ,rate3 = 0.2, level3 = 0.7
+						  ,rate4 = 0.1, level4 = 0.65
+						  ,rate5 = 0.4, level5 = 0.4
+						  ,rate6 = 0.3, level6 = 0.8
+						  ,rate7 = 0.3, level7 = 0.4
+						  ,rate8 = 0.1, level8 = 0.0
+						  }*/

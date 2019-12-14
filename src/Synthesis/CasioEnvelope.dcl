@@ -1,21 +1,17 @@
 definition module Synthesis.CasioEnvelope
 
-:: CasioCZ = {delayCZ :: Real // Seconds
-                ,attack1CZ :: Real // Seconds
-                ,holdCZ :: Real // Seconds
-                ,decay1CZ :: Real // Seconds
-                ,breakpoint1CZ :: Real // %
-                ,decay2CZ :: Real // Seconds
-                ,breakpoint2CZ :: Real // %
-                ,decay3CZ :: Real // Seconds
-                ,breakpoint3CZ :: Real // %
-                ,attack2CZ :: Real // Seconds
-                ,sustainCZ :: Real // %
-                ,releaseDecayCZ :: Real // Seconds
-                ,releaseBreakpoint1CZ :: Real // %
-                ,releaseAttackCZ :: Real // Seconds
-                ,releaseBreakpoint2CZ :: Real // %
-                ,releaseCZ :: Real // Seconds
-                }
+// rate :: % per second, level :: %
+:: CasioCZ = {rate1 :: Real ,level1 :: Real // Front Envelope
+             ,rate2 :: Real ,level2 :: Real 
+   	         ,rate3 :: Real ,level3 :: Real
+   	         ,rate4 :: Real ,level4 :: Real
+   	         ,rate5 :: Real ,level5 :: Real // ~Front Envelope
+   	         ,rate6 :: Real ,level6 :: Real // Release Envelope
+   	         ,rate7 :: Real ,level7 :: Real
+   	         ,rate8 :: Real ,level8 :: Real // ~Release Envelope
+             }    
 
 getCasioCZ :: Real CasioCZ -> [Real]
+
+generateLine :: Real Real Real -> ([Real], Real)
+
