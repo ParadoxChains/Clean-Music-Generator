@@ -20,7 +20,7 @@ where
 	sustainSamples = noteDur - attackSamples - decaySamples
 	releaseSamples = secondsToSamples adsr.rel
 	wholeEnv = [1.0*((toReal x)/(adsr.att * (toReal SAMPLING_RATE))) \\ x <- [1,2..attackSamples]] // Attack
-	           ++ [1.0-(adsr.sus*((toReal x)/(adsr.dec * (toReal SAMPLING_RATE)))) \\ x <- [1,2..decaySamples]] // Decay
+	           ++ [1.0-((1.0-adsr.sus)*((toReal x)/(adsr.dec * (toReal SAMPLING_RATE)))) \\ x <- [1,2..decaySamples]] // Decay
 	           ++ [adsr.sus \\ x <- [1,2..sustainSamples]] // Sustain
 	shortenedEnv = take noteDur wholeEnv
 	endValue | noteDur == 0 = 0.0
@@ -41,7 +41,7 @@ where
 	wholeEnv = [0.0 \\ x <- [1,2..delaySamples]] // Delay
 	           ++ [1.0*((toReal x)/(dahdsr.attack * (toReal SAMPLING_RATE))) \\ x <- [1,2..attackSamples]] // Attack
 	           ++ [1.0 \\ x <- [1,2..holdSamples]] // Hold
-	           ++ [1.0-(dahdsr.sustain*((toReal x)/(dahdsr.decay * (toReal SAMPLING_RATE)))) \\ x <- [1,2..decaySamples]] // Decay
+	           ++ [1.0-((1.0-dahdsr.sustain)*((toReal x)/(dahdsr.decay * (toReal SAMPLING_RATE)))) \\ x <- [1,2..decaySamples]] // Decay
 	           ++ [dahdsr.sustain \\ x <- [1,2..sustainSamples]] // Sustain
 	shortenedEnv = take noteDur wholeEnv
 	endValue | noteDur == 0 = 0.0
@@ -53,3 +53,12 @@ where
 
 applyEnvelope :: [Real] [Real] -> [Real]
 applyEnvelope wave envelope = [x*e \\ x <- wave & e <- envelope]
+
+
+
+
+
+
+
+
+
