@@ -6,13 +6,15 @@ import StdMaybe
 import Input.Chunks
 import Util.Byte
 
+:: PreviousDeltaTime :== Int
+
+:: TrackInfo :== [Message]
+
 :: HeaderInfo = 
 	{
 		format :: Int,
 		division:: Int
 	}
-
-:: TrackInfo :== [Message]
 
 :: Message = 
 	{
@@ -20,7 +22,7 @@ import Util.Byte
 		event :: Event
 	}
 
-::Event = NoteOn Channel Frequency Velocity| NoteOff Channel Frequency Velocity
+::Event = NoteOn Channel Frequency Velocity| NoteOff Channel Frequency Velocity | Other
 
 
 :: Info = 
@@ -34,6 +36,7 @@ import Util.Byte
 		channel :: Channel,
 		frequency :: Frequency,
 		veolocity :: Velocity,
+		initialTime :: Int,
 		duration :: Duration
 	}
 
@@ -42,29 +45,33 @@ readFile l = processInfo(process l)
 
 processInfo :: Info -> [Note]
 processInfo {headerInfo,trackInfo} 
-	= flatten(map note trackInfo)
+	= flatten(map (\x = note 0 x) trackInfo)
 
-note :: TrackInfo -> [Note] 
-note [] = []
-note l
+note :: PreviousDeltaTime TrackInfo -> [Note] 
+note _ [] = []
+note pd l
 	#! {deltaTime,event} = hd l 
+	#! initialT = pd + deltaTime
 	= case event of
 		NoteOn ch bgFre veo -> [{
 				channel = ch,
 				frequency = bgFre,
 				veolocity = veo,
+				initialTime = initialT,
 				duration = findDeltaTime bgFre (tl l)
-			} : note (tl l)]
-		NoteOff _ _ _-> note (tl l)
-	
+			} : note initialT (tl l)]
+		_ -> note initialT (tl l)
 		
+
+
 //return delta time to calculate the duration
 findDeltaTime :: Real TrackInfo -> Int
+findDeltaTime _ [] = 0
 findDeltaTime f l
 	#! {deltaTime,event} = hd l  
 	#! fre = case event of
 		NoteOff a b c -> b
-		NoteOn a b c -> -1.0
+		_ -> -1.0
 	|f == fre = deltaTime
 	= deltaTime + findDeltaTime f (tl l)
 
@@ -100,26 +107,30 @@ processTrackBody l
 	#! chunkLen = trackChunkLen l
 	#! chunkBody = drop 4 l
 	//delete delta time info bytes
-	= [processMessage 0 (take chunkLen chunkBody): processTrack (drop chunkLen chunkBody)]
+	= [processMessage 0 '\0' (take chunkLen chunkBody): processTrack (drop chunkLen chunkBody)]
 	
-processMessage :: Int [Char] -> TrackInfo
-processMessage lastEventLen [] = []
-processMessage lastEventLen l 
+processMessage :: Int Char [Char] -> TrackInfo
+processMessage _ _ [] = []
+processMessage lastEventLen lastType l 
 	#! (result,deltaLen) =  deltaTime l
 	#! chunkbody = drop deltaLen l
 	#! eventLen = eventLen lastEventLen chunkbody
-	= case processEvent chunkbody of 
-		Just correctEvent -> [{
-			deltaTime = result,
-			event = correctEvent
-			}: processMessage eventLen (drop eventLen chunkbody)]
-		Nothing -> processMessage eventLen (drop eventLen chunkbody)
-
-processEvent :: [Char] -> Maybe Event
+	#! eventType = hd chunkbody
+	| toInt eventType < 128 = [{	deltaTime = result,
+									event = processEvent [lastType:chunkbody]
+									}: processMessage lastEventLen lastType (drop eventLen chunkbody)]
+	= [{	deltaTime = result,
+			event = processEvent chunkbody
+			}: processMessage eventLen eventType (drop eventLen chunkbody)]
+			
+processEvent :: [Char] -> Event
 processEvent l
-	|isNoteOn (l!!0) = Just(NoteOn (getChannel (l!!0)) (getFrequency (l!!1)) (getVelocity (l!!2)))
-	|isNoteOff (l!!0) = Just(NoteOff (getChannel (l!!0)) (getFrequency (l!!1)) (getVelocity (l!!2)))
-	= Nothing
+	# cons = NoteOff (getChannel (l!!0)) (getFrequency (l!!1)) (getVelocity (l!!2))
+	| isNoteOn (l!!0) 
+		| getVelocity (l!!2) <> 0 = NoteOn (getChannel (l!!0)) (getFrequency (l!!1)) (getVelocity (l!!2))
+		= cons
+	| isNoteOff (l!!0) = cons
+	= Other
 
 eventLen:: Int [Char]->Int
 eventLen lastLen l
