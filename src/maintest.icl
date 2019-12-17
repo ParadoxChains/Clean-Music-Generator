@@ -5,7 +5,7 @@ import StdFile
 import Util.Byte
 import Util.ListUtils
 import Input.ReadFile
-import Input.SoundFont.Parse
+// import Input.SoundFont.Parse
 import Input.Wav.Parse
 import Output.Pcm
 import Output.MiddleLayer
@@ -39,14 +39,14 @@ import Util.Constants
 		
 //Start w = read w
 
-// parseSF :: !*World -> (!Result SoundFont, !*World)
+// parseSF :: !*World -> (!Result Pdta, !*World)
 // parseSF w
 //   #! (b, f, w) =
 //       fopen "../test_files/input/soundfont/STR_Ensemble.sf2" FReadData w
 //   | not b = abort "File not found"
 //   #! (bs, f) = readBytes f
 //   #! (_, w) = fclose f w
-//   = (parseSoundFont bs, w) 
+//   = ((\t. t.pdta) <$> parseSoundFont bs, w) 
 
 // Start w = parseSF w
 
