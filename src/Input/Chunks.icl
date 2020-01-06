@@ -40,7 +40,10 @@ deltaByteToInt :: [Char] -> Int
 deltaByteToInt [] = 0
 deltaByteToInt [c:cs]
 	#! len = length cs
-	= toInt c * 2 ^ (7*len) + deltaByteToInt cs
+	#! n = toInt c
+	| n > 128 = (n-128)* 2 ^ (7*len) + deltaByteToInt cs
+	= n
+	 * 2 ^ (7*len) + deltaByteToInt cs
 
 //filter bytes that contain delta time info
 //read next byte only if the previous byte has 1 as its first digit 

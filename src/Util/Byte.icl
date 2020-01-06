@@ -51,10 +51,13 @@ bytesToIntLE bs
 
 readBytes :: !*File -> ([Byte], !*File)
 readBytes f
-  #! (b, c, f) = freadc f
-  | not b = ([], f)
-  #! (cs, f) = readBytes f
-  = ([c:cs], f)
+  #! (cs, f) = go [] f
+  = (reverse cs, f)
+  where
+  go cs f
+    #! (b, c, f) = freadc f
+    | not b = (cs, f)
+    = go [c:cs] f
 
 writeBytes :: ![Byte] !*File -> *File
 writeBytes []     f = f

@@ -18,7 +18,7 @@ class Monad m where
   (<$) infixl 4 :: a !(m b) -> m a
   (<$) a m :== m >>= \_. pure a
 
-  (<*) infixl 4 :: (m a) !(m b) -> m a
+  (<*) infixl 4 :: !(m a) (m b) -> m a
   (<*) ma mb :== ma >>= \a. mb >>= \_. pure a
 
 when :: !Bool (m a) -> m () | Monad m

@@ -2,6 +2,9 @@ definition module Input.ReadFile
 import StdMaybe
 import Util.TypeDefs
 
+:: PreviousDeltaTime :== Int
+
+
 //store the useful information of header chunk		
 :: HeaderInfo = 
 	{
@@ -23,14 +26,8 @@ import Util.TypeDefs
 		event :: Event
 	}
 
-:: Channel :== Int
-
-:: Velocity :== Int
-
-:: Duration :== Int
-
 //note on,note off events and relative useful information
-::Event = NoteOn Channel Frequency Velocity| NoteOff Channel Frequency Velocity
+::Event = NoteOn Channel Frequency Velocity| NoteOff Channel Frequency Velocity | Other
 
 //the information that read from the file
 :: Info = 
@@ -47,6 +44,7 @@ import Util.TypeDefs
 		channel :: Channel,
 		frequency :: Frequency,
 		veolocity :: Velocity,
+		initialTime :: Int,
 		duration :: Duration
 	}
 
@@ -55,7 +53,7 @@ readFile :: [Char] -> [Note]
 
 processInfo :: Info -> [Note]
 
-note :: TrackInfo -> [Note]
+note :: PreviousDeltaTime TrackInfo -> [Note] 
 
 findDeltaTime :: Real TrackInfo -> Int
 
@@ -73,11 +71,11 @@ processTrack :: [Char] -> [TrackInfo]
 processTrackBody :: [Char] -> [TrackInfo]
 
 //give back a piece of message info in track chunk
-processMessage :: Int [Char] -> TrackInfo
+processMessage :: Int Char [Char] -> TrackInfo
 	
 //read events information in track chunks
 //give back events or nothing
-processEvent :: [Char] -> Maybe Event
+processEvent :: [Char] -> Event
 	
 //calculate the length of each event which depends on the event type
 eventLen:: Int [Char]->Int

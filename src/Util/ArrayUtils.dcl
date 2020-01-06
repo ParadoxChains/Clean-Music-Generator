@@ -19,3 +19,17 @@ Arguments: Array nRotations sizeOfArray*/
 shiftArr :: *(a e) Int -> *(a e) | Array a e
 
 //stackArr :: *(a e) *(a e) Int -> *(a e) | Array a e
+
+addArrAux :: Int {Real} {Real} -> Real
+
+// ++
+addArr :: {Real} {Real} -> {Real}
+
+// last
+lastArr :: {Real} -> Real
+
+// tale
+takeArr :: Int {Real} -> {Real} 
+
+//list to array
+listToArr :: [a] -> {a}

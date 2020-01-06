@@ -5,7 +5,7 @@ import StdFile
 import Util.Byte
 import Util.ListUtils
 import Input.ReadFile
-import Input.SoundFont.Parse
+// import Input.SoundFont.Parse
 import Input.Wav.Parse
 import Output.Pcm
 import Output.MiddleLayer
@@ -40,7 +40,16 @@ Start w = wavTest w
 		
 //Start w = read w
 
-//Start = parseSoundFont (fromString "RIFF\0\2\0\0sfbk")
+// parseSF :: !*World -> (!Result Pdta, !*World)
+// parseSF w
+//   #! (b, f, w) =
+//       fopen "../test_files/input/soundfont/STR_Ensemble.sf2" FReadData w
+//   | not b = abort "File not found"
+//   #! (bs, f) = readBytes f
+//   #! (_, w) = fclose f w
+//   = ((\t. t.pdta) <$> parseSoundFont bs, w) 
+
+// Start w = parseSF w
 
 // parseTestWav :: !*World -> (!Result Wav, !*World)
 // parseTestWav w
