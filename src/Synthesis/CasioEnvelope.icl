@@ -2,6 +2,7 @@ implementation module Synthesis.CasioEnvelope
 import StdEnv
 import Util.TimeUtils
 import Util.Constants
+import Util.ListUtils
 
 getCasioCZ :: Real CasioCZ -> [Real]
 getCasioCZ noteDur casio = shortenedEnv ++ releaseEnv
@@ -42,16 +43,9 @@ generateLine :: Real Real Real -> ([Real], Real)
 generateLine rt level1 level2 = (line, lst)
 where
 	line = [level1+rt,level1+2.0*rt..level2]
-	llst = last line
+	llst = level2 - ((level2-level1)-rt*(toReal(floor ((level2-level1)/rt))))
 	lst | llst == level2 = 0.0
 		= ((level2-llst)/rt)
 
-/*Start = getCasioCZ 10.0025 {rate1 = 0.5, level1 = 0.9
-						  ,rate2 = 0.1, level2 = 0.6
-						  ,rate3 = 0.2, level3 = 0.7
-						  ,rate4 = 0.1, level4 = 0.65
-						  ,rate5 = 0.4, level5 = 0.4
-						  ,rate6 = 0.3, level6 = 0.8
-						  ,rate7 = 0.3, level7 = 0.4
-						  ,rate8 = 0.1, level8 = 0.0
-						  }*/
+
+
