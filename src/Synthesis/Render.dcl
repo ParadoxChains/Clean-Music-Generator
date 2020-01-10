@@ -2,9 +2,10 @@ definition module Synthesis.Render
 import StdEnv
 import Util.TypeDefs
 import Util.TimeUtils
+import Util.ArrayUtils
+import Synthesis.Envelope
 import Synthesis.Generate
 import Input.ReadFile
-import Util.ArrayUtils
 
 :: NoteChunk = { note :: Note
                , wave :: Wave
@@ -25,5 +26,7 @@ numberOfSamples :: NoteChunk Int -> Int
 //Normalization of samples
 normalizeList :: [Real] -> [Real]
 //Render notes to get samples
-render :: [NoteChunk] -> [Real]
+render :: [Note] -> [Real]
 
+renderAux :: [NoteChunk] -> [Real]
+noteToChunk :: Note -> NoteChunk

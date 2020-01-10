@@ -2,22 +2,24 @@ implementation module Synthesis.Render
 import StdEnv
 import Util.TypeDefs
 import Util.TimeUtils
+import Util.ArrayUtils
+import Synthesis.Envelope
 import Synthesis.Generate
 import Input.ReadFile
-import Util.ArrayUtils
+
 
 generateSilence :: Int -> [Real]
 generateSilence silenceSamples = [0.0 \\ x <- [1,2..silenceSamples]]
 
 
 renderNoteChunk :: NoteChunk -> [Real]
-renderNoteChunk chunk = applyEnvelope wave envelope
+renderNoteChunk chunk = applyEnvelope wave envByValue
 where
     chunkBeats = (convertDurToBeats chunk.note.duration chunk.timeSig)
 	sampleNum = noteToSamples chunkBeats chunk.timeSig chunk.tempo
 	wave = generate chunk.wave chunk.note.frequency sampleNum
-	dahdsr = {delay = 0.0006, attack = 0.0003, hold = 0.0002, decay = 0.0006, sustain = 0.5, release = 0.0010}
 	envelope = getDAHDSR chunkBeats chunk.timeSig chunk.tempo chunk.dahdsr 
+	envByValue = [x*(toReal chunk.note.veolocity) \\ x <- envelope]
 
 
 numberOfSamples :: NoteChunk Int -> Int
@@ -29,9 +31,8 @@ normalizeList track = [x/peak \\ x <- track]
 where
 	peak = maxList [abs x \\ x <- track]
 
-
-render :: [NoteChunk] -> [Real]
-render chunkList = normalized
+renderAux :: [NoteChunk] -> [Real]
+renderAux chunkList = normalized
 where
 	totalSamples = maxList [numberOfSamples x (x.note.initialTime+x.note.duration) \\ x <- chunkList]
 	silenceTrack = generateSilence totalSamples
@@ -42,3 +43,13 @@ where
 	normalized = normalizeList noteSum
 
 
+render :: [Note] -> [Real]
+render noteList = renderAux chunkList
+where
+	chunkList = [noteToChunk nt \\ nt <- noteList]
+
+noteToChunk :: Note -> NoteChunk
+noteToChunk nt = {note = nt, wave = Sine, timeSig = ts, tempo = 1.0, dahdsr = env}
+where
+	ts = {barVal = 1, noteVal = 1}
+	env = {delay = 0.0, attack = 1.0, hold = 0.0, decay = 2.0, sustain = 0.3, release = 1.0}
