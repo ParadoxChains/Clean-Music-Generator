@@ -14,7 +14,7 @@ import Util.Byte
 //This function is responsible for writing a single int to the file
 //Taking two integers and a file, writing into the file using writeBytes function 
 writeUint :: !Int !Int !*File -> *File
-writeUint i n f = writeBytes (uintToBytesLE i n) f
+writeUint i n f = writeBytes (toBytes Unsigned LE i n) f
 
 // The first parameter is the size of the file in bytes minus 8.
 writeHeader :: !Int !*File -> *File

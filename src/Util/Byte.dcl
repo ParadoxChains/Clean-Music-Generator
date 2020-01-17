@@ -3,40 +3,27 @@ definition module Util.Byte
 // A byte is a character
 :: Byte :== Char
 
+// Specifies whether a number is unsigned or signed
+:: Signedness = Unsigned | Signed
+
+// Specifies whether a number is big-endian or little-endian
+:: Endianness = BE | LE
+
 // Take the complement of a byte
 complement :: !Byte -> Byte
 
-// Converts a non-negative integer to a given amount of bytes in big-endian
-// The first parameter is the number of bytes
-// The second parameter is the integer to be converted
-uintToBytesBE :: !Int !Int -> [Byte]
+// Converts an integer to a given amount of bytes
+// 1st parameter specifies whether the integer is signed or unsigned
+// 2nd parameter sepcifies whether the integer is big or little-endian
+// 3rd parameter specified the amount of bytes the output list should have
+// 4th parameter is the integer to be converted
+toBytes :: !Signedness !Endianness !Int !Int -> [Byte]
 
-// Converts a non-negative integer to a given amount of bytes in little-endian
-// The first parameter is the number of bytes
-// The second parameter is the integer to be converted
-uintToBytesLE :: !Int !Int -> [Byte]
-
-// Converts a list of bytes to a non-negative integer in big-endian
-bytesToUintBE :: ![Byte] -> Int
-
-// Converts a list of bytes to a non-negative integer in little-endian
-bytesToUintLE :: ![Byte] -> Int
-
-// Converts a signed integer to a given amount of bytes in big-endian
-// The first parameter is the number of bytes
-// The second parameter is the integer to be converted
-intToBytesBE :: !Int !Int -> [Byte]
-
-// Converts a signed integer to a given amount of bytes in little-endian
-// The first parameter is the number of bytes
-// The second parameter is the integer to be converted
-intToBytesLE :: !Int !Int -> [Byte]
-
-// Converts a list of bytes to a signed integer in big-endian
-bytesToIntBE :: ![Byte] -> Int
-
-// Converts a list of bytes to a signed integer in little-endian
-bytesToIntLE :: ![Byte] -> Int
+// Converts a list of bytes to an integer
+// 1st parameter specifies whether the integer is signed or unsigned
+// 2nd parameter sepcifies whether the integer is big or little-endian
+// 3rd parameter is the list of bytes to be converted
+fromBytes :: !Signedness !Endianness ![Byte] -> Int
 
 // Reads every byte of a file
 readBytes :: !*File -> ([Byte], !*File)

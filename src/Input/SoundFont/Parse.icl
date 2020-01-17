@@ -21,7 +21,7 @@ parseSfbk =
 parseInfo :: Parser Info
 parseInfo =
   string "LIST" >>>
-  uintLE 4 >>= \l.
+  int Unsigned LE 4 >>= \l.
   takeP l >>>
   pure Todo
 
@@ -35,16 +35,16 @@ parseSdta =
   pure { Sdta | smpl, sm24 }
 
 parseSmpl :: Parser (!Int, ![Int])
-parseSmpl = parseListWithLength "smpl" 2 (intLE 2)
+parseSmpl = parseListWithLength "smpl" 2 (int Signed LE 2)
 
 parseSm24 :: !Int -> Parser [Int]
 parseSm24 len =
   string "sm24" >>>
-  uintLE 4 >>= \size.
+  int Unsigned LE 4 >>= \size.
   when (size <> padded) (fail
     ("unexpected chunk size " +++ toString size
     +++ ", expecting " +++ toString padded)) >>>
-  replicateM len (uintLE 1) >>= \data.
+  replicateM len (int Unsigned LE 1) >>= \data.
   takeP pad >>>
   pure data
   where
@@ -70,12 +70,12 @@ parsePdta =
 parsePresetHeader :: Parser PresetHeader
 parsePresetHeader =
   takeP 20 >>= \presetName.
-  uintLE 2 >>= \preset.
-  uintLE 2 >>= \bank.
-  uintLE 2 >>= \presetBagNdx.
-  uintLE 4 >>= \library.
-  uintLE 4 >>= \genre.
-  uintLE 4 >>= \morphology.
+  int Unsigned LE 2 >>= \preset.
+  int Unsigned LE 2 >>= \bank.
+  int Unsigned LE 2 >>= \presetBagNdx.
+  int Unsigned LE 4 >>= \library.
+  int Unsigned LE 4 >>= \genre.
+  int Unsigned LE 4 >>= \morphology.
   pure { PresetHeader
     | presetName = getName presetName
     , preset, bank, presetBagNdx, library, genre, morphology }
@@ -83,15 +83,15 @@ parsePresetHeader =
 parseInst :: Parser Inst
 parseInst =
   takeP 20 >>= \instName.
-  uintLE 2 >>= \instBagNdx.
+  int Unsigned LE 2 >>= \instBagNdx.
   pure { Inst
     | instName = getName instName
     , instBagNdx }
 
 parseBag :: Parser Bag
 parseBag =
-  uintLE 2 >>= \genNdx.
-  uintLE 2 >>= \modNdx.
+  int Unsigned LE 2 >>= \genNdx.
+  int Unsigned LE 2 >>= \modNdx.
   pure { Bag | genNdx, modNdx }
 
 parseModList :: Parser ModList
@@ -103,14 +103,14 @@ parseGenList = Todo <$ takeP 4
 parseSample :: Parser Sample
 parseSample =
   takeP 20 >>= \sampleName.
-  uintLE 4 >>= \start.
-  uintLE 4 >>= \end.
-  uintLE 4 >>= \startLoop.
-  uintLE 4 >>= \endLoop.
-  uintLE 4 >>= \sampleRate.
-  uintLE 1 >>= \originalPitch.
-  intLE  1 >>= \pitchCorrection.
-  uintLE 2 >>= \sampleLink.
+  int Unsigned LE 4 >>= \start.
+  int Unsigned LE 4 >>= \end.
+  int Unsigned LE 4 >>= \startLoop.
+  int Unsigned LE 4 >>= \endLoop.
+  int Unsigned LE 4 >>= \sampleRate.
+  int Unsigned LE 1 >>= \originalPitch.
+  int Signed LE  1 >>= \pitchCorrection.
+  int Unsigned LE 2 >>= \sampleLink.
   Todo <$ takeP 2 >>= \sampleType.
   pure { Sample
     | sampleName = getName sampleName
@@ -120,7 +120,7 @@ parseSample =
 parseListWithLength :: !String !Int !(Parser a) -> Parser (!Int, ![a])
 parseListWithLength id subSize p =
   string id >>>
-  uintLE 4 >>= \size.
+  int Unsigned LE 4 >>= \size.
   when (size rem subSize <> 0) (fail
     ("unexpected chunk size " +++ toString size
     +++ ", expecting a multiple of " +++ toString subSize)) >>>

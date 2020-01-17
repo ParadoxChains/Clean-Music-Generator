@@ -73,14 +73,5 @@ string s = s <$ mapM_ char (fromString s) <?> "expecting " +++ s
 takeP :: !Int -> Parser [Char]
 takeP n = replicateM n anyChar
 
-uintBE :: !Int -> Parser Int
-uintBE n = bytesToUintBE <$> takeP n
-
-uintLE :: !Int -> Parser Int
-uintLE n = bytesToUintLE <$> takeP n
-
-intBE :: !Int -> Parser Int
-intBE n = bytesToIntBE <$> takeP n
-
-intLE :: !Int -> Parser Int
-intLE n = bytesToIntLE <$> takeP n
+int :: !Signedness !Endianness !Int -> Parser Int
+int s e n = fromBytes s e <$> takeP n

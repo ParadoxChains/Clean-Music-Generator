@@ -21,13 +21,13 @@ wave =
 fmt :: Parser ()
 fmt =
   string "fmt " >>>
-  uintLE 4 >>= \n.
+  int Unsigned LE 4 >>= \n.
   takeP n >>>
   pure ()
 
 data :: Parser [Byte]
 data =
   string "data" >>>
-  uintLE 4 >>= \n.
+  int Unsigned LE 4 >>= \n.
   takeP n >>= \bs.
   pure bs
