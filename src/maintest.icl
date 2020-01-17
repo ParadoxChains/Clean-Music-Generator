@@ -14,21 +14,24 @@ import Synthesis.Generate
 import Synthesis.Wave
 
 
-wavTest :: !*World -> *World
-wavTest w
-  #! (_, f, w) = fopen "test.wav" FWriteData w
-  #! data = transform16 (wavetable 0.5) 0.5
-  #! f = writePcmWav
-      { numChannels    = 1
-      , numBlocks      = (length data / 1)
-      , samplingRate   = 44100
-      , bytesPerSample = 2
-      } data f
-  #! (_, w) = fclose f w
-  = w
+// wavTest :: !*World -> *World
+// wavTest w
+//   #! (_, f, w) = fopen "test.wav" FWriteData w
+//   #! data = transform16 (wavetable 0.5) 0.5
+//   #! f = writePcmWav
+//       { numChannels    = 1
+//       , numBlocks      = (length data / 1)
+//       , samplingRate   = 44100
+//       , bytesPerSample = 2
+//       } data f
+//   #! (_, w) = fclose f w
+//   = w
 
 
-Start w = wavTest w
+// Start w = wavTest w
+
+// Start = generate Sawtooth 420.420 2205
+
 
 // read :: !*World -> (*World, [Note])
 // read oldW

@@ -29,7 +29,7 @@ addArr :: {Real} {Real} -> {Real}
 lastArr :: {Real} -> Real
 
 // tale
-takeArr :: Int {Real} -> {Real} 
+// takeArr :: Int {Real} -> {Real} 
 
 //list to array
 listToArr :: [a] -> {a}
