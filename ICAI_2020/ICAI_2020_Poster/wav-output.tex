@@ -1,0 +1,21 @@
+\newcolumntype{C}{>{\centering\arraybackslash}p{2em}}
+
+\begin{tabu}{|*{12}{C}|}
+% \begin{tabu} to 20cm {|*{12}{X[c]}|}
+\hline
+\multicolumn{12}{|c|}{chunk descriptor} \\ \hline
+52 & 49 & 46 & \multicolumn{1}{C|}{46} & 24 & 08 & 00 & \multicolumn{1}{C|}{00} & 57 & 41 & 56 & 45 \\
+R & I & F & \multicolumn{1}{C|}{F} & \multicolumn{4}{c|}{chunk size} & W & A & V & E \\ \hline
+\multicolumn{12}{|c|}{fmt subchunk} \\ \hline
+66 & 6d & 74 & \multicolumn{1}{C|}{20} & 10 & 00 & 00 & \multicolumn{1}{C|}{00} & 01 & \multicolumn{1}{C|}{00} & 02 & 00 \\
+f & m & t & \multicolumn{1}{C|}{ } & \multicolumn{4}{c|}{subchunk size} & \multicolumn{2}{c|}{format} & \multicolumn{2}{c|}{channels} \\ \hline
+\multicolumn{12}{|c|}{fmt subchunk} \\ \hline
+22 & 56 & 00 & \multicolumn{1}{C|}{00} & 88 & 58 & 01 & \multicolumn{1}{C|}{00} & 04 & \multicolumn{1}{C|}{00} & 10 & 00 \\
+\multicolumn{4}{|c|}{sample rate} & \multicolumn{4}{c|}{byte rate} & \multicolumn{2}{c|}{block} & \multicolumn{2}{c|}{bits} \\ \hline
+\multicolumn{12}{|c|}{data subchunk} \\ \hline
+64 & 61 & 74 & \multicolumn{1}{C|}{61} & 00 & 08 & 00 & \multicolumn{1}{C|}{00} & 00 & \multicolumn{1}{C|}{00} & 00 & 00 \\
+d & a & t & \multicolumn{1}{C|}{a} & \multicolumn{4}{c|}{subchunk size} & \multicolumn{4}{c|}{sample 1} \\ \hline
+\multicolumn{12}{|c|}{data subchunk} \\ \hline
+24 & \multicolumn{1}{C|}{17} & 1e & \multicolumn{1}{C|}{f3} & 3c & \multicolumn{1}{C|}{13} & 3c & \multicolumn{1}{C|}{14} & \multicolumn{4}{c|}{$\ldots$} \\
+\multicolumn{4}{|c|}{sample 2} & \multicolumn{4}{c|}{sample 3} & & & & \\ \hline
+\end{tabu}
