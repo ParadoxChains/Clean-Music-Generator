@@ -13,5 +13,4 @@ definition module Synthesis.CasioEnvelope
 
 getCasioCZ :: Real CasioCZ -> [Real]
 
-generateLine :: Real Real Real -> ([Real], Real)
 
