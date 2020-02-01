@@ -88,10 +88,10 @@ lastArr :: {Real} -> Real
 lastArr a = a.[(size a) - 1]
 
 // tale
-takeArr :: Int {Real} -> {Real} 
-takeArr x a
-	| x >= (size a) = a
-	= {a.[ind] \\ ind <- (arrSeq 0 1 ((size a) - 1))}
+// takeArr :: Int {Real} -> {Real} 
+// takeArr x a
+// 	| x >= (size a) = a
+// 	= {a.[ind] \\ ind <- (arrSeq 0 1 ((size a) - 1))}
 
 //list to array
 listToArr :: [a] -> {a}
