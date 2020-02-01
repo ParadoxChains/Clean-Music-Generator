@@ -1,6 +1,7 @@
 definition module Util.Monad.Parser
 
 import StdMaybe
+import Util.Byte
 import Util.Monad
 import Util.Monad.Result
 
@@ -23,7 +24,4 @@ string  :: !String -> Parser String
 
 takeP :: !Int -> Parser [Char]
 
-uintBE :: !Int -> Parser Int
-uintLE :: !Int -> Parser Int
-intBE  :: !Int -> Parser Int
-intLE  :: !Int -> Parser Int
+int :: !Signedness !Endianness !Int -> Parser Int

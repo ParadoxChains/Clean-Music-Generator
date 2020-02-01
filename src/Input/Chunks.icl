@@ -25,15 +25,15 @@ isTrack l
 //calculate the length of current track chunk
 //4 bytes for length information
 trackChunkLen :: [Char] -> Int
-trackChunkLen l = bytesToUintBE (take 4 l)
+trackChunkLen l = fromBytes Unsigned BE (take 4 l)
 
 //read the format info in header
 calcFormat :: [Char] -> Int
-calcFormat l = bytesToUintBE l
+calcFormat l = fromBytes Unsigned BE l
 
 //read the division info in header
 calcDivision :: [Char] -> Int
-calcDivision l = bytesToUintBE l
+calcDivision l = fromBytes Unsigned BE l
 
 //byte to int function for calculating delta time
 deltaByteToInt :: [Char] -> Int

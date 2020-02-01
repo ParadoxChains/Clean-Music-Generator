@@ -16,7 +16,7 @@ aux16 x max
 =floor((x*2.0^15.0)/max)
 
 transform16 :: [Real] Real -> [Char]
-transform16 list max=flatten (map (\x = intToBytesLE 2 x) (map (\x = aux16 x max) list))
+transform16 list max=flatten (map (\x = toBytes Signed LE 2 x) (map (\x = aux16 x max) list))
 
 transform16_what_if::[[Real]] Real->[[Char]]
 transform16_what_if listLists max =map (\x = transform16 x max) listLists
@@ -28,7 +28,7 @@ aux32 x max
 =floor((x*2.0^31.0)/max)
 
 transform32::[Real] Real->[Char]
-transform32 list max=flatten (map (\x = intToBytesLE 4 x) (map (\x = aux32 x max) list))
+transform32 list max=flatten (map (\x = toBytes Signed LE 4 x) (map (\x = aux32 x max) list))
 
 transform32_what_if::[[Real]] Real->[[Char]]
 transform32_what_if listLists max =map (\x = transform32 x max) listLists
