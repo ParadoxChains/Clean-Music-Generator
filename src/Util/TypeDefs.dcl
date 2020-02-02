@@ -21,3 +21,12 @@ import StdEnv
 Each duration increment is 1/24th of a Beat, and 
 must be converted appropriately.*/
 :: Duration :== Int
+
+// A byte is a character
+:: Byte :== Char
+
+// Specifies whether a number is unsigned or signed
+:: Signedness = Unsigned | Signed
+
+// Specifies whether a number is big-endian or little-endian
+:: Endianness = BE | LE
