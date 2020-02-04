@@ -1,13 +1,6 @@
 definition module Util.Byte
 
-// A byte is a character
-:: Byte :== Char
-
-// Specifies whether a number is unsigned or signed
-:: Signedness = Unsigned | Signed
-
-// Specifies whether a number is big-endian or little-endian
-:: Endianness = BE | LE
+import Util.TypeDefs
 
 // Take the complement of a byte
 complement :: !Byte -> Byte

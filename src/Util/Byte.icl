@@ -2,6 +2,7 @@ implementation module Util.Byte
 
 import StdEnv
 import StdFile
+import Util.Byte
 
 complement :: !Byte -> Byte
 complement b = toChar 255 - b
