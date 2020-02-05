@@ -18,13 +18,6 @@ floor r
 | toReal (toInt r) > r = (toInt r) - 1
 = toInt r
 
-/*
-floor::Real->Int
-floor x
-|toReal(toInt x)-x>=0.0=toInt(x)-1
-=toInt(x)
-*/
-
 // rem for Real numbers
 realRem :: Real Real -> Real
 realRem a b = b * abs(c - toReal(floor c))

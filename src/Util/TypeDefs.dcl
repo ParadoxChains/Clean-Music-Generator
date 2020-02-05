@@ -30,3 +30,5 @@ must be converted appropriately.*/
 
 // Specifies whether a number is big-endian or little-endian
 :: Endianness = BE | LE
+
+:: BitVersion = Eight | Sixteen | ThirtyTwo
