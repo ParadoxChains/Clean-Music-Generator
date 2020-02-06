@@ -16,7 +16,7 @@ transform_two_channels list max bitVersion = map (\x = transform_one_channel x m
 moving_wave :: Real Real BitVersion -> Int
 moving_wave targeted_number max bitVersion
 | translated_bit_version == 8 = toInt(255.0*((targeted_number/(1.0*max)+0.5)))
-| translated_bit_version == 16 = moving_wave_aux targeted_number max translated_bit_version
+= moving_wave_aux targeted_number max translated_bit_version
     where
         translated_bit_version = translating_bit_version bitVersion
 
