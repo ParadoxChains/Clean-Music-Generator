@@ -3,7 +3,7 @@ import StdEnv
 
 //Custom library imports
 import Synthesis.Accesstable, Synthesis.Generate, Synthesis.Wave, Synthesis.Wavetable
-import Util.Byte, Util.Constants, Util.ListUtils, Util.Rand, Util.TimeUtils, Util.Pitch, Util.Notation
+import Util.Byte, Util.Constants, Util.ListUtils, Util.Rand, Util.TimeUtils, Util.Pitch, Util.Notation, Util.TypeDefs
 import Input.Chunks, Input.ReadFile
 import Output.MiddleLayer, Output.Pcm
 
@@ -105,13 +105,13 @@ FurEliseSamples :: Int
 FurEliseSamples = (noteToSamples {p=3,q=8} {barVal = 3,noteVal = 8} 120.00) + (noteToSamples FurEliseLength {barVal = 3,noteVal = 8} 120.00)
 
 newData8 :: [Char]
-newData8 = transform8 extendedRender 1.0
+newData8 = transform_one_channel extendedRender 1.0 Eight
 
 newData16 :: [Char]
-newData16 = transform16 extendedRender 1.0
+newData16 = transform_one_channel extendedRender 1.0 Sixteen
 
 newData32 :: [Char]
-newData32 = transform32 extendedRender 1.0
+newData32 = transform_one_channel extendedRender 1.0 ThirtyTwo
 
 wavTest :: !*World -> *World
 wavTest w
