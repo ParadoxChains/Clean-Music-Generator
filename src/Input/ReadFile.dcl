@@ -1,6 +1,6 @@
 definition module Input.ReadFile
 import StdMaybe
-import Util.TypeDefs
+import Util.TypeDefs, Util.TimeUtils
 
 
 
@@ -10,7 +10,9 @@ import Util.TypeDefs
 		frequency :: Frequency,
 		veolocity :: Velocity,
 		initialTime :: Int,
-		duration :: Duration
+		duration :: Duration,
+		ts :: TimeSignature,
+		temp :: Tempo
 	}
 
-
+readFile :: [Char] -> [Note]

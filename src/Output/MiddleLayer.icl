@@ -1,12 +1,10 @@
 implementation module Output.MiddleLayer
 import StdEnv
-import Util.ListUtils
-import Util.Byte
-import Util.TypeDefs
+import Util.ListUtils, Util.Byte, Util.TypeDefs, Util.Constants
 
 transform_one_channel :: [Real] Real BitVersion -> [Byte]
 transform_one_channel list max bitVersion
-= flatten (map (\x = toBytes Signed LE (translated_bit_version/8) x) (map (\x = moving_wave x max bitVersion) list))
+= flatten (map (\x = toBytes Signed LE (translated_bit_version/BYTE_SIZE) x) (map (\x = moving_wave x max bitVersion) list))
     where
         translated_bit_version = translating_bit_version bitVersion
 

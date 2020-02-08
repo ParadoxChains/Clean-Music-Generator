@@ -43,13 +43,13 @@ where
 	normalized = normalizeList noteSum
 
 
-render :: [Note] -> [Real]
-render noteList = renderAux chunkList
+render :: [Note] ChannelProfile -> [Real]
+render noteList chanProf = renderAux chunkList
 where
-	chunkList = [noteToChunk nt \\ nt <- noteList]
+	chunkList = [noteToChunk nt chanProf \\ nt <- noteList]
 
-noteToChunk :: Note -> NoteChunk
-noteToChunk nt = {note = nt, wave = Sine, timeSig = ts, tempo = 1.0, dahdsr = env}
+noteToChunk :: Note ChannelProfile -> NoteChunk
+noteToChunk nt chanProf = {note = nt, wave = chanProf.wavType, timeSig = nt.ts, tempo = nt.temp, dahdsr = chanProf.envelope}
 where
 	ts = {barVal = 1, noteVal = 1}
 	env = {delay = 0.0, attack = 1.0, hold = 0.0, decay = 2.0, sustain = 0.3, release = 1.0}

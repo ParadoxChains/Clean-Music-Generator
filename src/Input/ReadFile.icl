@@ -4,7 +4,7 @@ import StdEnv
 import StdFile
 import StdMaybe
 import Input.Chunks
-import Util.Byte
+import Util.Byte, Util.TimeUtils
 
 :: PreviousDeltaTime :== Int
 
@@ -43,14 +43,6 @@ import Util.Byte
 		trackInfo :: [TrackInfo]
 	}
 
-:: Note = 
-	{
-		channel :: Channel,
-		frequency :: Frequency,
-		veolocity :: Velocity,
-		initialTime :: Int,
-		duration :: Duration
-	}
 
 readFile :: [Char] -> [Note]
 readFile l = processInfo(process l)
@@ -70,7 +62,13 @@ note pd l
 				frequency = bgFre,
 				veolocity = veo,
 				initialTime = initialT,
-				duration = findDeltaTime bgFre (tl l)
+				duration = findDeltaTime bgFre (tl l),
+				/*
+					TODO: Remove hardcoding.
+					Currently hardcoded to Liszt Hungarian Rhapsody 2.
+				*/
+				ts = {barVal = 2, noteVal = 4},
+				temp = 80.0
 			} : note initialT (tl l)]
 		_ -> note initialT (tl l)
 		

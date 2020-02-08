@@ -10,3 +10,5 @@ SAMPLING_RATE = 44100
 tableSize :: Int
 tableSize = 2205
 
+BYTE_SIZE :: Int
+BYTE_SIZE = 8

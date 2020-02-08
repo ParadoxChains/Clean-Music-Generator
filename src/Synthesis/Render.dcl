@@ -18,5 +18,9 @@ import Input.ReadFile
 generateSilence :: Int -> [Real]
 
 //Render notes to get samples
-render :: [Note] -> [Real]
+render :: [Note] ChannelProfile -> [Real]
 
+:: ChannelProfile = {
+                        wavType :: Wave,
+                        envelope :: DAHDSR
+                    }
