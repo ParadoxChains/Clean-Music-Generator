@@ -78,6 +78,18 @@ isNoteOn c = firstHalfStatus c == 9
 isNoteOff :: Char -> Bool
 isNoteOff c = firstHalfStatus c == 8
 
+//meta events
+isMeta :: Char -> Bool
+isMeta c = toInt c == 255
+
+//meta event -- set tempo
+isTempo :: [Char] -> Bool
+isTempo [event,type] = isMeta event && (toInt type) == 81
+
+//meta event -- time signature
+isTimeSignature :: [Char] -> Bool
+isTimeSignature [event,type] = isMeta event && (toInt type) == 88
+
 //return channel information
 getChannel :: Char -> Int
 getChannel c = secondHalfStatus c

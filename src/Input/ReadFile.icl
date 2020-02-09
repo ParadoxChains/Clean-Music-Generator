@@ -30,8 +30,9 @@ import Util.Byte, Util.TimeUtils
 		event :: Event
 	}
 
-//note on,note off events and relative useful information
-::Event = NoteOn Channel Frequency Velocity| NoteOff Channel Frequency Velocity | Other
+//note on,note off,two meta events and relative useful information
+::Event = NoteOn Channel Frequency Velocity | NoteOff Channel Frequency Velocity
+		| TP Tempo| TS TimeSignature| Other
 
 //the information that read from the file
 :: Info = 
@@ -140,8 +141,10 @@ processEvent l
 		| getVelocity (l!!2) <> 0 = NoteOn (getChannel (l!!0)) (getFrequency (l!!1)) (getVelocity (l!!2))
 		= cons
 	| isNoteOff (l!!0) = cons
+	| isTimeSignature (take 2 l) = TS {barVal = toInt(l!!3),noteVal = 2^toInt(l!!4)}
+	| isTempo (take 2 l) = TP fromBytes Unsigned BE(take 3 (drop 3 l))
 	= Other
-
+//,what's worse,I won't have internet in two hours,but I can still write the code.
 eventLen:: Int [Char]->Int
 eventLen lastLen l
 	#! n1 = firstHalfStatus (hd l)
