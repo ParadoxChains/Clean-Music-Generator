@@ -6,6 +6,27 @@ import Output.MiddleLayer, Output.Pcm
 import Synthesis.Accesstable, Synthesis.CasioEnvelope, Synthesis.Envelope,  Synthesis.GeneralEnvelope, Synthesis.Generate, Synthesis.Render, Synthesis.Wave, Synthesis.Wavetable
 import Util.Byte, Util.Constants, Util.ListUtils, Util.Monad, Util.Rand, Util.TimeUtils, Util.TypeDefs
 
+/* 
+//debug, file read
+LetsGo :: String String ADSR Wave BitVersion !*World -> [Note]
+LetsGo inFile outFile env1 wavType bits w
+    #! (_, f, w) = fopen outFile FWriteData w
+    #! (w, noteData) = read w inFile
+    #! newChannelProfile = constructChannelProfile env1 wavType
+    = noteData 
+*/
+
+
+//debug, render.
+LetsGo :: String String ADSR Wave BitVersion !*World -> [Real]
+LetsGo inFile outFile env1 wavType bits w
+    #! (_, f, w) = fopen outFile FWriteData w
+    #! (w, noteData) = read w inFile
+    #! newChannelProfile = constructChannelProfile env1 wavType
+    = render noteData newChannelProfile
+
+
+/*
 LetsGo :: String String ADSR Wave BitVersion !*World -> *World
 LetsGo inFile outFile env1 wavType bits w
     #! (_, f, w) = fopen outFile FWriteData w
@@ -21,7 +42,7 @@ LetsGo inFile outFile env1 wavType bits w
         } data f
     #! (_, w) = fclose f w
     = w
-
+*/
 constructChannelProfile :: ADSR Wave -> ChannelProfile
 constructChannelProfile env1 wT = out
 where
