@@ -23,7 +23,9 @@ where
 
 
 numberOfSamples :: NoteChunk Int -> Int
-numberOfSamples x dur = noteToSamples (convertDurToBeats dur x.timeSig) x.timeSig x.tempo
+numberOfSamples x dur = (noteToSamples (convertDurToBeats dur x.timeSig) x.timeSig x.tempo) + releaseSamples
+where
+	releaseSamples = floor (1.0 / (toReal secondsToSamples x.dahdsr.release)) + 1
 
 
 normalizeList :: [Real] -> [Real]
@@ -42,6 +44,26 @@ where
 	noteSum = [(sum [arr.[ind] \\ arr <- renderedTrackArr]) \\ ind <- [0,1..(totalSamples-1)]]
 	normalized = normalizeList noteSum
 
+// ---------Possibly more efficient implementation----------
+
+sumUp :: (Int,[Real]) (Int,{Real}) -> [Real]
+sumUp (totalSamples,mainTrack) (offset,track) = (totalSamples,newTrack)
+where
+	newTrack = [mS+((index < offset) ? 0 : track.[index]) \\ mS <- mainTrack & index <-[0,1..totalSamples]]
+//					^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+// Sorry for C++ syntax, I could not remember lambda functions syntax
+
+renderSecondAux :: [NoteChunk] -> [Real]
+renderSecondAux chunkList = normalized
+where
+	totalSamples = maxList [numberOfSamples x (x.note.initialTime+x.note.duration) \\ x <- chunkList]
+	silenceTrack = generateSilence totalSamples
+	renderedTrack = [((numberOfSamples x x.note.initialTime),(renderNoteChunk x)) \\ x <- chunkList]
+	renderedTrackArr = [(fst(ls),listToArr (snd ls)) \\ ls <- renderedTrack]
+	noteSum = foldLeft sumUp (totalSamples,silenceTrack) renderedTrack // Also, I do not remember foldLeft(or foldRight?)
+	normalized = normalizeList noteSum
+
+// --------------------------------------------------------
 
 render :: [Note] ChannelProfile -> [Real]
 render noteList chanProf = renderAux chunkList
