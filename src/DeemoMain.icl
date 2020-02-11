@@ -14,6 +14,7 @@ SquareProfile :: SynthProfile
 SquareProfile = {type = Square, env = {attack=(1.0/32.0), decay=(1.0/64.0), sustain = 0.2, release = 0.25}}
 */
 
+
 FurElise :: (Melody,Melody,TimeSignature,Tempo)
 FurElise = (RightHand, LeftHand, {barVal = 3,noteVal = 8}, 120.00)
 
@@ -85,8 +86,15 @@ fakeReverb = map (\sample = sample * 0.2) (shiftLeft extendedRender (-1 * dur))
 where
     dur = noteToSamples {p=1,q=8} {barVal = 3,noteVal = 8} 120.00
 
-newRender :: [Real]
-newRender = sumAll [extendedRender,fakeDelay,fakeReverb]
+fakeReverb2 :: [Real]
+fakeReverb2 = map (\sample = sample * 0.04) (shiftLeft extendedRender (-1 * dur))
+where
+    dur = noteToSamples {p=1,q=4} {barVal = 3,noteVal = 8} 120.00
+
+
+reverbRender :: [Real]
+reverbRender = sumAll [extendedRender,fakeReverb]
+
 
 newParams8 :: PcmWavParams
 newParams8 = {numChannels = 1, numBlocks = FurEliseSamples, samplingRate = 44100, bytesPerSample = 1}
@@ -113,10 +121,13 @@ newData16 = transform_one_channel extendedRender 1.0 Sixteen
 newData32 :: [Char]
 newData32 = transform_one_channel extendedRender 1.0 ThirtyTwo
 
+extraData32 :: [Char]
+extraData32 = transform_one_channel reverbRender 1.0 ThirtyTwo
+
 wavTest :: !*World -> *World
 wavTest w
-  #! (_, f, w) = fopen "test08.wav" FWriteData w
-  #! f = writePcmWav newParams32 newData32 f
+  #! (_, f, w) = fopen "test10_new.wav" FWriteData w
+  #! f = writePcmWav newParams32 extraData32 f
   #! (_, w) = fclose f w
   = w
 //Start = FurEliseLength
