@@ -6,7 +6,12 @@ import StdMaybe
 import Input.Chunks
 import Util.Byte, Util.TimeUtils
 
-:: PreviousDeltaTime :== Int
+:: AccumulatedTime :== Int
+:: InitialTime :== Int
+:: TSEvent :== (InitialTime, TimeSignature)
+:: TSEvents :== [TSEvent]
+:: TPEvent :== (InitialTime, Int)
+:: TPEvents :== [TPEvent]
 
 
 //store the useful information of header chunk		
@@ -30,8 +35,9 @@ import Util.Byte, Util.TimeUtils
 		event :: Event
 	}
 
-//note on,note off events and relative useful information
-::Event = NoteOn Channel Frequency Velocity| NoteOff Channel Frequency Velocity | Other
+//note on,note off,two meta events and relative useful information
+::Event = NoteOn Channel Frequency Velocity | NoteOff Channel Frequency Velocity
+		| TP Int | TS TimeSignature| Other
 
 //the information that read from the file
 :: Info = 
@@ -45,17 +51,39 @@ import Util.Byte, Util.TimeUtils
 
 
 readFile :: [Char] -> [Note]
-readFile l = processInfo(process l)
+readFile l
+	#! info = process l
+	= processInfo info (getT tp info) (getT ts info)
+	
+getT :: (AccumulatedTime TrackInfo -> [(InitialTime, a)]) Info -> [(InitialTime, a)]
+getT f {trackInfo} = flatten(map(\x = f 0 x)trackInfo)
+	
+tp :: AccumulatedTime TrackInfo -> TPEvents
+tp _ [] = []
+tp acc [m:ms] 
+	#! initialT = acc + m.deltaTime
+	= case m.event of 
+		TP tempo -> [(initialT, tempo):tp initialT ms]
+		_ -> tp initialT ms
+	
+ts :: AccumulatedTime TrackInfo -> TSEvents
+ts _ [] = []
+ts acc [m:ms] 
+	#! initialT = acc + m.deltaTime
+	= case m.event of 
+		TS timeS -> [(initialT, timeS):ts initialT ms]
+		_ -> ts initialT ms
+		
+processInfo :: Info TPEvents TSEvents-> [Note]
+processInfo {headerInfo,trackInfo} tp ts
+	= flatten(map (\x = note 0 x tp ts) trackInfo)
 
-processInfo :: Info -> [Note]
-processInfo {headerInfo,trackInfo} 
-	= flatten(map (\x = note 0 x) trackInfo)
-
-note :: PreviousDeltaTime TrackInfo -> [Note] 
-note _ [] = []
-note pd l
+note :: AccumulatedTime TrackInfo TPEvents TSEvents-> [Note] 
+note _ [] _ _= []
+note acc l tpe tse
 	#! {deltaTime,event} = hd l 
-	#! initialT = pd + deltaTime
+	#! initialT = acc + deltaTime
+	#! timeSig = findT (-1,{barVal = 4, noteVal = 4}) initialT tse 
 	= case event of
 		NoteOn ch bgFre veo -> [{
 				channel = ch,
@@ -63,17 +91,21 @@ note pd l
 				veolocity = veo,
 				initialTime = initialT,
 				duration = findDeltaTime bgFre (tl l),
-				/*
-					TODO: Remove hardcoding.
-					Currently hardcoded to Liszt Hungarian Rhapsody 2.
-				*/
-				ts = {barVal = 2, noteVal = 4},
-				temp = 80.0
-			} : note initialT (tl l)]
-		_ -> note initialT (tl l)
+				ts = timeSig,
+				temp = calcTempo (findT (-1,288*10^8/timeSig.noteVal) initialT tpe) timeSig.noteVal
+			} : note initialT (tl l) tpe tse]
+		_ -> note initialT (tl l) tpe tse
 		
+calcTempo :: Int Int -> Real
+calcTempo x v = 2.4*10.0^8.0 * (toReal v) * (toReal x)
 
+findT :: (Int,a) Int [(Int,a)] -> a
+findT (t,x) _ [] = x
+findT (t,x) initT [e:es]
+	| initT >= fst e && t <= fst e = findT e initT es
+	= findT (t,x) initT es
 
+	
 //return delta time to calculate the duration
 findDeltaTime :: Real TrackInfo -> Int
 findDeltaTime _ [] = 0
@@ -140,6 +172,8 @@ processEvent l
 		| getVelocity (l!!2) <> 0 = NoteOn (getChannel (l!!0)) (getFrequency (l!!1)) (getVelocity (l!!2))
 		= cons
 	| isNoteOff (l!!0) = cons
+	| isTimeSignature (take 2 l) = TS {barVal = toInt(l!!3),noteVal = 2^toInt(l!!4)}
+	| isTempo (take 2 l) = TP (fromBytes Unsigned BE(take 3 (drop 3 l)))
 	= Other
 
 eventLen:: Int [Char]->Int

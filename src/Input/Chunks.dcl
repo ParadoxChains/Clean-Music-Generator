@@ -21,6 +21,12 @@ isNoteOn :: Char -> Bool
 
 isNoteOff :: Char -> Bool
 
+isMeta :: Char -> Bool
+
+isTempo :: [Char] -> Bool
+
+isTimeSignature :: [Char] -> Bool
+
 getChannel :: Char -> Int
 
 getFrequency :: Char -> Frequency
