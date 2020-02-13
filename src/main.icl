@@ -1,14 +1,23 @@
 module main
 import StdEnv
 import Input.ReadFile
-//import Agglomerator
+import Util.Byte
+import Agglomerator
 
+/*
+read :: !*World -> (*World, [Note])
+read oldW
+ 	#! (b, oldF, newW) = fopen "Input/MIDI/debussy-clair-de-lune.mid" FReadData oldW
+ 	|not b = (newW, abort"can not open file")
+ 	#! (l, newF) = readBytes oldF
+ 	#! (b, newW2) = fclose newF newW
+ 	= (newW2, readFile l)
 
-Start = 0
-
+Start w = read w
+*/
 
 //USER SECTION
-/*You should change this as necessary.
+//You should change this as necessary.
 importMIDI :: String
 importMIDI = "./Input/MIDI/liz_rhap02.mid"
 
@@ -28,7 +37,7 @@ WavType = Square
 
 Bits :: BitVersion
 Bits = ThirtyTwo
-*/
+
 //NO GO ZONE
 //Don't change this Start line.
-//Start w = LetsGo importMIDI outputWave EnvProfile WavType Bits w
+Start w = LetsGo importMIDI outputWave EnvProfile WavType Bits w
