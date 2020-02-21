@@ -6,14 +6,14 @@ import Output.MiddleLayer, Output.Pcm
 import Synthesis.Accesstable, Synthesis.CasioEnvelope, Synthesis.Envelope,  Synthesis.GeneralEnvelope, Synthesis.Generate, Synthesis.Render, Synthesis.Wave, Synthesis.Wavetable
 import Util.Byte, Util.Constants, Util.ListUtils, Util.Monad, Util.Rand, Util.TimeUtils, Util.TypeDefs
 
-/* 
+/*
 //debug, file read
 LetsGo :: String String ADSR Wave BitVersion !*World -> [Note]
 LetsGo inFile outFile env1 wavType bits w
     #! (_, f, w) = fopen outFile FWriteData w
     #! (w, noteData) = read w inFile
     #! newChannelProfile = constructChannelProfile env1 wavType
-    = noteData 
+    = noteData
 */
 
 

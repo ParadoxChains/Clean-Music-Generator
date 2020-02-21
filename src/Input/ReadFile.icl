@@ -92,12 +92,13 @@ note acc l tpe tse
 				initialTime = initialT,
 				duration = findDeltaTime bgFre (tl l),
 				ts = timeSig,
-				temp = calcTempo (findT (-1,288*10^8/timeSig.noteVal) initialT tpe) timeSig.noteVal
+				temp = calcTempo (findT (-1,10^6*timeSig.noteVal/8) initialT tpe) timeSig.noteVal
 			} : note initialT (tl l) tpe tse]
 		_ -> note initialT (tl l) tpe tse
 		
 calcTempo :: Int Int -> Real
-calcTempo x v = 2.4*10.0^8.0 * (toReal v) * (toReal x)
+//calcTempo x v =  (toReal v) * (toReal x) / (2.4*10.0^8.0) 
+calcTempo x v = 1.5 * 10.0^7.0 * (toReal v) / (toReal x)
 
 findT :: (Int,a) Int [(Int,a)] -> a
 findT (t,x) _ [] = x
