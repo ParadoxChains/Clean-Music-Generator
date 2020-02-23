@@ -1,10 +1,7 @@
 implementation module Synthesis.Render
 import StdEnv
-import Util.TypeDefs
-import Util.TimeUtils
-import Util.ArrayUtils
-import Synthesis.Envelope
-import Synthesis.Generate
+import Util.TypeDefs, Util.TimeUtils, Util.ArrayUtils, Util.ListUtils
+import Synthesis.Envelope, Synthesis.Generate
 import Input.ReadFile
 
 
@@ -25,7 +22,7 @@ where
 numberOfSamples :: NoteChunk Int -> Int
 numberOfSamples x dur = (noteToSamples (convertDurToBeats dur x.timeSig) x.timeSig x.tempo) + releaseSamples
 where
-	releaseSamples = floor (1.0 / (toReal secondsToSamples x.dahdsr.release)) + 1
+	releaseSamples = floor (1.0 / (toReal (secondsToSamples x.dahdsr.release))) + 1
 
 
 normalizeList :: [Real] -> [Real]
@@ -46,12 +43,12 @@ where
 
 // ---------Possibly more efficient implementation----------
 
-sumUp :: (Int,[Real]) (Int,{Real}) -> (Int,[Real])
+sumUp :: (Int,[Real]) (Int,[Real]) -> (Int,[Real])
 sumUp (totalSamples,mainTrack) (offset,track) = (totalSamples,newTrack)
 where
 	offInd i
-	| i < offset = 0
-	= track.[1]
+	| i < offset = 0.0
+	= track!!i
 	newTrack = [mS+(offInd index) \\ mS <- mainTrack & index <-[0,1..totalSamples]]
 //					^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 // Sorry for C++ syntax, I could not remember lambda functions syntax
@@ -62,8 +59,8 @@ where
 	totalSamples = maxList [numberOfSamples x (x.note.initialTime+x.note.duration) \\ x <- chunkList]
 	silenceTrack = generateSilence totalSamples
 	renderedTrack = [((numberOfSamples x x.note.initialTime),(renderNoteChunk x)) \\ x <- chunkList]
-	renderedTrackArr = [(fst(ls),listToArr (snd ls)) \\ ls <- renderedTrack]
-	noteSum = foldl sumUp (totalSamples,silenceTrack) renderedTrack // Also, I do not remember foldLeft(or foldRight?)
+	//renderedTrackArr = [(fst(ls),listToArr (snd ls)) \\ ls <- renderedTrack]
+	(discard, noteSum) = foldl sumUp (totalSamples,silenceTrack) renderedTrack // Also, I do not remember foldLeft(or foldRight?)
 	normalized = normalizeList noteSum
 
 // --------------------------------------------------------
