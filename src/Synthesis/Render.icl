@@ -46,10 +46,13 @@ where
 
 // ---------Possibly more efficient implementation----------
 
-sumUp :: (Int,[Real]) (Int,{Real}) -> [Real]
+sumUp :: (Int,[Real]) (Int,{Real}) -> (Int,[Real])
 sumUp (totalSamples,mainTrack) (offset,track) = (totalSamples,newTrack)
 where
-	newTrack = [mS+((index < offset) ? 0 : track.[index]) \\ mS <- mainTrack & index <-[0,1..totalSamples]]
+	offInd i
+	| i < offset = 0
+	= track.[1]
+	newTrack = [mS+(offInd index) \\ mS <- mainTrack & index <-[0,1..totalSamples]]
 //					^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 // Sorry for C++ syntax, I could not remember lambda functions syntax
 
@@ -60,7 +63,7 @@ where
 	silenceTrack = generateSilence totalSamples
 	renderedTrack = [((numberOfSamples x x.note.initialTime),(renderNoteChunk x)) \\ x <- chunkList]
 	renderedTrackArr = [(fst(ls),listToArr (snd ls)) \\ ls <- renderedTrack]
-	noteSum = foldLeft sumUp (totalSamples,silenceTrack) renderedTrack // Also, I do not remember foldLeft(or foldRight?)
+	noteSum = foldl sumUp (totalSamples,silenceTrack) renderedTrack // Also, I do not remember foldLeft(or foldRight?)
 	normalized = normalizeList noteSum
 
 // --------------------------------------------------------
