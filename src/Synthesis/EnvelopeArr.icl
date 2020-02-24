@@ -8,7 +8,7 @@ ADSRtoDAHDSR::ADSR ->DAHDSR
 ADSRtoDAHDSR adsr = {delay = 0.0, attack = adsr.att, hold = 0.0, decay = adsr.dec,
 					 sustain = adsr.sus, release = adsr.rel}
 					
-DAHDSRtoADSR::DAHDSR->ADSR
+DAHDSRtoADSR::DAHDSR -> ADSR
 DAHDSRtoADSR dahdsr = {att = dahdsr.attack,dec = dahdsr.decay, 
 					   sus = dahdsr.sustain, rel = dahdsr.release}
 
@@ -54,8 +54,8 @@ where
 			 | noteDur <= delaySamples = 0.0
 			 | noteDur <= delaySamples+attackSamples = 1.0*((toReal (noteDur-delaySamples))/(dahdsr.attack * (toReal SAMPLING_RATE)))
 			 | noteDur <= delaySamples+attackSamples+holdSamples = 1.0
-			 | noteDur <= delaySamples+attackSamples+holdSamples+decaySamples = 1.0-(dahdsr.sustain*((toReal (shortLength-delaySamples-attackSamples-holdSamples))/(dahdsr.decay * (toReal SAMPLING_RATE))))
+			 | noteDur <= delaySamples+attackSamples+holdSamples+decaySamples = 1.0-(dahdsr.sustain*((toReal (noteDur-delaySamples-attackSamples-holdSamples))/(dahdsr.decay * (toReal SAMPLING_RATE))))
 			 = dahdsr.sustain
 
-applyEnvelope :: [Real] [Real] -> [Real]
-applyEnvelope wave envelope = [x*e \\ x <- wave & e <- envelope]
+applyEnvelope :: [Real] {Real} -> {Real}
+applyEnvelope wave envelope = {x*e \\ x <- wave & e <-: envelope}

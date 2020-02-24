@@ -1,4 +1,6 @@
 definition module Synthesis.EnvelopeArr
+import Util.TimeUtils
+import Util.Constants
 
 :: ADSR = {att :: Real
           ,dec :: Real
@@ -19,10 +21,10 @@ ADSRtoDAHDSR::ADSR ->DAHDSR
 DAHDSRtoADSR::DAHDSR->ADSR
 
 // Takes note duration and ADSR to generate envelope
-getADSR :: Real ADSR -> [Real]
+getADSR :: Beat TimeSignature Tempo ADSR -> {Real}
 
 // Takes note duration and DAHDSR to generate envelope
-getDAHDSR :: Real DAHDSR -> [Real]
+getDAHDSR :: Beat TimeSignature Tempo DAHDSR -> {Real}
 
 // Get's wave and envelope and applies envelope to wave
-applyEnvelope :: [Real] [Real] -> [Real] 
+applyEnvelope :: [Real] {Real} -> {Real}
