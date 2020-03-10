@@ -19,7 +19,7 @@ Start w = read w
 //USER SECTION
 //You should change this as necessary.
 importMIDI :: String
-importMIDI = "./Input/MIDI/liz_rhap02.mid"
+importMIDI = "./Input/MIDI/simple.mid"
 
 outputWave :: String
 outputWave = "./TestRenders/WAV/Liszt_Hungarian-Rhapsody-2.wav"

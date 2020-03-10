@@ -6,4 +6,7 @@ import Util.TypeDefs
 // Takes wave frequency and number of samples as parameters and generates 
 generate :: Wave Frequency Samples -> [Real]
 
+// TODO
+generateLocal :: Int Wave Frequency Samples -> Real
+
 

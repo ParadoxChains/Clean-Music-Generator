@@ -39,3 +39,7 @@ where
     (harmonics, amplitudes) = harmonics_amplitudes wavetype
 
 
+generateLocal :: Int Wave Frequency Samples -> Real
+generateLocal index _ _ _ = 0.0
+
+
