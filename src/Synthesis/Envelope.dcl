@@ -26,6 +26,7 @@ getADSR :: Beat TimeSignature Tempo ADSR -> [Real]
 
 // Takes note duration and DAHDSR to generate envelope
 getDAHDSR :: Beat TimeSignature Tempo DAHDSR -> [Real]
+getLocalDAHDSR :: Int Beat TimeSignature Tempo DAHDSR -> Real
 
 // Get's wave and envelope and applies envelope to wave
 applyEnvelope :: [Real] [Real] -> [Real] 

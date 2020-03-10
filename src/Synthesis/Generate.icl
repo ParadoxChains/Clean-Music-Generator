@@ -39,3 +39,7 @@ where
     (harmonics, amplitudes) = harmonics_amplitudes wavetype
 
 
+generateLocal :: Int Wave Frequency Samples -> Real
+generateLocal globalTime _ _ _ = 0.0
+
+
