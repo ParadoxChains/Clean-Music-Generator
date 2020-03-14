@@ -33,10 +33,10 @@ LetsGo inFile outFile env1 wavType bits w
     #! (w, noteData) = read w inFile
     #! newChannelProfile = constructChannelProfile env1 wavType
     #! realsData = render noteData newChannelProfile
-    #! data = transform_one_channel realsData 0.75 bits
+    #! data = transform_one_channel realsData 1.0 bits
     #! f = writePcmWav
         { numChannels    = 1
-        , numBlocks      = (length data / 1)
+        , numBlocks      = (length realsData / 2)
         , samplingRate   = SAMPLING_RATE
         , bytesPerSample = (translating_bit_version bits)/BYTE_SIZE
         } data f
