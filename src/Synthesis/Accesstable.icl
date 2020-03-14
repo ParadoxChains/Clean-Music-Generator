@@ -4,8 +4,6 @@ import Util.Constants
 import Util.ListUtils
 import Util.TypeDefs
 
-
-
 // Takes wavetable, frequency, harmonic and number of samples and gets us desired values from wavetable. 
 getValues :: {Real} Frequency Int Samples -> [Real]
 getValues waveTable frequency harmonic dur = [(getValue i waveTable) \\ i <- indexes]
