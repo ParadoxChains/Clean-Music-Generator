@@ -2,8 +2,6 @@ definition module Input.ReadFile
 import StdMaybe
 import Util.TypeDefs, Util.TimeUtils
 
-
-
 :: Note = 
 	{
 		channel :: Channel,
@@ -15,4 +13,9 @@ import Util.TypeDefs, Util.TimeUtils
 		temp :: Tempo
 	}
 
+/*
+Name: readFile
+Args: a list of bytes
+Output: a list of note messages
+*/
 readFile :: [Char] -> [Note]
