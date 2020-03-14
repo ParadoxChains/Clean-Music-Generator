@@ -22,7 +22,7 @@ importMIDI :: String
 importMIDI = "./Input/MIDI/simple.mid"
 
 outputWave :: String
-outputWave = "./TestRenders/WAV/simple_test-03-14_01.wav"
+outputWave = "./simple_test-03-14_01.wav"
 
 EnvProfile :: ADSR
 EnvProfile = {
