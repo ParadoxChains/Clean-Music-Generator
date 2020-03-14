@@ -16,5 +16,3 @@ wave :: [Real] [Real] Frequency Samples -> [Real]
 wave h a freq dur = sumAll l
 where 
     l = (get sineTable h a freq dur)
-
-

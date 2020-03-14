@@ -24,3 +24,4 @@ render :: [Note] ChannelProfile -> [Real]
                         wavType :: Wave,
                         envelope :: DAHDSR
                     }
+                    

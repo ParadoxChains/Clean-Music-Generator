@@ -53,12 +53,3 @@ where
 
 applyEnvelope :: [Real] [Real] -> [Real]
 applyEnvelope wave envelope = [x*e \\ x <- wave & e <- envelope]
-
-
-
-
-
-
-
-
-
