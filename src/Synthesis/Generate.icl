@@ -44,6 +44,6 @@ generateLocal localTime waveType freq _
 | localTime < 0 = 0.0
 = (generate waveType freq listSize)!!listIndex
 where
-    listSize = SAMPLING_RATE/freq
+    listSize = toInt((toReal SAMPLING_RATE)/(toReal freq))
     listIndex = localTime rem listSize
 

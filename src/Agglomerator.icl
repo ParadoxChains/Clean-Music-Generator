@@ -16,7 +16,7 @@ LetsGo inFile outFile env1 wavType bits w
     = noteData
 */
 
-
+/*
 //debug, render.
 LetsGo :: String String ADSR Wave BitVersion !*World -> [Real]
 LetsGo inFile outFile env1 wavType bits w
@@ -24,9 +24,9 @@ LetsGo inFile outFile env1 wavType bits w
     #! (w, noteData) = read w inFile
     #! newChannelProfile = constructChannelProfile env1 wavType
     = render noteData newChannelProfile
+*/
 
 
-/*
 LetsGo :: String String ADSR Wave BitVersion !*World -> *World
 LetsGo inFile outFile env1 wavType bits w
     #! (_, f, w) = fopen outFile FWriteData w
@@ -42,7 +42,7 @@ LetsGo inFile outFile env1 wavType bits w
         } data f
     #! (_, w) = fclose f w
     = w
-*/
+
 constructChannelProfile :: ADSR Wave -> ChannelProfile
 constructChannelProfile env1 wT = out
 where

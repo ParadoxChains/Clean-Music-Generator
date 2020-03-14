@@ -13,7 +13,7 @@ import Util.Byte, Util.Constants, Util.ListUtils, Util.Monad, Util.Rand, Util.Ti
 
 
 //debug, render.
-LetsGo :: String String ADSR Wave BitVersion !*World -> [Real]
+//LetsGo :: String String ADSR Wave BitVersion !*World -> [Real]
 
 
-//LetsGo :: String String ADSR Wave BitVersion !*World -> *World
+LetsGo :: String String ADSR Wave BitVersion !*World -> *World
