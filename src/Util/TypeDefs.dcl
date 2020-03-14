@@ -39,6 +39,19 @@ must be converted appropriately.*/
 // Strating time of an event
 :: InitialTime :== Int
 
+:: Tempo :== Real
+
+:: Time = {minutes :: Real
+          ,seconds :: Real
+          }
+
+:: TimeSignature = {barVal :: Int
+                   ,noteVal :: Int
+                   }
+
+:: Beat = {p :: Int,
+           q :: Int}
+
 // Strating time of a time signature event and time signature
 :: TSEvent :== (InitialTime, TimeSignature)
 
