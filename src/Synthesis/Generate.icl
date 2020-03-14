@@ -36,3 +36,4 @@ generate wavetype freq dur = wave harmonics amplitudes freq dur
 where
     (harmonics, amplitudes) = harmonics_amplitudes wavetype
 
+

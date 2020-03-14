@@ -3,7 +3,9 @@ implementation module Agglomerator
 import StdEnv, StdFile
 import Input.Chunks, Input.ReadFile
 import Output.MiddleLayer, Output.Pcm
-import Synthesis.Accesstable, Synthesis.CasioEnvelope, Synthesis.Envelope,  Synthesis.GeneralEnvelope, Synthesis.Generate, Synthesis.Render, Synthesis.Wave, Synthesis.Wavetable
+import Synthesis.Accesstable, Synthesis.CasioEnvelope, Synthesis.Envelope,  Synthesis.GeneralEnvelope, Synthesis.Generate, Synthesis.Wave, Synthesis.Wavetable
+//import Synthesis.BufferRender
+import Synthesis.InlineRender
 import Util.Byte, Util.Constants, Util.ListUtils, Util.Monad, Util.Rand, Util.TimeUtils, Util.TypeDefs
 
 /*
@@ -16,7 +18,7 @@ LetsGo inFile outFile env1 wavType bits w
     = noteData
 */
 
-
+/*
 //debug, render.
 LetsGo :: String String ADSR Wave BitVersion !*World -> [Real]
 LetsGo inFile outFile env1 wavType bits w
@@ -24,25 +26,25 @@ LetsGo inFile outFile env1 wavType bits w
     #! (w, noteData) = read w inFile
     #! newChannelProfile = constructChannelProfile env1 wavType
     = render noteData newChannelProfile
+*/
 
 
-/*
 LetsGo :: String String ADSR Wave BitVersion !*World -> *World
 LetsGo inFile outFile env1 wavType bits w
     #! (_, f, w) = fopen outFile FWriteData w
     #! (w, noteData) = read w inFile
     #! newChannelProfile = constructChannelProfile env1 wavType
     #! realsData = render noteData newChannelProfile
-    #! data = transform_one_channel realsData 0.75 bits
+    #! data = transform_one_channel realsData 2.0 bits
     #! f = writePcmWav
         { numChannels    = 1
-        , numBlocks      = (length data / 1)
+        , numBlocks      = (length realsData / 2)
         , samplingRate   = SAMPLING_RATE
         , bytesPerSample = (translating_bit_version bits)/BYTE_SIZE
         } data f
     #! (_, w) = fclose f w
     = w
-*/
+
 constructChannelProfile :: ADSR Wave -> ChannelProfile
 constructChannelProfile env1 wT = out
 where

@@ -25,7 +25,7 @@ timeToSamples t = secondsToSamples (timeToSeconds t)
 noteToSamples :: Beat TimeSignature Tempo -> Int
 noteToSamples b timeSig t = secondsToSamples totalTime
 where
-	beats = ((toReal (b.p*timeSig.noteVal)) / (toReal b.q))
+	beats = ((toReal (b.p*timeSig.noteVal)) / (toReal b.q * 4.0))
 	beatLength = 60.0 / t
 	totalTime = beats * beatLength
 

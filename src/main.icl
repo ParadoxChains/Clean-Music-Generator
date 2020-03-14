@@ -4,25 +4,22 @@ import Input.ReadFile
 import Util.Byte
 import Agglomerator
 
-/*
-read :: !*World -> (*World, [Note])
-read oldW
- 	#! (b, oldF, newW) = fopen "Input/MIDI/debussy-clair-de-lune.mid" FReadData oldW
- 	|not b = (newW, abort"can not open file")
- 	#! (l, newF) = readBytes oldF
- 	#! (b, newW2) = fclose newF newW
- 	= (newW2, readFile l)
-
-Start w = read w
-*/
 
 //USER SECTION
 //You should change this as necessary.
+
+/*
+Name: importMIDI
+Arguments: None
+Output: String
+
+Used to set the constant of the input file.
+*/
 importMIDI :: String
-importMIDI = "./Input/MIDI/liz_rhap02.mid"
+importMIDI = "./Input/MIDI/FurElise-Short.mid"
 
 outputWave :: String
-outputWave = "./TestRenders/WAV/Liszt_Hungarian-Rhapsody-2.wav"
+outputWave = "./furelise_test-03-14_11.wav"
 
 EnvProfile :: ADSR
 EnvProfile = {
@@ -33,7 +30,7 @@ EnvProfile = {
              }
 
 WavType :: Wave
-WavType = Square
+WavType = Sawtooth
 
 Bits :: BitVersion
 Bits = ThirtyTwo
