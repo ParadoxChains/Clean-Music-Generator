@@ -33,7 +33,7 @@ EnvProfile = {
              }
 
 WavType :: Wave
-WavType = Square
+WavType = Sine
 
 Bits :: BitVersion
 Bits = ThirtyTwo
