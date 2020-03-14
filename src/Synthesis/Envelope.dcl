@@ -28,4 +28,4 @@ getADSR :: Beat TimeSignature Tempo ADSR -> [Real]
 getDAHDSR :: Beat TimeSignature Tempo DAHDSR -> [Real]
 
 // Get's wave and envelope and applies envelope to wave
-applyEnvelope :: [Real] [Real] -> [Real] 
+applyEnvelope :: [Real] [Real] -> [Real]

@@ -9,5 +9,3 @@ definition module Synthesis.GeneralEnvelope
             }
 
 getEnvelope :: Real GenEnv -> [Real] 
-
-

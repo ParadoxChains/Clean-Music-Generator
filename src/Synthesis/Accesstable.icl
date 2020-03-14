@@ -31,10 +31,7 @@ getValue r waveTable
 interpolate :: Real Int Int {Real} -> Real
 interpolate r x0 x1 waveTable = (waveTable.[x0]) + (r-toReal(x0)) * (waveTable.[x0] - waveTable.[x1]) / toReal(x1-x0)
 
-
-// Takes wavetable, list of harmonics, list of amplitudes, frequency and number of samples
 get :: {Real} [Real] [Real] Frequency Samples -> [[Real]]
 get waveTable harmonics amplitudes freq dur = [map (\x = x * ampl) l \\ l <- values & ampl <- amplitudes]
 where
     values = [getValues waveTable freq (toInt(har)) dur \\ har <- harmonics]
-

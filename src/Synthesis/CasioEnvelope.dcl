@@ -12,5 +12,3 @@ definition module Synthesis.CasioEnvelope
              }    
 
 getCasioCZ :: Real CasioCZ -> [Real]
-
-

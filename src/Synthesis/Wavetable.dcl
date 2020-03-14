@@ -1,4 +1,8 @@
 definition module Synthesis.Wavetable
 
-// Takes amplitude as parameter and generates Sine wave table.
+/*
+Name: wavetable
+Input: Amplitude
+Output: One period of sine wave.
+*/
 wavetable :: Real -> {Real} 
