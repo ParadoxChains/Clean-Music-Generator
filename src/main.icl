@@ -16,10 +16,10 @@ Output: String
 Used to set the constant of the input file.
 */
 importMIDI :: String
-importMIDI = "./Input/MIDI/FurElise-Short.mid"
+importMIDI = "./Input/MIDI/mz_330_1.mid"
 
 outputWave :: String
-outputWave = "./furelise_test-03-14_11.wav"
+outputWave = "./mozart_test-03-14_01.wav"
 
 EnvProfile :: ADSR
 EnvProfile = {
@@ -30,7 +30,7 @@ EnvProfile = {
              }
 
 WavType :: Wave
-WavType = Sawtooth
+WavType = Sine
 
 Bits :: BitVersion
 Bits = ThirtyTwo
