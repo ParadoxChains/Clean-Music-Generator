@@ -16,7 +16,7 @@ renderIndex globalTime chunk
 | localTime < 0  = 0.0
 = envelope * wave * (toReal chunk.note.veolocity)
 where
-	localTime = (globalTime - (secondsToSamples (toReal chunk.note.initialTime)))
+	localTime = (globalTime - (noteToSamples (convertDurToBeats chunk.initialTime chunk.timeSig) chunk.timeSig chunk.tempo))
     chunkBeats = (convertDurToBeats chunk.note.duration chunk.timeSig)
 	sampleNum = noteToSamples chunkBeats chunk.timeSig chunk.tempo
     wave = generateLocal localTime chunk.wave chunk.note.frequency sampleNum
