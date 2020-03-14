@@ -40,6 +40,10 @@ where
 
 
 generateLocal :: Int Wave Frequency Samples -> Real
-generateLocal localTime _ _ _ = 0.0
-
+generateLocal localTime waveType freq _ 
+| localTime < 0 = 0.0
+= (generate waveType freq listSize)!!listIndex
+where
+    listSize = SAMPLING_RATE/freq
+    listIndex = localTime rem listSize
 
