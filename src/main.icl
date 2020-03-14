@@ -16,10 +16,10 @@ Output: String
 Used to set the constant of the input file.
 */
 importMIDI :: String
-importMIDI = "./Input/MIDI/FurElise-Short.mid"
+importMIDI = "./Input/MIDI/FurElise.mid"
 
 outputWave :: String
-outputWave = "./furelise_test-03-14_11.wav"
+outputWave = "./furelise_test-03-14_13.wav"
 
 EnvProfile :: ADSR
 EnvProfile = {
