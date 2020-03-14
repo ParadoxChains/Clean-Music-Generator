@@ -40,6 +40,6 @@ where
 
 
 generateLocal :: Int Wave Frequency Samples -> Real
-generateLocal globalTime _ _ _ = 0.0
+generateLocal localTime _ _ _ = 0.0
 
 
