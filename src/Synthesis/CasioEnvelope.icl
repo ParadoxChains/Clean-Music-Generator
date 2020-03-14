@@ -46,6 +46,3 @@ where
 	llst = level2 - ((level2-level1)-rt*(toReal(floor ((level2-level1)/rt))))
 	lst | llst == level2 = 0.0
 		= ((level2-llst)/rt)
-
-
-

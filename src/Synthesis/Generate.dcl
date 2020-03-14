@@ -3,10 +3,10 @@ import Synthesis.Wave
 import Util.TypeDefs
 
 
-// Takes wave frequency and number of samples as parameters and generates 
+/*
+Name: generate
+Input: Wave type, Frequency, Number of samples
+Output: Generated wave
+Interface for 'wave' function from Generate.dcl
+*/
 generate :: Wave Frequency Samples -> [Real]
-
-// TODO
-//generateLocal :: Int Wave Frequency Samples -> Real
-
-

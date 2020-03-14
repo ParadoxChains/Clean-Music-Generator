@@ -10,21 +10,19 @@ import Util.TypeDefs
 import Util.ArrayUtils
 
 
-// noise wave
-// requires VERY large heap  --  100M is enough
+// generating random numbers
+randoms = map (\x = x rem 40) (take 100 (genRandInt (genRandInt 1)))
+
+// noise wave characteristics
 noise_harmonics = map (\x = x * 36.0) (take 100 (genRandReal 1))
 noise_amplitudes = repeatn 100 1.0
-randoms = map (\x = x rem 40) (take 100 (genRandInt 1))
 
-
+// takes Wave type as parameter and gives appropriate tuple of harmonics and amplitudes.
 harmonics_amplitudes :: Wave -> ([Real], [Real])
 harmonics_amplitudes Sine = ([1.0], [1.0])
 harmonics_amplitudes Sawtooth = ([1.0,2.0..50.0],[ (-1.0)^(k+1.0) * (1.0 / k) \\ k <- [1.0,2.0..50.0]])
 harmonics_amplitudes Square = ([1.0,3.0..100.0], [1.0 / x \\ x <- [1.0,3.0..100.0]])
 harmonics_amplitudes Triangle = ([1.0,3.0..100.0], [ (-1.0)^(i + 1.0) * (1.0/(k^2.0)) \\ k <- [1.0,3.0..100.0] & i <- [1.0..] ])
-
-
-
 
 generate :: Wave Frequency Samples -> [Real]
 generate Noise freq dur = sumAll l
@@ -38,13 +36,4 @@ generate wavetype freq dur = wave harmonics amplitudes freq dur
 where
     (harmonics, amplitudes) = harmonics_amplitudes wavetype
 
-/*
-generateLocal :: Int Wave Frequency Samples -> Real
-generateLocal localTime waveType freq _ 
-| localTime < 0 = 0.0
-= (generate waveType freq listSize)!!listIndex
-where
-    listSize = toInt((toReal SAMPLING_RATE)/(toReal freq))
-    listIndex = localTime rem listSize
-*/
 
