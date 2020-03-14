@@ -32,3 +32,21 @@ must be converted appropriately.*/
 :: Endianness = BE | LE
 
 :: BitVersion = Eight | Sixteen | ThirtyTwo
+
+// Sum of delta time
+:: AccumulatedTime :== Int
+
+// Strating time of an event
+:: InitialTime :== Int
+
+// Strating time of a time signature event and time signature
+:: TSEvent :== (InitialTime, TimeSignature)
+
+// A list of time signature events
+:: TSEvents :== [TSEvent]
+
+// Starting time of a tempo event and the tempo value
+:: TPEvent :== (InitialTime, Int)
+
+// A list of tempo events
+:: TPEvents :== [TPEvent]
