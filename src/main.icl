@@ -19,7 +19,7 @@ importMIDI :: String
 importMIDI = "./Input/MIDI/FurElise-Short.mid"
 
 outputWave :: String
-outputWave = "./furelise_test-03-14_05.wav"
+outputWave = "./furelise_test-03-14_11.wav"
 
 EnvProfile :: ADSR
 EnvProfile = {
@@ -30,7 +30,7 @@ EnvProfile = {
              }
 
 WavType :: Wave
-WavType = Sine
+WavType = Sawtooth
 
 Bits :: BitVersion
 Bits = ThirtyTwo

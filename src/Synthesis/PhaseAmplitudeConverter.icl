@@ -21,7 +21,7 @@ generateLocal localIndex Sine freq = sampleOut
 where
     cycleSize = (toReal SAMPLING_RATE)/freq
     tableSize = sineTableSize
-    actualPhase = ((toReal localIndex)/cycleSize) * (toReal tableSize)
+    actualPhase = (((toReal localIndex))/cycleSize) * (toReal tableSize)
     phase = toInt actualPhase
     decimals = (toReal phase) - actualPhase
     a | phase == 0 = sineTable.[tableSize rem tableSize] = sineTable.[phase rem tableSize]
@@ -37,23 +37,33 @@ generateLocal localIndex Square freq = sampleOut
 where
     cycleSize = (toReal SAMPLING_RATE)/freq
     tableSize = sineTableSize
-    actualPhase = ((toReal localIndex)/cycleSize) * (toReal tableSize)
+    actualPhase = ( (toReal localIndex) /cycleSize) * (toReal tableSize)
     phase = toInt actualPhase
-    sampleOut | phase < (tableSize/2) = -1.0 = 1.0
+    sampleOut | (phase rem tableSize) < (tableSize/2) = -1.0 = 1.0
 generateLocal localIndex Triangle freq = sampleOut
 where
     cycleSize = (toReal SAMPLING_RATE)/freq
     tableSize = toReal(sineTableSize)
-    actualPhase = ((toReal localIndex)/cycleSize) * tableSize
-    phase = toInt actualPhase
+    actualPhase = ((toReal localIndex)/cycleSize) * (toReal tableSize)
+    phase = actualPhase remReal (toReal tableSize)
     sampleOut
-    | actualPhase <= (0.5*tableSize) = (actualPhase - (0.25*tableSize))/tableSize
-    = (((tableSize - actualPhase)-(0.25*tableSize))*4.0)/tableSize
+    | phase <= (0.5*tableSize) = (phase - (0.25*tableSize))/tableSize
+    = (((tableSize - phase)-(0.25*tableSize))*4.0)/tableSize
 generateLocal localIndex Pulse freq = 0.0
 generateLocal localIndex Sawtooth freq = sampleOut
 where
     cycleSize = (toReal SAMPLING_RATE)/freq
     tableSize = toReal(sineTableSize)
-    actualPhase = ((toReal localIndex)/cycleSize) * tableSize
-    sampleOut = actualPhase/tableSize
+    actualPhase = ((toReal localIndex)/cycleSize) * (toReal tableSize)
+    phase = actualPhase remReal (toReal tableSize)
+    sampleOut = phase/tableSize
 
+(remReal) :: Real Real -> Real
+(remReal) x y = result
+where
+    a = x/y
+    b = toReal(toInt a)
+    c = a - b
+    result
+    | x > y = x + (y*(c-b))
+    = x

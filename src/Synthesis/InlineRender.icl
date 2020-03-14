@@ -15,13 +15,15 @@ generateSilence silenceSamples = [0.0 \\ x <- [1,2..silenceSamples]]
 renderIndex :: Int NoteChunk -> Real
 renderIndex globalTime chunk 
 | localTime < 0  = 0.0
-= envelope * wave * (toReal chunk.note.veolocity)
+= resultSample
 where
 	localTime = (globalTime - (noteToSamples (convertDurToBeats chunk.note.initialTime chunk.timeSig) chunk.timeSig chunk.tempo))
     chunkBeats = (convertDurToBeats chunk.note.duration chunk.timeSig)
 	sampleNum = noteToSamples chunkBeats chunk.timeSig chunk.tempo
     wave = generateLocal localTime chunk.wave chunk.note.frequency 
     envelope = getLocalDAHDSR localTime chunkBeats chunk.timeSig chunk.tempo chunk.dahdsr 
+	appliedEnvelope = envelope * wave * (toReal chunk.note.veolocity)
+	resultSample = appliedEnvelope
 
 numberOfSamples :: NoteChunk Int -> Int
 numberOfSamples x dur = (noteToSamples (convertDurToBeats dur x.timeSig) x.timeSig x.tempo) + releaseSamples
