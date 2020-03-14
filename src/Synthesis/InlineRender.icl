@@ -7,6 +7,7 @@ import Util.ListUtils
 import Synthesis.Envelope
 import Synthesis.Generate
 import Input.ReadFile
+import Synthesis.PhaseAmplitudeConverter
 
 generateSilence :: Int -> [Real]
 generateSilence silenceSamples = [0.0 \\ x <- [1,2..silenceSamples]]
@@ -19,7 +20,7 @@ where
 	localTime = (globalTime - (noteToSamples (convertDurToBeats chunk.note.initialTime chunk.timeSig) chunk.timeSig chunk.tempo))
     chunkBeats = (convertDurToBeats chunk.note.duration chunk.timeSig)
 	sampleNum = noteToSamples chunkBeats chunk.timeSig chunk.tempo
-    wave = generateLocal localTime chunk.wave chunk.note.frequency sampleNum
+    wave = generateLocal localTime chunk.wave chunk.note.frequency 
     envelope = getLocalDAHDSR localTime chunkBeats chunk.timeSig chunk.tempo chunk.dahdsr 
 
 numberOfSamples :: NoteChunk Int -> Int

@@ -38,7 +38,7 @@ generate wavetype freq dur = wave harmonics amplitudes freq dur
 where
     (harmonics, amplitudes) = harmonics_amplitudes wavetype
 
-
+/*
 generateLocal :: Int Wave Frequency Samples -> Real
 generateLocal localTime waveType freq _ 
 | localTime < 0 = 0.0
@@ -46,4 +46,5 @@ generateLocal localTime waveType freq _
 where
     listSize = toInt((toReal SAMPLING_RATE)/(toReal freq))
     listIndex = localTime rem listSize
+*/
 

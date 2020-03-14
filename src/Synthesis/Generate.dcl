@@ -7,6 +7,6 @@ import Util.TypeDefs
 generate :: Wave Frequency Samples -> [Real]
 
 // TODO
-generateLocal :: Int Wave Frequency Samples -> Real
+//generateLocal :: Int Wave Frequency Samples -> Real
 
 
