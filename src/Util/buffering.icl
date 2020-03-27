@@ -2,6 +2,7 @@ implementation module Util.buffering
 import StdEnv
 
 //to divide a list into current amount of blocks
+
 buffer::[Real] Int -> [[Real]]
 buffer list size
 |size == 0 = []
