@@ -54,7 +54,7 @@ where
 	totalSamples = maxList [numberOfSamples x (x.note.initialTime+x.note.duration) \\ x <- chunkList]
 
 renderTotalSamples :: [Note] ChannelProfile -> Int
-render noteList chanProf = renderAux chunkList
+renderTotalSamples noteList chanProf = renderTotalSamplesAux chunkList
 where
 	chunkList = [noteToChunk nt chanProf \\ nt <- noteList]
 
@@ -62,15 +62,15 @@ totalRenderedAux :: [NoteChunk] -> Int
 totalRenderedAux chunkList = sum [numberOfSamples x x.note.duration \\ x <- chunkList]
 
 totalRendered :: [Note] ChannelProfile -> Int
-totalRendered noteList chanProf = renderAux chunkList
+totalRendered noteList chanProf = totalRenderedAux chunkList
 where
 	chunkList = [noteToChunk nt chanProf \\ nt <- noteList]
 
 renderDataAux :: [NoteChunk] -> [(Int,Int)]
-renderDatadAux chunkList = [((numberOfSamples x x.note.duration),(numberOfSamples x (x.note.initialTime+x.note.duration)))  \\ x <- chunkList]
+renderDataAux chunkList = [((numberOfSamples x x.note.duration),(numberOfSamples x (x.note.initialTime+x.note.duration)))  \\ x <- chunkList]
 
 renderData :: [Note] ChannelProfile -> [(Int,Int)]
-renderData noteList chanProf = renderAux chunkList
+renderData noteList chanProf = renderDataAux chunkList
 where
 	chunkList = [noteToChunk nt chanProf \\ nt <- noteList]
 

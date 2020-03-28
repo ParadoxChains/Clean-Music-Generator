@@ -1,0 +1,17 @@
+==File Diagnostics==
+    File name: ./Input/MIDI/simple.mid
+    Notes read from file: 18
+    Samples rendered: 413083
+    Execution: 2.87  Garbage collection: 0.38  Total: 3.25
+
+==File Diagnostics==
+    File name: ./Input/MIDI/FurElise-Short.mid
+    Notes read from file: 54
+    Samples rendered: 450923
+    Execution: 10.32  Garbage collection: 0.85  Total: 11.17
+
+==File Diagnostics==
+    File name: ./Input/MIDI/FurElise.mid
+    Notes read from file: 298
+    Samples rendered: 2356043
+    Execution: 296.24  Garbage collection: 18.43  Total: 314.67
