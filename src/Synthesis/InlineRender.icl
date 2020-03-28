@@ -42,11 +42,39 @@ where
     renderedTrack = [sum [renderIndex x chunk \\ chunk <- chunkList] \\ x <-[1,2..totalSamples]];
 	normalized = normalizeList renderedTrack (maxList [abs x \\ x <- renderedTrack])
 
-
 render :: [Note] ChannelProfile -> [Real]
 render noteList chanProf = renderAux chunkList
 where
 	chunkList = [noteToChunk nt chanProf \\ nt <- noteList]
+
+//-----------------------------------------------------------------------------
+renderTotalSamplesAux :: [NoteChunk] -> Int
+renderTotalSamplesAux chunkList = totalSamples
+where
+	totalSamples = maxList [numberOfSamples x (x.note.initialTime+x.note.duration) \\ x <- chunkList]
+
+renderTotalSamples :: [Note] ChannelProfile -> Int
+render noteList chanProf = renderAux chunkList
+where
+	chunkList = [noteToChunk nt chanProf \\ nt <- noteList]
+
+totalRenderedAux :: [NoteChunk] -> Int
+totalRenderedAux chunkList = sum [numberOfSamples x x.note.duration \\ x <- chunkList]
+
+totalRendered :: [Note] ChannelProfile -> Int
+totalRendered noteList chanProf = renderAux chunkList
+where
+	chunkList = [noteToChunk nt chanProf \\ nt <- noteList]
+
+renderDataAux :: [NoteChunk] -> [(Int,Int)]
+renderDatadAux chunkList = [((numberOfSamples x x.note.duration),(numberOfSamples x (x.note.initialTime+x.note.duration)))  \\ x <- chunkList]
+
+renderData :: [Note] ChannelProfile -> [(Int,Int)]
+renderData noteList chanProf = renderAux chunkList
+where
+	chunkList = [noteToChunk nt chanProf \\ nt <- noteList]
+
+//-------------------------------------------------------------------------------
 
 noteToChunk :: Note ChannelProfile -> NoteChunk
 noteToChunk nt chanProf = {note = nt, wave = chanProf.wavType, timeSig = nt.ts, tempo = nt.temp, dahdsr = chanProf.envelope}
