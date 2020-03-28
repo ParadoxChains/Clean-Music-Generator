@@ -2,17 +2,42 @@ definition module Util.complexUtils
 
 :: Complex = {real :: Real, imaginary :: Real}
 
-//for adding complex numbers
+/*
+Name: instance +
+Input: record: Complex 
+Output: record: Complex
+*/
+
 instance + Complex
 
-//for subtracting complex numbers
+
+/*
+Name: instance -
+Input: record: Complex 
+Output: record: Complex
+*/
+
 instance - Complex
 
-//for multiplying complex numbers
+
+/*
+Name: instance *
+Input: record: Complex 
+Output: record: Complex
+*/
+
 instance * Complex
 
-//to find a conjugate of complex number
-conjugate::Complex->Complex
-
-// for dividing complex numbers
+/*
+Name: instance /
+Input: record: Complex 
+Output: record: Complex
+*/
 instance / Complex
+
+/*
+Name: conjugate
+Input: record: Complex 
+Output: record: Complex
+*/
+conjugate::Complex->Complex

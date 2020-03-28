@@ -1,13 +1,30 @@
 definition module Util.decibelConverts
 
-//convert power ratio to decibels
+/*
+Name: powerToDb
+Input: power ratio
+Output: power ratio converted into decibels
+*/
 powerToDb::Real -> Real
 
-// convert decibels to power ratio
+
+/*
+Name: DbToPower
+Input: decibels
+Output: decibel converted into power ratio
+*/
 DbToPower::Real -> Real
 
-// convert amplitude ratio to decibels
+/*
+Name: amplitudeToDb
+Input: amplitudes
+Output: amplitudes converted into decibels
+*/
 amplitudeToDb::Real -> Real
 
-// convert decibels to amplitude ratio
+/*
+Name: DbToAmplitude
+Input: decibels
+Output: decibels converted into amplitudes
+*/
 DbToAmplitude::Real -> Real

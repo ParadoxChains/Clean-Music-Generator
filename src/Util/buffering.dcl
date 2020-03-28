@@ -1,4 +1,10 @@
 definition module Util.buffering
 
-//to divide a list into current amount of blocks
+
+/*
+Name: buffer
+Input: list of Reals and Int -amount of blocks
+Output: list of lists of Reals 
+*/
+
 buffer::[Real] Int -> [[Real]]
