@@ -4,14 +4,27 @@
     Samples rendered: 413083
     Execution: 2.87  Garbage collection: 0.38  Total: 3.25
 
+
 ==File Diagnostics==
     File name: ./Input/MIDI/FurElise-Short.mid
     Notes read from file: 54
     Samples rendered: 450923
     Execution: 10.32  Garbage collection: 0.85  Total: 11.17
+    
 
 ==File Diagnostics==
     File name: ./Input/MIDI/FurElise.mid
     Notes read from file: 298
     Samples rendered: 2356043
     Execution: 296.24  Garbage collection: 18.43  Total: 314.67
+
+
+==Statistics==
+    Linear Fit: 1.09297 x - 31.6562
+        Variance: 0.99078
+
+    Quadratic Fit: 2.49444 - 0.0411621 x + 0.00344592 x^2
+        Variance: 1
+
+    Exponential Fit: 4.00456 e^(0.0144421 x)
+        Variance: 0.99991
