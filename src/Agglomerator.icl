@@ -45,6 +45,38 @@ LetsGo inFile outFile env1 wavType bits w
     #! (_, w) = fclose f w
     = w
 
+Diagnostics :: [String] String ADSR Wave BitVersion !*World -> *World
+Diagnostics inFiles outFile env1 wavType bits w
+    #! (_, f, w) = fopen outFile FWriteData w
+    // #! (w, noteData) = read w inFile
+    // #! noteCount = length noteData
+    // #! newChannelProfile = constructChannelProfile env1 wavType
+    // #! samplesCount = renderTotalSamples noteData newChannelProfile
+    // #! data = makeDiagsString inFile noteCount samplesCount
+    #! (w, data) = makeDiags inFiles env1 wavType bits w ""
+    #! f = writeDiag data f
+    #! (_, w) = fclose f w
+    = w
+
+makeDiags :: [String] ADSR Wave BitVersion !*World String -> (*World, String)
+makeDiags [] env1 wavType bits w acc = (w,acc)
+makeDiags [first:rest] env1 wavType bits w acc
+    #! (w, noteData) = read w first
+    #! noteCount = length noteData
+    #! newChannelProfile = constructChannelProfile env1 wavType
+    #! samplesCount = renderTotalSamples noteData newChannelProfile
+    #! data = makeDiagsString first noteCount samplesCount
+    = makeDiags rest env1 wavType bits w (acc +++ data +++ "\n")
+
+makeDiagsString :: String Int Int -> String
+makeDiagsString inFile notes samples = "==File Diagnostics==\n" +++ "    File name: " +++ inFile +++ "\n" +++ "    Notes read from file: " +++ (toString notes) +++ "\n" +++ "    Samples rendered: " +++ (toString samples) +++ "\n"
+
+writeDiag :: !String !*File -> *File
+writeDiag diags f
+  #! f = fwrites diags f
+  = f
+
+
 constructChannelProfile :: ADSR Wave -> ChannelProfile
 constructChannelProfile env1 wT = out
 where

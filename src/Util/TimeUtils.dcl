@@ -1,18 +1,7 @@
 definition module Util.TimeUtils
 import Input.ReadFile
+import Util.TypeDefs
 
-:: Tempo :== Real
-
-:: Time = {minutes :: Real
-          ,seconds :: Real
-          }
-
-:: TimeSignature = {barVal :: Int
-                   ,noteVal :: Int
-                   }
-
-:: Beat = {p :: Int,
-           q :: Int}
 
 instance + Beat
 instance == Beat
