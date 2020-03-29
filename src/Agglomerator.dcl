@@ -17,3 +17,5 @@ import Util.Byte, Util.Constants, Util.ListUtils, Util.Monad, Util.Rand, Util.Ti
 
 
 LetsGo :: String String ADSR Wave BitVersion !*World -> *World
+
+Diagnostics :: [String] String ADSR Wave BitVersion !*World -> *World

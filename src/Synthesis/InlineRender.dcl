@@ -14,13 +14,24 @@ import Input.ReadFile
                , dahdsr :: DAHDSR
                }
 
+:: ChannelProfile = {
+                        wavType :: Wave,
+                        envelope :: DAHDSR
+                    }
+
 // Generate sample of silence
 generateSilence :: Int -> [Real]
 
 //Render notes to get samples
 render :: [Note] ChannelProfile -> [Real]
 
-:: ChannelProfile = {
-                        wavType :: Wave,
-                        envelope :: DAHDSR
-                    }
+//------------------------------------------------------------------
+
+// Lenght of timeline
+renderTotalSamples :: [Note] ChannelProfile -> Int
+
+// Number of rendered values 
+totalRendered :: [Note] ChannelProfile -> Int
+
+// Can you get that list and send me txt? :) (For simple, FurElise-Short, FurElise and liz-raph02)
+renderData :: [Note] ChannelProfile -> [(Int,Int)]

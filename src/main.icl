@@ -15,11 +15,22 @@ Output: String
 
 Used to set the constant of the input file.
 */
-importMIDI :: String
-importMIDI = "./Input/MIDI/mz_330_1.mid"
+
+SIMPLE_MIDI :: String
+SIMPLE_MIDI = "simple.mid"
+
+FURELISESHORT_MIDI :: String
+FURELISESHORT_MIDI = "FurElise-Short.mid"
+
+FURELISE_MIDI :: String 
+FURELISE_MIDI = "FurElise.mid"
+
+importMIDI :: String -> String
+importMIDI name = "./Input/MIDI/" +++ name
 
 outputWave :: String
-outputWave = "./mozart_test-03-14_01.wav"
+outputWave = "./diag.wav"
+
 
 EnvProfile :: ADSR
 EnvProfile = {
@@ -35,6 +46,15 @@ WavType = Pulse
 Bits :: BitVersion
 Bits = ThirtyTwo
 
+diagOut :: String
+diagOut = "./diag01.txt"
+
+
 //NO GO ZONE
 //Don't change this Start line.
-Start w = LetsGo importMIDI outputWave EnvProfile WavType Bits w
+Start w = LetsGo (importMIDI FURELISE_MIDI) outputWave EnvProfile WavType Bits w
+
+listMIDIs :: [String]
+listMIDIs = [importMIDI SIMPLE_MIDI, importMIDI FURELISESHORT_MIDI, importMIDI FURELISE_MIDI]
+
+//Start w = Diagnostics listMIDIs diagOut EnvProfile WavType Bits w
