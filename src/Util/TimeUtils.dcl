@@ -3,6 +3,7 @@ import Input.ReadFile
 import Util.TypeDefs
 
 
+
 instance + Beat
 instance == Beat
 instance zero Beat

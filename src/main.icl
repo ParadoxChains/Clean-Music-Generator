@@ -31,6 +31,7 @@ importMIDI name = "./Input/MIDI/" +++ name
 outputWave :: String
 outputWave = "./diag.wav"
 
+
 EnvProfile :: ADSR
 EnvProfile = {
                 att = 0.01,
@@ -40,7 +41,7 @@ EnvProfile = {
              }
 
 WavType :: Wave
-WavType = Sawtooth
+WavType = Pulse
 
 Bits :: BitVersion
 Bits = ThirtyTwo

@@ -11,7 +11,9 @@ import Util.ArrayUtils
 
 
 // generating random numbers
+
 randoms = map (\x = x rem 40) (take 100 (genRandInt (hd (genRandInt 1))))
+
 
 // noise wave characteristics
 noise_harmonics = map (\x = x * 36.0) (take 100 (genRandReal 1))
