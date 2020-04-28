@@ -71,4 +71,4 @@ import Input.MusicXML.Parse
 // test for Input.MusicXML.Parse
 //Start = parse dropWhiteSpace['c','','f','  ']
 //Start = parse dropWhiteSpace[' ','44','f','  ']
-Start = parse skip['a','>','b']
+//Start = parse skip['a','>','b']
