@@ -1,17 +1,19 @@
 module maintest
 
 import StdEnv
-import StdFile
-import Util.Byte
-import Util.ListUtils
-import Input.ReadFile
-// import Input.SoundFont.Parse
-import Input.Wav.Parse
-import Output.Pcm
-import Output.MiddleLayer
-import Synthesis.Wavetable
-import Synthesis.Generate
-import Synthesis.Wave
+//import StdFile
+//import Util.Byte
+//import Util.ListUtils
+//import Input.MIDI.ReadFile
+import Util.Monad.Parser
+//import Input.SoundFont.Parse
+//import Input.Wav.Parse
+//import Output.Pcm
+//import Output.MiddleLayer
+//import Synthesis.Wavetable
+//import Synthesis.Generate
+//import Synthesis.Wave
+import Input.MusicXML.Parse
 
 
 // wavTest :: !*World -> *World
@@ -32,7 +34,7 @@ import Synthesis.Wave
 
 // Start = generate Sawtooth 420.420 2205
 
-
+// test for Input.MIDI.ReadFile
 // read :: !*World -> (*World, [Note])
 // read oldW
 // 	#! (b, oldF, newW) = fopen "Input/MIDI/simple.mid" FReadData oldW
@@ -66,4 +68,7 @@ import Synthesis.Wave
 
 //import synthesis.Wave, synthesis.Generate
 
-
+// test for Input.MusicXML.Parse
+//Start = parse dropWhiteSpace['c','','f','  ']
+//Start = parse dropWhiteSpace[' ','44','f','  ']
+Start = parse skip['a','>','b']

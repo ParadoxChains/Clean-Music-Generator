@@ -6,7 +6,7 @@ import Util.ArrayUtils
 import Util.ListUtils
 import Synthesis.EnvelopeArr
 import Synthesis.Generate
-import Input.ReadFile
+import Input.MIDI.ReadFile
 
 // Arr
 generateSilence :: Int -> {Real}

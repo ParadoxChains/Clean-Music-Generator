@@ -63,16 +63,3 @@ must be converted appropriately.*/
 
 // A list of tempo events
 :: TPEvents :== [TPEvent]
-
-:: Tempo :== Real
-
-:: Time = {minutes :: Real
-          ,seconds :: Real
-          }
-
-:: TimeSignature = {barVal :: Int
-                   ,noteVal :: Int
-                   }
-
-:: Beat = {p :: Int,
-           q :: Int}

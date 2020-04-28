@@ -1,8 +1,6 @@
 definition module Util.TimeUtils
-import Input.ReadFile
+import Input.MIDI.ReadFile
 import Util.TypeDefs
-
-
 
 instance + Beat
 instance == Beat

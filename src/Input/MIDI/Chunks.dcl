@@ -1,4 +1,4 @@
-definition module Input.Chunks
+definition module Input.MIDI.Chunks
 import Util.TypeDefs
 
 /*

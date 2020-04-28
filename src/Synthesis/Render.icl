@@ -5,7 +5,7 @@ import Util.TimeUtils
 import Util.ArrayUtils
 import Synthesis.Envelope
 import Synthesis.Generate
-import Input.ReadFile
+import Input.MIDI.ReadFile
 
 
 generateSilence :: Int -> [Real]

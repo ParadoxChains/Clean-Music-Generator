@@ -5,7 +5,7 @@ import Util.TimeUtils
 import Util.ArrayUtils
 import Synthesis.EnvelopeArr
 import Synthesis.Generate
-import Input.ReadFile
+import Input.MIDI.ReadFile
 
 :: NoteChunk = { note :: Note
                , wave :: Wave

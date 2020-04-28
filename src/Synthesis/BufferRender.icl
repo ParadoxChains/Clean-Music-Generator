@@ -6,7 +6,7 @@ import Util.ArrayUtils
 import Util.ListUtils
 import Synthesis.Envelope
 import Synthesis.Generate
-import Input.ReadFile
+import Input.MIDI.ReadFile
 import Synthesis.PhaseAmplitudeConverter
 
 generateSilence :: Int -> [Real]
