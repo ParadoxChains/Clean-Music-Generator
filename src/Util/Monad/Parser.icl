@@ -42,6 +42,24 @@ fail e = Parser \s. Err (toString s.pos +++ ": " +++ e)
 optional :: !(Parser a) -> Parser (Maybe a)
 optional p = Just <$> p <|> pure Nothing
 
+between :: !(Parser open) !(Parser close) !(Parser a) -> Parser a
+between open close p = open >>> p <* close
+
+choice :: [Parser a] -> Parser a
+choice ps = foldr (<|>) (fail "no choice") ps
+
+many :: (Parser a) -> Parser [a]
+many p = go id where
+  go f = optional p >>= \r. case r of
+    Nothing -> pure (f [])
+    Just x  -> go \xs -> f [x:xs]
+
+some :: !(Parser a) -> Parser [a]
+some p =
+  p >>= \x.
+  many p >>= \xs.
+  pure [x:xs]
+
 err :: !String !String -> Parser a
 err u e = fail ("unexpected " +++ u +++ ", expecting " +++ e)
 
@@ -60,6 +78,12 @@ anyChar :: Parser Char
 anyChar = get >>= \s. case s.rest of
   []     -> err "eof" "any char"
   [c:cs] -> put { pos = s.pos + 1, rest = cs } >>> pure c
+
+satisfy :: !(Char -> Bool) -> Parser Char
+satisfy p = get >>= \s. case s.rest of
+  []     -> err "eof" "character satisfying predicate"
+  [c:cs] | p c -> put { pos = s.pos + 1, rest = cs } >>> pure c
+               -> err (toString c) "character satisfying predicate"
 
 char :: !Char -> Parser Char
 char c0 = get >>= \s. case s.rest of
