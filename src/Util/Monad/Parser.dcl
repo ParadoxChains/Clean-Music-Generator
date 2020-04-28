@@ -25,6 +25,9 @@ fail :: !String -> Parser a
 // but whenever the parser p fails, it replaces the error with str
 (<?>) infix 0 :: !(Parser a) String -> Parser a
 
+// notFollowedBy p only succeeds when the parser p fails.
+notFollowedBy :: !(Parser a) -> Parser ()
+
 
 // optional p tries to apply the parser p.
 // It will parse p or Nothing.
@@ -46,9 +49,18 @@ choice :: [Parser a] -> Parser a
 // and returns a list of the values returned by p.
 many :: (Parser a) -> Parser [a]
 
+// manyTill p end applies parser p zero or more times
+// until parser end succeeds.
+// Returns the list of values returned by p and the end result.
+manyTill :: (Parser a) !(Parser end) -> Parser ([a], end)
+
 // some p applies the parser p one or more times
 // and returns a list of the values returned by p.
 some :: !(Parser a) -> Parser [a]
+
+// someTill p end works similarly to manyTill p end,
+// but p should succeed at least once.
+someTill :: !(Parser a) !(Parser end) -> Parser ([a], end)
 
 
 // This parser only succeeds at the end of input.
@@ -72,6 +84,15 @@ string :: !String -> Parser String
 takeP :: !Int -> Parser [Char]
 
 
-// int s e b parses a binary integer
+// Parse an integer in decimal representation
+decimal :: Parser Int
+
+// signed space p parser parses an optional sign character (“+” or “-”),
+// then it runs parser p which should return a number.
+// Sign of the number is changed
+// according to the previously parsed sign character.
+signed :: !(Parser Int) -> Parser Int
+
+// int s e b parses an integer from binary data
 // with s signedness, e endianness and b bytes
 int :: !Signedness !Endianness !Int -> Parser Int
