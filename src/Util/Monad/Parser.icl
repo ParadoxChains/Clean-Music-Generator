@@ -24,6 +24,7 @@ instance Monad Parser where
 parse :: !(Parser a) ![Char] -> Result a
 parse (Parser p) cs = fst <$> p { pos = 0, rest = cs }
 
+
 fail :: !String -> Parser a
 fail e = Parser \s. Err (toString s.pos +++ ": " +++ e)
 
@@ -39,6 +40,12 @@ fail e = Parser \s. Err (toString s.pos +++ ": " +++ e)
   Err _ -> Err (toString s.pos +++ ": " +++ e)
   r     -> r
 
+notFollowedBy :: !(Parser a) -> Parser ()
+notFollowedBy (Parser p) = Parser \s. case p s of
+  Err _ -> pure ((), s)
+  _     -> Err "failed notFollowedBy"
+
+
 optional :: !(Parser a) -> Parser (Maybe a)
 optional p = Just <$> p <|> pure Nothing
 
@@ -52,13 +59,26 @@ many :: (Parser a) -> Parser [a]
 many p = go id where
   go f = optional p >>= \r. case r of
     Nothing -> pure (f [])
-    Just x  -> go \xs -> f [x:xs]
+    Just x  -> go \xs. f [x:xs]
+
+manyTill :: (Parser a) !(Parser end) -> Parser ([a], end)
+manyTill p end = go id where
+  go f = optional end >>= \done. case done of
+    Nothing    -> p >>= \x. go \xs. f [x:xs]
+    Just done` -> pure (f [], done`)
 
 some :: !(Parser a) -> Parser [a]
 some p =
   p >>= \x.
   many p >>= \xs.
   pure [x:xs]
+
+someTill :: !(Parser a) !(Parser end) -> Parser ([a], end)
+someTill p end =
+  p >>= \x.
+  manyTill p end >>= \(xs, y).
+  pure ([x:xs], y)
+
 
 err :: !String !String -> Parser a
 err u e = fail ("unexpected " +++ u +++ ", expecting " +++ e)
@@ -68,6 +88,7 @@ get = Parser \s. pure (s, s)
 
 put :: State -> Parser ()
 put s = Parser \_. pure ((), s)
+
 
 eof :: Parser ()
 eof = get >>= \s. case s.rest of
@@ -81,9 +102,9 @@ anyChar = get >>= \s. case s.rest of
 
 satisfy :: !(Char -> Bool) -> Parser Char
 satisfy p = get >>= \s. case s.rest of
-  []     -> err "eof" "character satisfying predicate"
+  []     -> err "eof" "character satisfying the predicate"
   [c:cs] | p c -> put { pos = s.pos + 1, rest = cs } >>> pure c
-               -> err (toString c) "character satisfying predicate"
+               -> err (toString c) "character satisfying the predicate"
 
 char :: !Char -> Parser Char
 char c0 = get >>= \s. case s.rest of
@@ -94,8 +115,18 @@ char c0 = get >>= \s. case s.rest of
 string :: !String -> Parser String
 string s = s <$ mapM_ char (fromString s) <?> "expecting " +++ s
 
+
 takeP :: !Int -> Parser [Char]
 takeP n = replicateM n anyChar
+
+
+decimal :: Parser Int
+decimal = go <?> "expecting integer" where
+  go = foldl step 0 <$> some (satisfy isDigit)
+  step a c = a * 10 + toInt (toString c)
+
+signed :: !(Parser Int) -> Parser Int
+signed p = (id <$ char '+' <|> (~) <$ char '-' <|> pure id) <*> p
 
 int :: !Signedness !Endianness !Int -> Parser Int
 int s e n = fromBytes s e <$> takeP n
