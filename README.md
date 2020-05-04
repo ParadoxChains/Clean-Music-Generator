@@ -2,6 +2,14 @@
 Welcome to our little repo for the **Music Generation and Sound Processing in a Functional Programming Paradigm** project.\
 Reading resources have been added, please check [this markdown document](https://github.com/ParadoxChains/Clean-Music-Generator/blob/master/Resources/Reading-Resources.md).
 
+## EFOP Spring Semester
+
+## Zuka
+- [ ] Flanger
+- [ ] Phaser
+
+
+
 ## Tasks Up For Grabs
 1. Flanger/Chorus/Delay
    1. Easy Difficulty.
@@ -25,5 +33,5 @@ Reading resources have been added, please check [this markdown document](https:/
    1. Hard Difficulty
    2. Hard Math
 8. Live MIDI Input
-   1. Not gonna this is the hardest one.
+   1. Not gonna lie, this is the hardest one.
    2. Math is trivial. That's not the hard part lol.
