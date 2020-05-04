@@ -93,6 +93,6 @@ decimal :: Parser Int
 // according to the previously parsed sign character.
 signed :: !(Parser Int) -> Parser Int
 
-// int s e b parses an integer from binary data
+// binint s e b parses an integer from binary data
 // with s signedness, e endianness and b bytes
-int :: !Signedness !Endianness !Int -> Parser Int
+binint :: !Signedness !Endianness !Int -> Parser Int

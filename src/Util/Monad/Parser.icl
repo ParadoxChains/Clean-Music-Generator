@@ -128,5 +128,5 @@ decimal = go <?> "expecting integer" where
 signed :: !(Parser Int) -> Parser Int
 signed p = (id <$ char '+' <|> (~) <$ char '-' <|> pure id) <*> p
 
-int :: !Signedness !Endianness !Int -> Parser Int
-int s e n = fromBytes s e <$> takeP n
+binint :: !Signedness !Endianness !Int -> Parser Int
+binint s e n = fromBytes s e <$> takeP n
