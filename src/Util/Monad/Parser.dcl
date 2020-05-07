@@ -9,8 +9,12 @@ import Util.Monad.Result
 
 instance Monad Parser
 
-// Runs the parser to get the result
+// Runs the parser to get the result.
 parse :: !(Parser a) ![Char] -> Result a
+
+// Runs the parser to get the result and the remaining character.
+// Use this only for debugging.
+parseWithRest :: !(Parser a) ![Char] -> Result (!a, ![Char])
 
 
 // Stop parsing and report an error
@@ -22,7 +26,7 @@ fail :: !String -> Parser a
 (<|>) infixl 3 :: !(Parser a) (Parser a) -> Parser a
 
 // The parser p <?> str behaves as parser p,
-// but whenever the parser p fails, it replaces the error with str
+// but whenever the parser p fails, it replaces the error with str.
 (<?>) infix 0 :: !(Parser a) String -> Parser a
 
 // notFollowedBy p only succeeds when the parser p fails.
@@ -80,11 +84,11 @@ char :: !Char -> Parser Char
 string :: !String -> Parser String
 
 
-// takeP n parses n characters
+// takeP n parses n characters.
 takeP :: !Int -> Parser [Char]
 
 
-// Parse an integer in decimal representation
+// Parse an integer in decimal representation.
 decimal :: Parser Int
 
 // signed space p parser parses an optional sign character (“+” or “-”),
@@ -94,5 +98,5 @@ decimal :: Parser Int
 signed :: !(Parser Int) -> Parser Int
 
 // binint s e b parses an integer from binary data
-// with s signedness, e endianness and b bytes
+// with s signedness, e endianness and b bytes.
 binint :: !Signedness !Endianness !Int -> Parser Int
