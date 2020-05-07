@@ -24,6 +24,10 @@ instance Monad Parser where
 parse :: !(Parser a) ![Char] -> Result a
 parse (Parser p) cs = fst <$> p { pos = 0, rest = cs }
 
+parseWithRest :: !(Parser a) ![Char] -> Result (!a, ![Char])
+parseWithRest (Parser p) cs
+  = (\(a, s). (a, s.rest)) <$> p { pos = 0, rest = cs }
+
 
 fail :: !String -> Parser a
 fail e = Parser \s. Err (toString s.pos +++ ": " +++ e)
@@ -128,5 +132,5 @@ decimal = go <?> "expecting integer" where
 signed :: !(Parser Int) -> Parser Int
 signed p = (id <$ char '+' <|> (~) <$ char '-' <|> pure id) <*> p
 
-int :: !Signedness !Endianness !Int -> Parser Int
-int s e n = fromBytes s e <$> takeP n
+binint :: !Signedness !Endianness !Int -> Parser Int
+binint s e n = fromBytes s e <$> takeP n
