@@ -24,9 +24,9 @@ instance Monad Parser where
 parse :: !(Parser a) ![Char] -> Result a
 parse (Parser p) cs = fst <$> p { pos = 0, rest = cs }
 
-parseWithRest :: !(Parser a) ![Char] -> Result (!a, ![Char])
+parseWithRest :: !(Parser a) ![Char] -> Result (!a, !String)
 parseWithRest (Parser p) cs
-  = (\(a, s). (a, s.rest)) <$> p { pos = 0, rest = cs }
+  = (\(a, s). (a, {c \\ c <- s.rest})) <$> p { pos = 0, rest = cs }
 
 
 fail :: !String -> Parser a
