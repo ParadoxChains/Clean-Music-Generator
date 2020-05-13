@@ -17,7 +17,7 @@ parse :: !(Parser a) ![Char] -> Result a
 parseWithRest :: !(Parser a) ![Char] -> Result (!a, !String)
 
 
-// Stop parsing and report an error
+// Stop parsing and report an error.
 fail :: !String -> Parser a
 
 // The parser p <|> q first applies p.
@@ -28,6 +28,13 @@ fail :: !String -> Parser a
 // The parser p <?> str behaves as parser p,
 // but whenever the parser p fails, it replaces the error with str.
 (<?>) infix 0 :: !(Parser a) String -> Parser a
+
+// If p in lookAhead p succeeds (either consuming input or not)
+// the whole parser behaves like p succeeded without consuming anything
+// (parser state is not updated as well).
+// If p fails, lookAhead has no effect,
+// i.e. it will fail consuming input if p fails consuming input.
+lookAhead :: !(Parser a) -> Parser a
 
 // notFollowedBy p only succeeds when the parser p fails.
 notFollowedBy :: !(Parser a) -> Parser ()

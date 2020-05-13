@@ -44,6 +44,11 @@ fail e = Parser \s. Err (toString s.pos +++ ": " +++ e)
   Err _ -> Err (toString s.pos +++ ": " +++ e)
   r     -> r
 
+lookAhead :: !(Parser a) -> Parser a
+lookAhead (Parser p) = Parser \s. case p s of
+  Err e     -> Err e
+  Ok (a, _) -> pure (a, s)
+
 notFollowedBy :: !(Parser a) -> Parser ()
 notFollowedBy (Parser p) = Parser \s. case p s of
   Err _ -> pure ((), s)

@@ -32,6 +32,12 @@ replicateM i m = go i where
       go (i - 1) >>= \xs.
       pure [x:xs]
 
+replicateM_ :: !Int !(m a) -> m () | Monad m
+replicateM_ i m = go i where
+  go i
+    | i <= 0 = pure ()
+    = m >>> go (i - 1)
+
 instance Monad Maybe where
   pure a = Just a
   (>>=) m f = case m of
