@@ -79,5 +79,10 @@ dropWhiteSpace :: Parser ()
 
 skip :: Parser ()
 
+skipHeader :: Parser ()
 
- 	
+parseTagName :: Parser [Char]
+
+parseBeginTag :: Parser [Char]
+
+parseEndTag :: Parser [Char]

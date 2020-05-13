@@ -34,16 +34,18 @@ import Input.MusicXML.Parse
 
 // Start = generate Sawtooth 420.420 2205
 
-// test for Input.MIDI.ReadFile
-// read :: !*World -> (*World, [Note])
-// read oldW
-// 	#! (b, oldF, newW) = fopen "Input/MIDI/simple.mid" FReadData oldW
-// 	|not b = (newW, abort"can not open file")
-// 	#! (l, newF) = readBytes oldF
-// 	#! (b, newW2) = fclose newF newW
-// 	= (newW2, readFile l)
+// test for Input.MusicXML.Parse
+read :: !*World -> (*World, Result (!(), ![Char]))
+read oldW
+#! (b, oldF, newW) = fopen "Input/MusicXML/sample_input/hello_world.xml" FReadData oldW
+|not b = (newW, abort "can not open file")
+#! (l, newF) = readBytes oldF
+#! (b, newW2) = fclose newF newW
+= (newW2, parseWithRest skipHeader l)
 		
 //Start w = read w
+
+Start w = parseWithRest parseTagName (read w)
 
 // parseSF :: !*World -> (!Result Pdta, !*World)
 // parseSF w
@@ -67,8 +69,3 @@ import Input.MusicXML.Parse
 //Start w = parseTestWav w 
 
 //import synthesis.Wave, synthesis.Generate
-
-// test for Input.MusicXML.Parse
-//Start = parse dropWhiteSpace['c','','f','  ']
-//Start = parse dropWhiteSpace[' ','44','f','  ']
-//Start = parse skip['a','>','b']

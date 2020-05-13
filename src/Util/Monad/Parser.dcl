@@ -14,7 +14,7 @@ parse :: !(Parser a) ![Char] -> Result a
 
 // Runs the parser to get the result and the remaining character.
 // Use this only for debugging.
-parseWithRest :: !(Parser a) ![Char] -> Result (!a, !String)
+parseWithRest :: !(Parser a) ![Char] -> Result (!a, ![Char])
 
 
 // Stop parsing and report an error.
@@ -84,7 +84,7 @@ anyChar :: Parser Char
 // for which the supplied function f returns True.
 satisfy :: !(Char -> Bool) -> Parser Char
 
-// char c only matches the single character c.
+// char c only matches the single specific character c.
 char :: !Char -> Parser Char
 
 // string str only matches the string str.
