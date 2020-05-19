@@ -11,13 +11,15 @@ import Util.Monad.Parser
 :: Octave :== Int
 :: Divisions :== Int
 :: Beat_type :== Int
+//:: XML :== 
 //<score-partwise>: made up of parts, where each part is made up of measures. 
 //<score-timewise>: made up of measures, where each measure is made up of parts. 
 :: File_type = Partwise | Timewise
 :: Note_type = Whole | Quarter | Other_note
 :: Mode = Major | Minor | Other_mode
 :: Measure_numbering = None | System | Other_mn
-
+// Text String: information of a tag; Element String: what kind of element is this
+:: XML = Text String | Element String [XML] 
 :: Key = 
 	{
 		fifths :: Fifths,
@@ -81,8 +83,18 @@ skip :: Parser ()
 
 skipHeader :: Parser ()
 
-parseTagName :: Parser [Char]
+parseTagName :: Parser String
 
-parseBeginTag :: Parser [Char]
+parseBeginTag :: Parser String
 
-parseEndTag :: Parser [Char]
+parseEndTag :: Parser String
+
+parseInfo :: Parser XML
+
+parseElement :: Parser XML
+
+parseXML :: Parser XML
+
+parseFile :: Parser XML
+
+//test :: Parser String

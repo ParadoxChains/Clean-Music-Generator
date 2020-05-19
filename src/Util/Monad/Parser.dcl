@@ -14,7 +14,7 @@ parse :: !(Parser a) ![Char] -> Result a
 
 // Runs the parser to get the result and the remaining character.
 // Use this only for debugging.
-parseWithRest :: !(Parser a) ![Char] -> Result (!a, ![Char])
+parseWithRest :: !(Parser a) ![Char] -> Result (!a, !String)
 
 
 // Stop parsing and report an error.

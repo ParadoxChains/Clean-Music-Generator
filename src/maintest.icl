@@ -35,17 +35,18 @@ import Input.MusicXML.Parse
 // Start = generate Sawtooth 420.420 2205
 
 // test for Input.MusicXML.Parse
-read :: !*World -> (*World, Result (!(), ![Char]))
+read :: !*World -> (*World, Result (!XML, !String))
 read oldW
 #! (b, oldF, newW) = fopen "Input/MusicXML/sample_input/hello_world.xml" FReadData oldW
+//#! (b, oldF, newW) = fopen "Input/MusicXML/sample_input/Binchois.musicxml" FReadData oldW
 |not b = (newW, abort "can not open file")
 #! (l, newF) = readBytes oldF
 #! (b, newW2) = fclose newF newW
-= (newW2, parseWithRest skipHeader l)
+= (newW2, parseWithRest parseFile l)
 		
 //Start w = read w
 
-Start w = parseWithRest parseTagName (read w)
+Start w = read w
 
 // parseSF :: !*World -> (!Result Pdta, !*World)
 // parseSF w
