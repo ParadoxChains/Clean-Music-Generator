@@ -14,6 +14,14 @@ if [[ ($# -eq 0) && ("$moduleName" = "") ]]; then
     exit 1
 fi
 
+hash octave &>/dev/null
+if [ $? -ne 0 ]
+then
+    echo "[error] 'octave' command not found on the system. It is required to plot!" >&2
+    echo "I AM INSTALLING IT FOR YOU <3"
+    sudo apt install octave
+fi
+
 if [[ $# -ge 1 ]]; then
     moduleName=$1
 fi
