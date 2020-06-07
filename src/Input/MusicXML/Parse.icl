@@ -47,6 +47,9 @@ parseSelfClosingTag =
 	char '>' >>>
 	dropWhiteSpace >>> 
 	pure (Element x [])
+
+parseAttribute :: Parser XML
+parseAttribute = 
 	
 // parsing information between open tag and close tag
 parseInfo :: Parser XML
@@ -63,14 +66,25 @@ parseElement =
 		True -> dropWhiteSpace >>> pure (Element x y)
 		False -> fail ("No matching close tag for " +++ x)
 
+parseXML :: Parser XML
+parseXML = parseSelfClosingTag <|> parseElement <|> parseInfo
+
+parseFile :: Parser XML
+parseFile = skipHeader >>> dropWhiteSpace >>> parseXML
+
 getNote :: XML -> Note
 getNote (Element "note" x) 
 		= {
-	   		pitch = case (getElement "pitch" x) of
-	   				(Element "pitch" 
-						[(Element "step" [(Text t1)]),
-				 	 	 (Element "octave" [(Text t2)]):_])
-	   				 	 -> {step = t1.[0], octave = toInt(t2)},
+	   		pitch = case (getElements "pitch" x) of
+	   				[(Element "pitch" l)]
+	   				 	 -> {step = case (getElement "step" l) of
+	   				 	 			(Element "step" [(Text t1)]) -> t1.[0],
+	   				 	 	 alter = case (getElements "alter" l) of
+	   				 	 	 		[(Element "alter" [(Text t2)])] -> toInt(t2)
+	   				 	 	 		[] -> 1,
+	   				 	 	 octave = case (getElement "octave" l) of
+	   				 	 	 		(Element "octave" [(Text t3)]) -> toInt(t3)}
+	   				[] -> {step = 'C', alter = 1, octave = 4},
 	   		duration = case (getElement "duration" x) of 
 	   				(Element "duration" [(Text t3)]) -> toInt(t3),
 	   		type = case (getElement "type" x) of 
@@ -80,34 +94,17 @@ getNote (Element "note" x)
 	   						"quarter" -> Quarter
 	   						_ -> Other_Note
 	     }
-/*
-getNote x 
-		= {
-	   		pitch = case (getElement "pitch" l) of
-	   			(Element "pitch" 
-					[(Element "step" [(Text t1)]),
-				 	 (Element "octave" [(Text t2)]):_])
-	   				 -> {step = t1.[0], octave = toInt(t2)},
-	   		duration = 
-	   			case (getElement "duration" l) of 
-	   				(Element "duration" [(Text t3)]) 
-	   				 -> toInt(t3),
-	   		type = case (getElement "type" l) of 
-	   				(Element "type" [(Text t4)]) 
-	   				 ->	case t4 of 
-	   						"whole" -> Whole
-	   						"quarter" -> Quarter
-	   						_ -> Other_Note
-	     }*/
+
 getNotes :: [XML] -> [Note]	
 getNotes l = map getNote (getElements "note" l)
 
 getAttribute :: XML -> Attributes
-getAttribute (Element "attribute" x) 
+getAttribute (Element "attributes" x) 
 			 = {
-				divisions = case (getElement "divisions" x) of
-							(Element "divisions" [(Text t1)]) -> toInt(t1),
-				key = case(getElement "key" x) of 
+				divisions = case (getElements "divisions" x) of
+							[(Element "divisions" [(Text t1)])] -> toInt(t1)
+							[] -> 1,
+				key = case (getElement "key" x) of 
 					  (Element "key" [(Element "fifths" [(Text t2)]):x]) -> 
 						{fifths = toInt(t2), 
 					   	 mode = case x of
@@ -115,13 +112,17 @@ getAttribute (Element "attribute" x)
 					   			 [(Element "mode" [(Text "Minor")]):_] -> Minor
 					   			 [(Element "mode" [(Text _)]):_] -> Other_Mode
 					   			 _ -> Major},
-				time = case(getElement "time" x) of
-						(Element "time" 
+				time = case (getElements "time" x) of
+						[(Element "time" 
 						 [(Element "beats" [(Text t3)]),
-				 	 	  (Element "beat-type" [(Text t4)]):_]) -> 
+				 	 	  (Element "beat-type" [(Text t4)]):_])] -> 
 				 	 	 	{barVal = toInt(t3), 
 							 noteVal = toInt(t4)}
+						[] -> 
+				 	 	 	{barVal = 4, 
+							 noteVal = 4}
 			  	} 
+getAttribute (Element name l) = abort name
 
 getAttributes :: [XML] -> [Attributes]	
 getAttributes l = map getAttribute (getElements "attributes" l)
@@ -151,11 +152,6 @@ getParts l = flatten(map getPart (getElements "part" l))
 getRoot :: XML -> [Measure]
 getRoot (Element "score-partwise" l) = getParts l
 
-parseXML :: Parser XML
-parseXML = parseSelfClosingTag <|> parseElement <|> parseInfo
-
-parseFile :: Parser XML
-parseFile = skipHeader >>> dropWhiteSpace >>> parseXML
 
 
 

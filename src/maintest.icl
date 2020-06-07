@@ -37,8 +37,8 @@ import Input.MusicXML.Parse
 // test for Input.MusicXML.Parse
 read :: !*World -> (*World, [Measure])
 read oldW
-#! (b, oldF, newW) = fopen "Input/MusicXML/sample_input/hello_world.xml" FReadData oldW
-//#! (b, oldF, newW) = fopen "Input/MusicXML/sample_input/Binchois.musicxml" FReadData oldW
+//#! (b, oldF, newW) = fopen "Input/MusicXML/sample_input/hello_world.xml" FReadData oldW
+#! (b, oldF, newW) = fopen "Input/MusicXML/sample_input/Binchois.musicxml" FReadData oldW
 //#! (b, oldF, newW) = fopen "Input/MusicXML/sample_input/Chant.musicxml" FReadData oldW
 |not b = (newW, abort "can not open file")
 #! (l, newF) = readBytes oldF

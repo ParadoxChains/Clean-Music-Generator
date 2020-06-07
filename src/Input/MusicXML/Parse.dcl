@@ -13,7 +13,13 @@ import Util.Monad.Parser
 :: Mode = Major | Minor | Other_Mode
 
 // Text String: information of a tag; Element String: what kind of element is this
-:: XML = Text String | Element String [XML] 
+:: XML = Text String | Element String [ElementAttribute] [XML] 
+
+:: ElementAttribute =
+	{
+		name :: String,
+		value :: String
+	}
 
 :: Key = 
 	{
@@ -24,6 +30,7 @@ import Util.Monad.Parser
 :: Pitch = 
 	{
 		step :: Step,
+		alter :: Int,
 		octave :: Octave
 	}
 	
@@ -67,6 +74,10 @@ parseInfo :: Parser XML
 
 parseElement :: Parser XML
 
+parseXML :: Parser XML
+
+parseFile :: Parser XML
+
 getNote :: XML -> Note
 
 getNotes :: [XML] -> [Note]	
@@ -79,12 +90,13 @@ getMeasure :: XML -> Measure
 
 getMeasures :: [XML] -> [Measure]
 
+getElement :: String [XML] -> XML
+
+getElements :: String [XML] -> [XML]
+
 getPart :: XML -> [Measure]
 
 getParts :: [XML] -> [Measure]
 
 getRoot :: XML -> [Measure]
 
-parseXML :: Parser XML
-
-parseFile :: Parser XML
