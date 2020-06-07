@@ -16,7 +16,6 @@ parse :: !(Parser a) ![Char] -> Result a
 // Use this only for debugging.
 parseWithRest :: !(Parser a) ![Char] -> Result (!a, !String)
 
-
 // Stop parsing and report an error.
 fail :: !String -> Parser a
 
