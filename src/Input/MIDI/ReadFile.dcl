@@ -1,4 +1,4 @@
-definition module Input.ReadFile
+definition module Input.MIDI.ReadFile
 import StdMaybe
 import Util.TypeDefs, Util.TimeUtils
 

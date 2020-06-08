@@ -1,6 +1,6 @@
 module main
 import StdEnv
-import Input.ReadFile
+import Input.MIDI.ReadFile
 import Util.Byte
 import Agglomerator
 

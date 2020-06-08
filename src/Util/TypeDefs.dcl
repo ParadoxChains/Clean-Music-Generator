@@ -46,8 +46,7 @@ must be converted appropriately.*/
           }
 
 :: TimeSignature = {barVal :: Int
-                   ,noteVal :: Int
-                   }
+                   ,noteVal :: Int}
 
 :: Beat = {p :: Int,
            q :: Int}

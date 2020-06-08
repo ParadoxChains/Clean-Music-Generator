@@ -21,7 +21,7 @@ parseSfbk =
 parseInfo :: Parser Info
 parseInfo =
   string "LIST" >>>
-  int Unsigned LE 4 >>= \l.
+  binint Unsigned LE 4 >>= \l.
   takeP l >>>
   pure Todo
 
@@ -35,16 +35,16 @@ parseSdta =
   pure { Sdta | smpl, sm24 }
 
 parseSmpl :: Parser (!Int, ![Int])
-parseSmpl = parseListWithLength "smpl" 2 (int Signed LE 2)
+parseSmpl = parseListWithLength "smpl" 2 (binint Signed LE 2)
 
 parseSm24 :: !Int -> Parser [Int]
 parseSm24 len =
   string "sm24" >>>
-  int Unsigned LE 4 >>= \size.
+  binint Unsigned LE 4 >>= \size.
   when (size <> padded) (fail
     ("unexpected chunk size " +++ toString size
     +++ ", expecting " +++ toString padded)) >>>
-  replicateM len (int Unsigned LE 1) >>= \data.
+  replicateM len (binint Unsigned LE 1) >>= \data.
   takeP pad >>>
   pure data
   where
@@ -70,12 +70,12 @@ parsePdta =
 parsePresetHeader :: Parser PresetHeader
 parsePresetHeader =
   takeP 20 >>= \presetName.
-  int Unsigned LE 2 >>= \preset.
-  int Unsigned LE 2 >>= \bank.
-  int Unsigned LE 2 >>= \presetBagNdx.
-  int Unsigned LE 4 >>= \library.
-  int Unsigned LE 4 >>= \genre.
-  int Unsigned LE 4 >>= \morphology.
+  binint Unsigned LE 2 >>= \preset.
+  binint Unsigned LE 2 >>= \bank.
+  binint Unsigned LE 2 >>= \presetBagNdx.
+  binint Unsigned LE 4 >>= \library.
+  binint Unsigned LE 4 >>= \genre.
+  binint Unsigned LE 4 >>= \morphology.
   pure { PresetHeader
     | presetName = getName presetName
     , preset, bank, presetBagNdx, library, genre, morphology }
@@ -83,15 +83,15 @@ parsePresetHeader =
 parseInst :: Parser Inst
 parseInst =
   takeP 20 >>= \instName.
-  int Unsigned LE 2 >>= \instBagNdx.
+  binint Unsigned LE 2 >>= \instBagNdx.
   pure { Inst
     | instName = getName instName
     , instBagNdx }
 
 parseBag :: Parser Bag
 parseBag =
-  int Unsigned LE 2 >>= \genNdx.
-  int Unsigned LE 2 >>= \modNdx.
+  binint Unsigned LE 2 >>= \genNdx.
+  binint Unsigned LE 2 >>= \modNdx.
   pure { Bag | genNdx, modNdx }
 
 parseModList :: Parser ModList
@@ -103,14 +103,14 @@ parseGenList = Todo <$ takeP 4
 parseSample :: Parser Sample
 parseSample =
   takeP 20 >>= \sampleName.
-  int Unsigned LE 4 >>= \start.
-  int Unsigned LE 4 >>= \end.
-  int Unsigned LE 4 >>= \startLoop.
-  int Unsigned LE 4 >>= \endLoop.
-  int Unsigned LE 4 >>= \sampleRate.
-  int Unsigned LE 1 >>= \originalPitch.
-  int Signed LE  1 >>= \pitchCorrection.
-  int Unsigned LE 2 >>= \sampleLink.
+  binint Unsigned LE 4 >>= \start.
+  binint Unsigned LE 4 >>= \end.
+  binint Unsigned LE 4 >>= \startLoop.
+  binint Unsigned LE 4 >>= \endLoop.
+  binint Unsigned LE 4 >>= \sampleRate.
+  binint Unsigned LE 1 >>= \originalPitch.
+  binint Signed   LE 1 >>= \pitchCorrection.
+  binint Unsigned LE 2 >>= \sampleLink.
   Todo <$ takeP 2 >>= \sampleType.
   pure { Sample
     | sampleName = getName sampleName
@@ -120,7 +120,7 @@ parseSample =
 parseListWithLength :: !String !Int !(Parser a) -> Parser (!Int, ![a])
 parseListWithLength id subSize p =
   string id >>>
-  int Unsigned LE 4 >>= \size.
+  binint Unsigned LE 4 >>= \size.
   when (size rem subSize <> 0) (fail
     ("unexpected chunk size " +++ toString size
     +++ ", expecting a multiple of " +++ toString subSize)) >>>

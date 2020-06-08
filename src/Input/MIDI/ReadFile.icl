@@ -1,4 +1,4 @@
-implementation module Input.ReadFile
+implementation module Input.MIDI.ReadFile
 
 import StdEnv
 import StdFile

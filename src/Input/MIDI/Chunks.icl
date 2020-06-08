@@ -1,4 +1,4 @@
-implementation module Input.Chunks
+implementation module Input.MIDI.Chunks
 
 import StdEnv
 import Util.Byte, Util.TypeDefs
