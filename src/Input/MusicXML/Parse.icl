@@ -24,6 +24,15 @@ skipComment = ()<$ (string "<!-" >>>  manyTill anyChar (string "-->"))
 parseTagName :: Parser String
 parseTagName = some (satisfy (\x = (isAlpha x) ||  (x == '-'))) >>= \x = pure (toString x)
 
+//parseBeginTag :: Parser (String,ElementAttribute)
+/*
+parseBeginTag = 
+	char '<' >>> 
+	parseTagName >>= \x = 
+	many (char ' ' >>> parseAttribute) >>= \y =
+	char '>' >>>
+	pure (x,y)
+*/
 parseBeginTag :: Parser String
 parseBeginTag = 
 	char '<' >>> 
@@ -32,12 +41,7 @@ parseBeginTag =
 	pure x
 
 parseEndTag :: Parser String
-parseEndTag = 
-	char '<' >>> 
-	char '/' >>> 
-	parseTagName >>= \x = 
-	char '>' >>> 
-	pure x
+parseEndTag = between (string "</") (char '>') parseTagName
 
 parseSelfClosingTag :: Parser XML
 parseSelfClosingTag = 
@@ -48,8 +52,13 @@ parseSelfClosingTag =
 	dropWhiteSpace >>> 
 	pure (Element x [])
 
-parseAttribute :: Parser XML
+parseAttribute :: Parser ElementAttribute
 parseAttribute = 
+	parseTagName >>= \x = 
+	char '=' >>>
+	char '"' >>>
+	manyTill anyChar (char '"') >>= \z =
+	pure({name = x, value = toString(fst z)})
 	
 // parsing information between open tag and close tag
 parseInfo :: Parser XML

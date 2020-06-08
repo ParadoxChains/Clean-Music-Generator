@@ -13,8 +13,8 @@ import Util.Monad.Parser
 :: Mode = Major | Minor | Other_Mode
 
 // Text String: information of a tag; Element String: what kind of element is this
-:: XML = Text String | Element String [ElementAttribute] [XML] 
-
+//:: XML = Text String | Element String [ElementAttribute] [XML] 
+:: XML = Text String | Element String [XML] 
 :: ElementAttribute =
 	{
 		name :: String,
@@ -69,6 +69,8 @@ parseBeginTag :: Parser String
 parseEndTag :: Parser String
 
 parseSelfClosingTag :: Parser XML
+
+parseAttribute :: Parser ElementAttribute
 
 parseInfo :: Parser XML
 
