@@ -1,4 +1,4 @@
-definition module Synthesis.LFO
+definition module Effects.LFO
 import StdEnv
 import Util.TypeDefs
 import Synthesis.PhaseAmplitudeConverter
