@@ -1,4 +1,4 @@
-implementation module Synthesis.LFO
+implementation module Effects.LFO
 import StdEnv
 import Synthesis.PhaseAmplitudeConverter
 import Util.Constants
