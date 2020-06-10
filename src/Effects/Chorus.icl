@@ -17,4 +17,3 @@ applyChorus wave (f, delay, a, b) = [wave!!i \\ i<-[0..toInt(delay_in_sampels)]]
                                         \\ i <- [(toInt(delay_in_sampels)+1)..(length wave - 1)]]
 where 
     delay_in_sampels = delay * toReal(SAMPLING_RATE)
-

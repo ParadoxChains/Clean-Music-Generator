@@ -4,4 +4,3 @@ import Synthesis.Wave
 import Util.TypeDefs
 
 applyDelay :: Wave DelayParameters -> Wave
-
