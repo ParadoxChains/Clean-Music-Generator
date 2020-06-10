@@ -1,4 +1,4 @@
-implementation module Effects.reverbNewest
+implementation module Effects.reverb
 import StdEnv
 import Util.TypeDef,Util.TimeUtils
 //Works with seconds
