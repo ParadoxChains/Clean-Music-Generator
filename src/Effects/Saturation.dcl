@@ -1,4 +1,4 @@
-definition module Synthesis.Saturation
+definition module Effects.Saturation
 import StdEnv
 
 hardClipping :: [Real] Real -> [Real]

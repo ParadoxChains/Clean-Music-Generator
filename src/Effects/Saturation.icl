@@ -1,4 +1,4 @@
-implementation module Synthesis.Saturation
+implementation module Effects.Saturation
 import StdEnv
 
 e :: Int
