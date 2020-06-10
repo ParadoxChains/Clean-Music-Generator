@@ -4,7 +4,7 @@ import Util.TypeDef,Util.TimeUtils
 //Works with seconds
 
 resultForPlotSeconds:: [Real] Int  Real Real->[(Real,Real)]
-resultForPlot ampVal bounces seconds decay = [(toReal x,y) \\ y<-yVals & x<-[0..]]
+resultForPlotSeconds ampVal bounces seconds decay = [(toReal x,y) \\ y<-yVals & x<-[0..]]
 where
 	yVals = generateReverbSeconds ampVal bounces seconds decay 1 ampVal
 
@@ -20,7 +20,7 @@ where
 	extendedResults = results ++ decaySilence
 	newResult = [a+b \\ a <- extendedResults & b<-delayedDecayedSignal]
 
-//Start=resultForPlot (makeBigList 2.0 2) 1 0.4 0.5 
+//Start=resultForPlotSeconds (makeBigList 2.0 2) 1 0.4 0.5 
 createList::Real->[Real]
 createList a= [toReal(i)*0.05\\i<-[0..toInt(a)*20]] 
 			++reverse [toReal(i)*0.05\\i<-[1..toInt(a)*20]]
