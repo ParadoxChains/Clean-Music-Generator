@@ -1,4 +1,7 @@
-definition module Flanger
+definition module Effects.Flanger
+import Synthesis.Wave
+import Util.TypeDefs
 
-
-flanger :: [Real] Int Int Real -> [Real]
+// Applying flanger to given Wave
+// Parameters: (A, rate, manual)
+applyFlanger :: Wave FlangerParameters -> Wave
