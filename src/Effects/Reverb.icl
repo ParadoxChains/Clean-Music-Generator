@@ -8,7 +8,7 @@ import Util.TypeDef,Util.TimeUtils
 resultForPlotSeconds:: [Real] Int  Real Real->[(Real,Real)]
 resultForPlotSeconds amp_val bounces seconds decay = [(toReal x,y) \\ y<-y_vals & x<-[0..]]
 where
-	y_vals = generateReverbSeconds amp_val bounces seconds decay 1 ampVal
+	y_vals = generateReverbSeconds amp_val bounces seconds decay 1 amp_val
 
 generateReverbSeconds :: [Real] Int Real Real Int [Real] -> [Real]
 generateReverbSeconds original bounces seconds decay nth_bounce results
