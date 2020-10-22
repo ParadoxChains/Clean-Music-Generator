@@ -15,6 +15,12 @@ where
         y = simplifyBeat b
 instance zero Beat where zero = {p=0,q=1}
 
+instance == Direction
+	where
+		(==) Left Left= True
+		(==) Right Right =True
+		(==) _ _ = False
+
 timeToSeconds :: Time -> Real
 timeToSeconds t = t.minutes*60.0 + t.seconds
 

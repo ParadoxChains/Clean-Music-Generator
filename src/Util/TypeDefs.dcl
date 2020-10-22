@@ -75,3 +75,6 @@ must be converted appropriately.*/
 
 // Effect
 //:: Effect = (Flanger, FlangerParameters) | (Chorus, ChorusParameters) | (Delay, DelayParameters) | (Phaser, PhaserParameters)
+
+// Direction for Panning
+:: Direction= Left | Right
