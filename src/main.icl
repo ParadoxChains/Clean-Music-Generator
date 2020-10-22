@@ -41,7 +41,7 @@ EnvProfile = {
              }
 
 WavType :: Wave
-WavType = Pulse
+WavType = Square
 
 Bits :: BitVersion
 Bits = ThirtyTwo
