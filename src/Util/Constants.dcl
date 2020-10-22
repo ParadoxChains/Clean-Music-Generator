@@ -2,6 +2,6 @@ definition module Util.Constants
 
 PI :: Real
 SAMPLING_RATE :: Int
-tableSize :: Int
+TABLE_SIZE :: Int
 BYTE_SIZE :: Int
 

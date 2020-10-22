@@ -7,6 +7,6 @@ import Util.TypeDefs
 
 
 applyDelay :: Wave DelayParameters -> Wave
-applyDelay wave (Ts, Delay) = [0 \\ i <- [0..N]] + wave
+applyDelay wave (ts, delay) = [0 \\ i <- [0..N]] + wave
 where
-    N = Delay / Ts
+    N = delay / ts
