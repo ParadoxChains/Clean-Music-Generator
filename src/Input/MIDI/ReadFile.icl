@@ -3,11 +3,11 @@ implementation module Input.MIDI.ReadFile
 import StdEnv
 import StdFile
 import StdMaybe
-import Input.Chunks
+import Input.MIDI.Chunks
 import Util.Byte, Util.TimeUtils
 
-//store the useful information of header chunk		
-:: HeaderInfo = 
+//store the useful information of header chunk
+:: HeaderInfo =
 	{
 		//MIDI file format,valid:0,1,2
 		format :: Int,
@@ -19,7 +19,7 @@ import Util.Byte, Util.TimeUtils
 :: TrackInfo :== [Message]
 
 //store the information about a piece of event
-:: Message = 
+:: Message =
 	{
 		//number of 'ticks' from the previous event, represented as a variable length quantity
 		deltaTime :: Int,
@@ -32,9 +32,9 @@ import Util.Byte, Util.TimeUtils
 		| TP Int | TS TimeSignature| Other
 
 //the information that read from the file
-:: Info = 
+:: Info =
 	{
-		//a record which store the information of header chunk 
+		//a record which store the information of header chunk
 		headerInfo :: HeaderInfo,
 		//a list of TrackInfo which contains a list of Message which is a record
 		//so it is basically a list of list of record
@@ -56,7 +56,7 @@ Name: getT
 Args: a function and track chunk information
 Output: a list of tempo or timesignature events
 Info: a higher order function for getting tempo and timesignature
-*/	
+*/
 getT :: (AccumulatedTime TrackInfo -> [(InitialTime, a)]) Info -> [(InitialTime, a)]
 getT f {trackInfo} = flatten(map(\x = f 0 x)trackInfo)
 
@@ -64,12 +64,12 @@ getT f {trackInfo} = flatten(map(\x = f 0 x)trackInfo)
 Name: tp
 Args: accumelated delta time and track chunk information
 Output: a list of tempo event
-*/	
+*/
 tp :: AccumulatedTime TrackInfo -> TPEvents
 tp _ [] = []
-tp acc [m:ms] 
+tp acc [m:ms]
 	#! initialT = acc + m.deltaTime
-	= case m.event of 
+	= case m.event of
 		TP tempo -> [(initialT, tempo):tp initialT ms]
 		_ -> tp initialT ms
 
@@ -77,12 +77,12 @@ tp acc [m:ms]
 Name: ts
 Args: accumelated delta time and track chunk information
 Output: a list of time signature event
-*/	
+*/
 ts :: AccumulatedTime TrackInfo -> TSEvents
 ts _ [] = []
-ts acc [m:ms] 
+ts acc [m:ms]
 	#! initialT = acc + m.deltaTime
-	= case m.event of 
+	= case m.event of
 		TS timeS -> [(initialT, timeS):ts initialT ms]
 		_ -> ts initialT ms
 
@@ -90,7 +90,7 @@ ts acc [m:ms]
 Name: processInfo
 Args: information of chunks and two meta events
 Output: a list of note messages
-*/		
+*/
 processInfo :: Info TPEvents TSEvents-> [Note]
 processInfo {headerInfo,trackInfo} tp ts
 	= flatten(map (\x = note 0 x tp ts) trackInfo)
@@ -100,12 +100,12 @@ Name: note
 Args: accumelated delta time, track chunk information and two meta events
 Output: a list of note messages
 */
-note :: AccumulatedTime TrackInfo TPEvents TSEvents-> [Note] 
+note :: AccumulatedTime TrackInfo TPEvents TSEvents-> [Note]
 note _ [] _ _= []
 note acc l tpe tse
-	#! {deltaTime,event} = hd l 
+	#! {deltaTime,event} = hd l
 	#! initialT = acc + deltaTime
-	#! timeSig = findT (-1,{barVal = 4, noteVal = 4}) initialT tse 
+	#! timeSig = findT (-1,{barVal = 4, noteVal = 4}) initialT tse
 	= case event of
 		NoteOn ch bgFre veo -> [{
 				channel = ch,
@@ -122,13 +122,13 @@ note acc l tpe tse
 Name: calcTempo
 Args: two integers
 Output: tempo value (default: 120 beats/minute)
-*/		
+*/
 calcTempo :: Int Int -> Real
 calcTempo x v = 1.5 * 10.0^7.0 * (toReal v) / (toReal x)
 
 /*
 Name: findT
-Args: the latest deltatime with tempo/timesig that is earlier than initial time, 
+Args: the latest deltatime with tempo/timesig that is earlier than initial time,
 		initial time, a list of tempo and timesig events
 Output: the latest tempo or timesignature event that is earlier than initial time
 */
@@ -142,11 +142,11 @@ findT (t,x) initT [e:es]
 Name: findDeltaTime
 Args: frequency and track chunk information
 Output: an integer value of delta time
-*/	
+*/
 findDeltaTime :: Real TrackInfo -> Int
 findDeltaTime _ [] = 0
 findDeltaTime frequency l
-	#! {deltaTime,event} = hd l  
+	#! {deltaTime,event} = hd l
 	#! fre = case event of
 		NoteOff a b c -> b
 		_ -> -1.0
@@ -160,9 +160,9 @@ Output: information about header chunk and truck chunks
 */
 process :: [Char] -> Info
 process l
-	|length l > 14 && isHeader (take 4 l) = 
-		{ 
-			headerInfo = processHeader (drop 8 l), 
+	|length l > 14 && isHeader (take 4 l) =
+		{
+			headerInfo = processHeader (drop 8 l),
 			trackInfo = processTrack (drop 14 l)
 		}
 	= abort "not enough information"
@@ -173,7 +173,7 @@ Args: a list of bytes
 Output: information about the header chunk
 */
 processHeader :: [Char] -> HeaderInfo
-processHeader l = 
+processHeader l =
 	{
 		format = calcFormat (take 2 l),
 		division = calcDivision (take 2(drop 4 l))
@@ -186,7 +186,7 @@ Output: a list of track chunk information
 */
 processTrack :: [Char] -> [TrackInfo]
 processTrack [] = []
-processTrack l 
+processTrack l
 	//4bytes:type of chunk(mtrk)
 	|isTrack l = processTrackBody (drop 4 l)
 	= processTrackBody l
@@ -208,10 +208,10 @@ processTrackBody l
 Name: processMessage
 Args: the length in bytes of previous event, the type of previous event, a list of bytes
 Output: one piece of track chunk information
-*/		
+*/
 processMessage :: Int Char [Char] -> TrackInfo
 processMessage _ _ [] = []
-processMessage lastEventLen lastType l 
+processMessage lastEventLen lastType l
 	#! (result,deltaLen) =  deltaTime l
 	#! chunkbody = drop deltaLen l
 	#! eventLen = eventLen lastEventLen chunkbody
@@ -227,11 +227,11 @@ processMessage lastEventLen lastType l
 Name: processEvent
 Args: a list of bytes
 Output: one event
-*/			
+*/
 processEvent :: [Char] -> Event
 processEvent l
 	# cons = NoteOff (getChannel (l!!0)) (getFrequency (l!!1)) (getVelocity (l!!2))
-	| isNoteOn (l!!0) 
+	| isNoteOn (l!!0)
 		| getVelocity (l!!2) <> 0 = NoteOn (getChannel (l!!0)) (getFrequency (l!!1)) (getVelocity (l!!2))
 		= cons
 	| isNoteOff (l!!0) = cons

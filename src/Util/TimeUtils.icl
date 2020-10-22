@@ -2,7 +2,7 @@ implementation module Util.TimeUtils
 import StdEnv
 import Util.ListUtils
 import Util.Constants
-import Input.ReadFile
+import Input.MIDI.ReadFile
 import Util.TypeDefs
 
 
