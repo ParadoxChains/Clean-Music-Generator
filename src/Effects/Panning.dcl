@@ -1,7 +1,7 @@
 definition module Effects.Panning
 import StdEnv
 
-:: Direction= Left | Right
+
 
 
 //linear amplitude panning for mono sound

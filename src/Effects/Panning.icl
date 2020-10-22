@@ -1,46 +1,33 @@
 implementation module Effects.Panning
 import StdEnv
-
-
-SAMPLING_RATE :: Real
-SAMPLING_RATE = 44100.0
-
-soundSpeed :: Real
-soundSpeed = 34300.0
-
-PI::Real
-PI=3.14
+import Util.Constants
+import Synthesis.Wave
+import Util.TypeDefs
 
 
 
-
-instance == Direction
-	where
-		(==) Left Left= True
-		(==) Right Right =True
-		(==) _ _ = False
 
 
 ampPanMonoLinear :: [Real] Real Direction ->([Real],[Real])
-ampPanMonoLinear wave panVal dir
-| dir == Left = ([x*(1.0+panVal)\\x<-wave],[x*(1.0-panVal)\\x<-wave])
-=([x*(1.0-panVal)\\x<-wave],[x*(1.0-panVal)\\x<-wave])
+ampPanMonoLinear wave pan_val dir
+| dir == Left = ([x*(1.0+pan_val)\\x<-wave],[x*(1.0-pan_val)\\x<-wave])
+=([x*(1.0-pan_val)\\x<-wave],[x*(1.0-pan_val)\\x<-wave])
 
 ampPanStereoLinear :: [Real] [Real] Real Direction ->([Real],[Real])
-ampPanStereoLinear waveL waveR panVal dir
-| dir == Left = ([x*(1.0+panVal)\\x<-waveL],[x*(1.0-panVal)\\x<-waveR])
-=([x*(1.0-panVal)\\x<-waveL],[x*(1.0+panVal)\\x<-waveR])
+ampPanStereoLinear wave_l wave_r pan_val dir
+| dir == Left = ([x*(1.0+pan_val)\\x<-wave_l],[x*(1.0-pan_val)\\x<-wave_r])
+=([x*(1.0-pan_val)\\x<-wave_l],[x*(1.0+pan_val)\\x<-wave_r])
 
 
 delayPanMonoLinear:: [Real] Int Direction ->([Real],[Real])
-delayPanMonoLinear wave shiftVal dir
-| dir == Left = ((repeatn shiftVal 0.0)++wave,wave++(repeatn shiftVal 0.0))
-=(wave++(repeatn shiftVal 0.0),(repeatn shiftVal 0.0)++wave)
+delayPanMonoLinear wave shift_val dir
+| dir == Left = ((repeatn shift_val 0.0)++wave,wave++(repeatn shift_val 0.0))
+=(wave++(repeatn shift_val 0.0),(repeatn shift_val 0.0)++wave)
 
 delayPanStereoLinear:: [Real] [Real] Int Direction ->([Real],[Real])
-delayPanStereoLinear waveL waveR shiftVal dir
-| dir == Left = ((repeatn shiftVal 0.0)++waveL,waveR++(repeatn shiftVal 0.0))
-=(waveL++(repeatn shiftVal 0.0),(repeatn shiftVal 0.0)++waveR)
+delayPanStereoLinear wave_l wave_r shift_val dir
+| dir == Left = ((repeatn shift_val 0.0)++wave_l,wave_r++(repeatn shift_val 0.0))
+=(wave_l++(repeatn shift_val 0.0),(repeatn shift_val 0.0)++wave_r)
 
 
 sineTable :: {Real}
@@ -57,61 +44,63 @@ sineList = [x\\x<-:sineTable]
 
 
 ampPanMonoCircular :: [Real] Real Direction ->([Real],[Real])
-ampPanMonoCircular wave panVal dir
+ampPanMonoCircular wave pan_val dir
 | dir == Left = ([x*loudness\\x<-wave],[x*(1.0-loudness)\\x<-wave])
 =([x*(1.0-loudness)\\x<-wave],[x*loudness\\x<-wave])
 where
 	PI=3.14
-	dist=sqrt(2.0*115.5625 - 2.0*115.5625*cos((1.0-panVal) * PI/2.0))
+	dist=sqrt(2.0*115.5625 - 2.0*115.5625*cos((1.0-pan_val) * PI/2.0))
 	loudness=0.5 + 0.5*(1.0-(dist/10.75))
 
 ampPanStereoCircular :: [Real] [Real] Real Direction ->([Real],[Real])
-ampPanStereoCircular waveL waveR panVal dir
-| dir == Left = ([x*loudness\\x<-waveL],[x*(1.0-loudness)\\x<-waveR])
-=([x*(1.0-loudness)\\x<-waveL],[x*loudness\\x<-waveR])
+ampPanStereoCircular wave_l wave_r pan_val dir
+| dir == Left = ([x*loudness\\x<-wave_l],[x*(1.0-loudness)\\x<-wave_r])
+=([x*(1.0-loudness)\\x<-wave_l],[x*loudness\\x<-wave_r])
 where
 	PI=3.14
-	dist=sqrt(2.0*115.5625 - 2.0*115.5625*cos((1.0-panVal) * PI/2.0))
+	dist=sqrt(2.0*115.5625 - 2.0*115.5625*cos((1.0-pan_val) * PI/2.0))
 	loudness=0.5 + 0.5*(1.0-(dist/10.75))
 
 
 
 delayPanMonoCircular:: [Real] Real Direction ->([Real],[Real])
-delayPanMonoCircular wave panVal dir
-| dir == Left = ((repeatn shiftVal 0.0)++wave,wave++(repeatn shiftVal 0.0))
-=(wave++(repeatn shiftVal 0.0),(repeatn shiftVal 0.0)++wave)
+delayPanMonoCircular wave pan_val dir
+| dir == Left = ((repeatn shift_val 0.0)++wave,wave++(repeatn shift_val 0.0))
+=(wave++(repeatn shift_val 0.0),(repeatn shift_val 0.0)++wave)
 where
-	dist=sqrt(2.0*115.5625 - 2.0*115.5625*cos((1.0-panVal) * PI/2.0))
-	shiftVal=toInt (SAMPLING_RATE * (dist/soundSpeed))
+	dist=sqrt(2.0*115.5625 - 2.0*115.5625*cos((1.0-pan_val) * PI/2.0))
+	shift_val=toInt (SAMPLING_RATE * (dist/SOUND_SPEED))
 
 
 delayPanStereoCircular:: [Real] [Real] Real Direction ->([Real],[Real])
-delayPanStereoCircular waveL waveR panVal dir
-| dir == Left = ((repeatn shiftVal 0.0)++waveL,waveR++(repeatn shiftVal 0.0))
-=(waveL++(repeatn shiftVal 0.0),(repeatn shiftVal 0.0)++waveR)
+delayPanStereoCircular wave_l wave_r pan_val dir
+| dir == Left = ((shift_val shiftVal 0.0)++wave_l,wave_r++(repeatn shift_val 0.0))
+=(wave_l++(repeatn shift_val 0.0),(repeatn shift_val 0.0)++wave_r)
 where
-	dist=sqrt(2.0*115.5625 - 2.0*115.5625*cos((1.0-panVal) * PI/2.0))
-	shiftVal=toInt(SAMPLING_RATE * (dist/soundSpeed))
+	dist=sqrt(2.0*115.5625 - 2.0*115.5625*cos((1.0-pan_val) * PI/2.0))
+	shift_val=toInt(SAMPLING_RATE * (dist/SOUND_SPEED))
 
 
 panningMono :: [Real] Real Real Direction->([Real],[Real])
-panningMono wave panVal mix dir  = ( map (\(dry, wet) = (mix*wet) + ((1.0-mix)*dry)) [ (d,w) \\ d<-waveL & w<-wetLeft],  map (\(dry, wet) = (mix*wet) + ((1.0-mix)*dry)) [ (d,w) \\ d<-waveR & w<-wetRight])
+panningMono wave pan_val mix dir  = ( map (\(dry, wet) = (mix*wet) + ((1.0-mix)*dry)) [ (d,w) \\ d<-wave_l & w<-wet_left],  
+									map (\(dry, wet) = (mix*wet) + ((1.0-mix)*dry)) [ (d,w) \\ d<-wave_r & w<-wet_right])
 where
-	waveR=wave
-	waveL=wave
-	waves = ampPanStereoCircular waveL waveR panVal dir
-	wL=fst waves
-	wR=snd waves
-    (wetLeft, wetRight) = delayPanStereoCircular wL wR panVal dir
+	wave_r=wave
+	wave_l=wave
+	waves = ampPanStereoCircular wave_l wave_r pan_val dir
+	w_l=fst waves
+	w_r=snd waves
+    (wet_left, wet_right) = delayPanStereoCircular w_l w_r pan_val dir
 
 
 panningStereo :: [Real] [Real] Real Real Direction->([Real],[Real])
-panningStereo waveL waveR panVal mix dir  = ( map (\(dry, wet) = (mix*wet) + ((1.0-mix)*dry)) [ (d,w) \\ d<-waveL & w<-wetLeft],  map (\(dry, wet) = (mix*wet) + ((1.0-mix)*dry)) [ (d,w) \\ d<-waveR & w<-wetRight])
+panningStereo wave_l wave_r pan_val mix dir  = ( map (\(dry, wet) = (mix*wet) + ((1.0-mix)*dry)) [ (d,w) \\ d<-wave_l & w<-wet_left],  
+												map (\(dry, wet) = (mix*wet) + ((1.0-mix)*dry)) [ (d,w) \\ d<-wave_r & w<-wet_right])
 where
-	waves = ampPanStereoCircular waveL waveR panVal dir
-	wL=fst waves
-	wR=snd waves
-    (wetLeft, wetRight) = delayPanStereoCircular wL wR panVal dir
+	waves = ampPanStereoCircular wave_l wave_r pan_val dir
+	w_l=fst waves
+	w_r=snd waves
+    (wet_left, wet_right) = delayPanStereoCircular w_l w_r pan_val dir
 
 
 
@@ -119,5 +108,4 @@ where
 //Start = snd(ampPanMonoCircular sineList 0.8 Left)
 //Start = snd(delayPanMonoCircular sineList 0.8 Left)
 //Start = snd( panningMono sineList 0.8 0.75 Left)
-//
-Start = fst(delayPanStereoCircular sineList sineList 0.8 Left)
+//Start = fst(delayPanStereoCircular sineList sineList 0.8 Left)
