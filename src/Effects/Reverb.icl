@@ -11,16 +11,16 @@ where
 	yVals = generateReverbSeconds ampVal bounces seconds decay 1 ampVal
 
 generateReverbSeconds :: [Real] Int Real Real Int [Real] -> [Real]
-generateReverbSeconds original bounces seconds decay nthBounce results
-| nthBounce > bounces = results
-= generateReverbSeconds original bounces seconds decay (nthBounce + 1) newResult
+generateReverbSeconds original bounces seconds decay nth_bounce results
+| nth_bounce > bounces = results
+= generateReverbSeconds original bounces seconds decay (nth_bounce + 1) new_result
 where
 	delay=secondsToSamples seconds
-	decayedSignal = map (\x = x * (decay^(toReal nthBounce))) original
-	decaySilence = repeatn (nthBounce * delay) 0.0
-	delayedDecayedSignal = decaySilence ++ decayedSignal
-	extendedResults = results ++ decaySilence
-	newResult = [a+b \\ a <- extendedResults & b<-delayedDecayedSignal]
+	decayed_signal = map (\x = x * (decay^(toReal nth_bounce))) original
+	decay_silence = repeatn (nth_bounce * delay) 0.0
+	delayed_decayed_signal = decay_silence ++ decayed_signal
+	extended_results = results ++ decay_silence
+	new_result = [a+b \\ a <- extended_results & b<-delayed_decayed_signal]
 
 createList::Real->[Real]
 createList a= [toReal(i)*0.05\\i<-[0..toInt(a)*20]]
@@ -34,18 +34,18 @@ makeBigList num cnt=(createList num)++ makeBigList num (cnt-1)
 //Tryout with beats
 
 resultForPlot:: [Real] Int  Beat TimeSignature Tempo Real->[(Real,Real)]
-resultForPlot ampVal bounces beat ts tempo decay = [(toReal x,y) \\ y<-yVals & x<-[0..]]
+resultForPlot amp_val bounces beat ts tempo decay = [(toReal x,y) \\ y<-y_vals & x<-[0..]]
 where
-	yVals = generateReverb ampVal bounces beat ts  tempo decay 1 ampVal
+	y_vals = generateReverb amp_val bounces beat ts  tempo decay 1 amp_val
 
 generateReverb :: [Real] Int Beat TimeSignature Tempo Real Int [Real] -> [Real]
-generateReverb original bounces beat ts  tempo decay nthBounce results
-| nthBounce > bounces = results
-= generateReverb original bounces beat ts tempo decay (nthBounce + 1) newResult
+generateReverb original bounces beat ts  tempo decay nth_bounce results
+| nth_bounce > bounces = results
+= generateReverb original bounces beat ts tempo decay (nth_bounce + 1) new_result
 where
 	delay=noteToSamples beat ts tempo
-	decayedSignal = map (\x = x * (decay^(toReal nthBounce))) original
-	decaySilence = repeatn (nthBounce * delay) 0.0
-	delayedDecayedSignal = decaySilence ++ decayedSignal
-	extendedResults = results ++ decaySilence
-	newResult = [a+b \\ a <- extendedResults & b<-delayedDecayedSignal]
+	decayed_signal = map (\x = x * (decay^(toReal nth_bounce))) original
+	decay_silence = repeatn (nth_bounce * delay) 0.0
+	delayed_decayed_signal = decay_silence ++ decayed_signal
+	extended_results = results ++ decay_silence
+	new_result = [a+b \\ a <- extended_results & b<-delayed_decayed_signal]
