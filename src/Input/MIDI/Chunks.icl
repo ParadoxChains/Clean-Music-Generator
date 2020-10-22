@@ -67,9 +67,8 @@ deltaByteToInt [] = 0
 deltaByteToInt [c:cs]
 	#! len = length cs
 	#! n = toInt c
-	| n > 128 = (n-128)* 2 ^ (7*len) + deltaByteToInt cs
-	= n
-	 * 2 ^ (7*len) + deltaByteToInt cs
+	| n > 128 = (n-128) * 2 ^ (7 * len) + deltaByteToInt cs
+	= n * 2 ^ (7 * len) + deltaByteToInt cs
 
 /*
 Name: deltaTimeList
@@ -146,7 +145,7 @@ Output: boolean value
 Info: check if current event is meta event and the type is "Set Tempo"
 */
 isTempo :: [Char] -> Bool
-isTempo [event,type] = isMeta event && (toInt type) == 81
+isTempo [event, type] = isMeta event && (toInt type) == 81
 
 /*
 Name: isTimeSignature
@@ -155,7 +154,7 @@ Output: boolean value
 Info: check if current event is meta event and the type is "Time Signature"
 */
 isTimeSignature :: [Char] -> Bool
-isTimeSignature [event,type] = isMeta event && (toInt type) == 88
+isTimeSignature [event, type] = isMeta event && (toInt type) == 88
 
 /*
 Name: getChannel
@@ -174,7 +173,7 @@ Info: frequency information comes from note number
 getFrequency :: Char -> Frequency
 getFrequency c
 	#! n = toInt c
-	|n >= 0 || n <= 127 = 440.0 * 2.0 ^ (toReal(n-69) / 12.0)
+	|n >= 0 || n <= 127 = 440.0 * 2.0 ^ (toReal(n - 69) / 12.0)
 	= abort "incorrect MIDI note number\n"
 
 /*
