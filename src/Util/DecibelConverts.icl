@@ -4,7 +4,7 @@ import StdEnv
 //convert power ratio to decibels
 powerToDb::Real -> Real
 powerToDb ratio
-|ratio < 0.0 = abort "please write positive ratio"
+|ratio < 0.0 = abort "please write positive ratio\n"
 = 10.0 * (log10 ratio)
 
 // convert decibels to power ratio
