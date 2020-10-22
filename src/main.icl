@@ -26,7 +26,7 @@ FURELISE_MIDI :: String
 FURELISE_MIDI = "FurElise.mid"
 
 importMIDI :: String -> String
-importMIDI name = "./Input/MIDI/" +++ name
+importMIDI name = "./Input/MIDI/sample_input/" +++ name
 
 outputWave :: String
 outputWave = "./diag.wav"
@@ -52,7 +52,7 @@ diagOut = "./diag01.txt"
 
 //NO GO ZONE
 //Don't change this Start line.
-Start w = LetsGo (importMIDI FURELISE_MIDI) outputWave EnvProfile WavType Bits w
+Start w = LetsGo (importMIDI FURELISESHORT_MIDI) outputWave EnvProfile WavType Bits w
 
 listMIDIs :: [String]
 listMIDIs = [importMIDI SIMPLE_MIDI, importMIDI FURELISESHORT_MIDI, importMIDI FURELISE_MIDI]
