@@ -28,7 +28,7 @@ harmonics_amplitudes Triangle = ([1.0,3.0..100.0], [ (-1.0)^(i + 1.0) * (1.0/(k^
 
 generate :: Wave Frequency Samples -> [Real]
 generate Noise freq dur = sumAll l
-where 
+where
     l = [shiftLeft list i \\ list <- (get (wavetable 1.0) noise_harmonics noise_amplitudes freq dur) & i <- randoms]
 generate Pulse freq dur = subtractLists (shiftLeft saw (SAMPLING_RATE/(2*(toInt freq)))) saw
 where
@@ -37,5 +37,3 @@ generate Silence _ dur = [abs(x*0.0)\\x<-(wave [1.0] [0.0] 440.00 dur)]
 generate wavetype freq dur = wave harmonics amplitudes freq dur
 where
     (harmonics, amplitudes) = harmonics_amplitudes wavetype
-
-

@@ -1,5 +1,6 @@
 definition module Synthesis.GeneralEnvelope
 
+
 :: EnvLevel = {rate :: Real
               ,level :: Real
               }
@@ -8,4 +9,4 @@ definition module Synthesis.GeneralEnvelope
             ,sustainLevel :: Int
             }
 
-getEnvelope :: Real GenEnv -> [Real] 
+getEnvelope :: Real GenEnv -> [Real]

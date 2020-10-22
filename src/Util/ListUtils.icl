@@ -1,13 +1,13 @@
 implementation module Util.ListUtils
 import StdEnv
 
-// Rotate a list N places to the left. 
+// Rotate a list N places to the left.
 shiftLeft :: [a] Int -> [a]
 shiftLeft [] _ = []
 shiftLeft x 0 = x
 shiftLeft x y = (drop shift x) ++ (take shift x)
 where
-    shift    
+    shift
         | y > 0 = (y rem (length x))
         = ((length x)-((~y) rem (length x)))
 
@@ -21,7 +21,7 @@ floor r
 // rem for Real numbers
 realRem :: Real Real -> Real
 realRem a b = b * abs(c - toReal(floor c))
-where 
+where
     c = a / b
 
 // sums up two lists

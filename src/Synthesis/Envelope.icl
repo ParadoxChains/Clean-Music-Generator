@@ -3,12 +3,13 @@ import StdEnv
 import Util.TimeUtils
 import Util.Constants
 
+
 ADSRtoDAHDSR::ADSR ->DAHDSR
 ADSRtoDAHDSR adsr = {delay = 0.0, attack = adsr.att, hold = 0.0, decay = adsr.dec,
 					sustain = adsr.sus, release = adsr.rel}
-					
+
 DAHDSRtoADSR::DAHDSR->ADSR
-DAHDSRtoADSR dahdsr = {att = dahdsr.attack,dec = dahdsr.decay, 
+DAHDSRtoADSR dahdsr = {att = dahdsr.attack,dec = dahdsr.decay,
 							sus = dahdsr.sustain, rel = dahdsr.release}
 
 getADSR :: Beat TimeSignature Tempo ADSR -> [Real]
@@ -26,7 +27,7 @@ where
 	endValue | noteDur == 0 = 0.0
 			 | noteDur <= attackSamples = 1.0*((toReal (noteDur))/(adsr.att * (toReal SAMPLING_RATE)))
 			 | noteDur <= attackSamples+decaySamples = 1.0-(adsr.sus*((toReal (noteDur-attackSamples))/(adsr.dec * (toReal SAMPLING_RATE))))
-			 = adsr.sus  
+			 = adsr.sus
 
 getDAHDSR :: Beat TimeSignature Tempo DAHDSR -> [Real]
 getDAHDSR beat timeSig tempo dahdsr = shortenedEnv ++ [endValue-(endValue*((toReal x)/(dahdsr.release * (toReal SAMPLING_RATE)))) \\ x <- [1,2..releaseSamples]] // Release

@@ -4,7 +4,7 @@ import StdEnv
 //Custom library imports
 import Synthesis.Accesstable, Synthesis.Generate, Synthesis.Wave, Synthesis.Wavetable
 import Util.Byte, Util.Constants, Util.ListUtils, Util.Rand, Util.TimeUtils, Util.Pitch, Util.Notation, Util.TypeDefs
-import Input.Chunks, Input.ReadFile
+import Input.MIDI.Chunks, Input.MIDI.Readfile
 import Output.MiddleLayer, Output.Pcm
 
 /*

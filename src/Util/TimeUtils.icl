@@ -2,8 +2,9 @@ implementation module Util.TimeUtils
 import StdEnv
 import Util.ListUtils
 import Util.Constants
-import Input.ReadFile
+import Input.MIDI.ReadFile
 import Util.TypeDefs
+
 
 instance + Beat where + a b = simplifyBeat{p = (a.p*b.q)+(b.p*a.q), q = (a.q*b.q)}
 instance == Beat

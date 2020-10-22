@@ -7,6 +7,7 @@ import Synthesis.EnvelopeArr
 import Synthesis.Generate
 import Input.MIDI.ReadFile
 
+
 :: NoteChunk = { note :: Note
                , wave :: Wave
                , timeSig :: TimeSignature
@@ -24,4 +25,3 @@ render :: [Note] ChannelProfile -> {Real}
                         wavType :: Wave,
                         envelope :: DAHDSR
                     }
-                    

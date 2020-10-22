@@ -1,7 +1,7 @@
 implementation module Agglomerator
 
 import StdEnv, StdFile
-import Input.Chunks, Input.ReadFile
+import Input.MIDI.Chunks, Input.MIDI.ReadFile
 import Output.MiddleLayer, Output.Pcm
 import Synthesis.Accesstable, Synthesis.CasioEnvelope, Synthesis.Envelope,  Synthesis.GeneralEnvelope, Synthesis.Generate, Synthesis.Wave, Synthesis.Wavetable
 //import Synthesis.BufferRender

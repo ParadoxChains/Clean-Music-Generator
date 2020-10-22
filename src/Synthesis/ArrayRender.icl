@@ -8,6 +8,7 @@ import Synthesis.EnvelopeArr
 import Synthesis.Generate
 import Input.MIDI.ReadFile
 
+
 // Arr
 generateSilence :: Int -> {Real}
 generateSilence silenceSamples = {0.0 \\ x <- [1,2..silenceSamples]}
@@ -19,7 +20,7 @@ where
     chunkBeats = (convertDurToBeats chunk.note.duration chunk.timeSig)
 	sampleNum = noteToSamples chunkBeats chunk.timeSig chunk.tempo
 	wave = generate chunk.wave chunk.note.frequency sampleNum
-	envelope = getDAHDSR chunkBeats chunk.timeSig chunk.tempo chunk.dahdsr 
+	envelope = getDAHDSR chunkBeats chunk.timeSig chunk.tempo chunk.dahdsr
 	envByValue = {x*(toReal chunk.note.veolocity) \\ x <-: envelope}
 
 // NONE
@@ -67,4 +68,3 @@ noteToChunk nt chanProf = {note = nt, wave = chanProf.wavType, timeSig = nt.ts, 
 where
 	ts = {barVal = 1, noteVal = 1}
 	env = {delay = 0.0, attack = 1.0, hold = 0.0, decay = 2.0, sustain = 0.3, release = 1.0}
-	

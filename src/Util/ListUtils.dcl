@@ -1,6 +1,6 @@
 definition module Util.ListUtils
 
-// Rotate a list N places to the left. 
+// Rotate a list N places to the left.
 shiftLeft :: [a] Int -> [a]
 
 // floor function

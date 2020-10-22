@@ -4,19 +4,20 @@ import Util.TimeUtils
 import Util.Constants
 import Util.ListUtils
 
+
 getCasioCZ :: Real CasioCZ -> [Real]
 getCasioCZ noteDur casio = shortenedEnv ++ releaseEnv
 where
     noteSamples = secondsToSamples noteDur
-    rt1 | 0.0 > casio.level1 = ~(casio.rate1 / (toReal SAMPLING_RATE)) 
+    rt1 | 0.0 > casio.level1 = ~(casio.rate1 / (toReal SAMPLING_RATE))
 	    = (casio.rate1 / (toReal SAMPLING_RATE))
-	rt2 | casio.level1 > casio.level2 = ~(casio.rate2 / (toReal SAMPLING_RATE)) 
+	rt2 | casio.level1 > casio.level2 = ~(casio.rate2 / (toReal SAMPLING_RATE))
 	    = (casio.rate2 / (toReal SAMPLING_RATE))
-	rt3 | casio.level2 > casio.level3 = ~(casio.rate3 / (toReal SAMPLING_RATE)) 
+	rt3 | casio.level2 > casio.level3 = ~(casio.rate3 / (toReal SAMPLING_RATE))
 	    = (casio.rate3 / (toReal SAMPLING_RATE))
-	rt4 | casio.level3 > casio.level4 = ~(casio.rate4 / (toReal SAMPLING_RATE)) 
+	rt4 | casio.level3 > casio.level4 = ~(casio.rate4 / (toReal SAMPLING_RATE))
 	    = (casio.rate4 / (toReal SAMPLING_RATE))
-	rt5 | casio.level4 > casio.level5 = ~(casio.rate5 / (toReal SAMPLING_RATE)) 
+	rt5 | casio.level4 > casio.level5 = ~(casio.rate5 / (toReal SAMPLING_RATE))
 	    = (casio.rate5 / (toReal SAMPLING_RATE))
     line1 = generateLine rt1 0.0 casio.level1
     line2 = generateLine rt2 (casio.level1-rt2*(snd line1)) casio.level2
@@ -27,18 +28,18 @@ where
 	sustain = [casio.level5 \\ x <-[1,2..(noteSamples-(length frontEnv))]]
 	shortenedEnv = take noteSamples (frontEnv ++ sustain)
 	offset = last shortenedEnv
-	rt6 | offset > casio.level6 = ~(casio.rate6 / (toReal SAMPLING_RATE)) 
+	rt6 | offset > casio.level6 = ~(casio.rate6 / (toReal SAMPLING_RATE))
 	    = (casio.rate6 / (toReal SAMPLING_RATE))
-	rt7 | casio.level6 > casio.level7 = ~(casio.rate7 / (toReal SAMPLING_RATE)) 
+	rt7 | casio.level6 > casio.level7 = ~(casio.rate7 / (toReal SAMPLING_RATE))
 	    = (casio.rate7 / (toReal SAMPLING_RATE))
-	rt8 | casio.level7 > casio.level8 = ~(casio.rate8 / (toReal SAMPLING_RATE)) 
-	    = (casio.rate8 / (toReal SAMPLING_RATE)) 
+	rt8 | casio.level7 > casio.level8 = ~(casio.rate8 / (toReal SAMPLING_RATE))
+	    = (casio.rate8 / (toReal SAMPLING_RATE))
 	line6 = generateLine rt6 offset casio.level6
 	line7 = generateLine rt7 (casio.level6-rt7*(snd line6)) casio.level7
 	line8 = generateLine rt8 (casio.level7-rt8*(snd line7)) casio.level8
 	releaseEnv = (fst line6) ++ (fst line7) ++ (fst line8)
-	
-	
+
+
 generateLine :: Real Real Real -> ([Real], Real)
 generateLine rt level1 level2 = (line, lst)
 where

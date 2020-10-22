@@ -1,4 +1,4 @@
-implementation module Util.complexUtils
+implementation module Util.ComplexUtils
 import StdEnv
 
 
@@ -15,7 +15,7 @@ where
 //for multiplying complex numbers
 instance * Complex
 where
-	(*) a b = { real = a.real * b.real - a.imaginary * b.imaginary , 
+	(*) a b = { real = a.real * b.real - a.imaginary * b.imaginary ,
 				imaginary = a.real*b.imaginary + a.imaginary*b.real }
 
 //to find a conjugate of complex number

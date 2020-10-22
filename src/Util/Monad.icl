@@ -3,6 +3,7 @@ implementation module Util.Monad
 import StdEnv
 import StdMaybe
 
+
 when :: !Bool (m a) -> m () | Monad m
 when b m
   | b = m >>> pure ()

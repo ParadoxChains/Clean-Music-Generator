@@ -1,4 +1,5 @@
-definition module Util.decibelConverts
+definition module Util.DecibelConverts
+
 
 /*
 Name: powerToDb

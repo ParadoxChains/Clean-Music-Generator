@@ -7,6 +7,7 @@ import Synthesis.Envelope
 import Synthesis.Generate
 import Input.MIDI.ReadFile
 
+
 :: NoteChunk = { note :: Note
                , wave :: Wave
                , timeSig :: TimeSignature
@@ -30,7 +31,7 @@ render :: [Note] ChannelProfile -> [Real]
 // Lenght of timeline
 renderTotalSamples :: [Note] ChannelProfile -> Int
 
-// Number of rendered values 
+// Number of rendered values
 totalRendered :: [Note] ChannelProfile -> Int
 
 // Can you get that list and send me txt? :) (For simple, FurElise-Short, FurElise and liz-raph02)

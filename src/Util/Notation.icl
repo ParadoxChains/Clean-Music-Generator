@@ -2,7 +2,7 @@ implementation module Util.Notation
 import StdEnv
 
 import Util.Pitch, Util.TimeUtils
-import Input.Chunks, Input.ReadFile
+import Input.MIDI.Chunks, Input.MIDI.Readfile
 
 :: ManualNote = { note :: String, duration :: Beat}
 :: Next = On ManualNote | Off Beat
