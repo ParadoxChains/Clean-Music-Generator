@@ -58,7 +58,7 @@ Output: a list of tempo or timesignature events
 Info: a higher order function for getting tempo and timesignature
 */
 getT :: (AccumulatedTime TrackInfo -> [(InitialTime, a)]) Info -> [(InitialTime, a)]
-getT f {trackInfo} = flatten(map(\x = f 0 x)trackInfo)
+getT f {trackInfo} = flatten (map (\x = f 0 x) trackInfo)
 
 /*
 Name: tp
@@ -93,7 +93,7 @@ Output: a list of note messages
 */
 processInfo :: Info TPEvents TSEvents-> [Note]
 processInfo {headerInfo,trackInfo} tp ts
-	= flatten(map (\x = note 0 x tp ts) trackInfo)
+	= flatten (map (\x = note 0 x tp ts) trackInfo)
 
 /*
 Name: note
@@ -176,7 +176,7 @@ processHeader :: [Char] -> HeaderInfo
 processHeader l =
 	{
 		format = calcFormat (take 2 l),
-		division = calcDivision (take 2(drop 4 l))
+		division = calcDivision (take 2 (drop 4 l))
 	}
 
 /*

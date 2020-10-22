@@ -25,14 +25,6 @@ parseTagName :: Parser String
 parseTagName = some (satisfy (\x = (isAlpha x) ||  (x == '-'))) >>= \x = pure (toString x)
 
 //parseBeginTag :: Parser (String,ElementAttribute)
-/*
-parseBeginTag = 
-	char '<' >>> 
-	parseTagName >>= \x = 
-	many (char ' ' >>> parseAttribute) >>= \y =
-	char '>' >>>
-	pure (x,y)
-*/
 parseBeginTag :: Parser String
 parseBeginTag = 
 	char '<' >>> 
@@ -150,7 +142,7 @@ getElement s l
 	= x
 	
 getElements :: String [XML] -> [XML]
-getElements s xs = [(Element name l)\\(Element name l)<-xs | name == s]
+getElements s xs = [(Element name l) \\(Element name l) <- xs | name == s]
 
 getPart :: XML -> [Measure]
 getPart (Element "part" l) = getMeasures l
