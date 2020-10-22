@@ -3,10 +3,10 @@ import StdEnv
 import Util.ListUtils, Util.Byte, Util.TypeDefs, Util.Constants
 
 transformOneChannel :: [Real] Real BitVersion -> [Byte]
-transformOneChannel list max bitVersion
-= flatten (map (\x = toBytes Signed LE (translatedBitVersion/BYTE_SIZE) x) (map (\x = movingWave x max bitVersion) list))
+transformOneChannel list max bit_version
+= flatten (map (\x = toBytes Signed LE (translatedBitVersion/BYTE_SIZE) x) (map (\x = movingWave x max bit_version) list))
     where
-        translatedBitVersion = translatingBitVersion bitVersion
+        translatedBitVersion = translatingBitVersion bit_version
 
 transformTwoChannels :: [[Real]] Real BitVersion -> [[Byte]]
 transformTwoChannels list max bit_version = map (\x = transformOneChannel x max bit_version) list
