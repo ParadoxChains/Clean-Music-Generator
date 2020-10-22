@@ -165,7 +165,7 @@ process l
 			headerInfo = processHeader (drop 8 l),
 			trackInfo = processTrack (drop 14 l)
 		}
-	= abort "not enough information"
+	= abort "not enough information\n"
 
 /*
 Name: processHeader

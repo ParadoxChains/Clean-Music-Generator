@@ -86,8 +86,8 @@ where
 read :: !*World String -> (*World, [Note])
 read w fileName
     #! (openStatus, ourFile, w) = fopen fileName FReadData w
-    |not openStatus = (w, abort"File can not be opened")
+    |not openStatus = (w, abort"File can not be opened\n")
     #! (byteList, ourFile) = readBytes ourFile
     #! (closeStatus, w) = fclose ourFile w
-    | not closeStatus = (w, abort "File closing operation failed")
+    | not closeStatus = (w, abort "File closing operation failed\n")
     = (w, readFile byteList)

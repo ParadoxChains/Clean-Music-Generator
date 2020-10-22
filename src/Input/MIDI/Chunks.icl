@@ -12,11 +12,11 @@ Info: check if current is a header chunk
 */
 isHeader :: [Char] -> Bool
 isHeader l
-	|length l < 4 = False 
+	|length l < 4 = False
 	#! type = toString (take 4 l)
 	|type == "MThd" = True
 	= False
-	
+
 /*
 Name: isTrack
 Args: a list of bytes
@@ -25,7 +25,7 @@ Info: check if current is a track chunk
 */
 isTrack :: [Char] -> Bool
 isTrack l
-	|length l < 4 = False 
+	|length l < 4 = False
 	#! type = toString (take 4 l)
 	|type == "MTrk" = True
 	= False
@@ -41,7 +41,7 @@ trackChunkLen l = fromBytes Unsigned BE (take 4 l)
 /*
 Name: calcFormat
 Args: a list of bytes
-Output: the format of MIDI file 
+Output: the format of MIDI file
 Info: possible result -- 0 1 2
 */
 calcFormat :: [Char] -> Int
@@ -76,7 +76,7 @@ Name: deltaTimeList
 Args: a list of bytes
 Output: a list of bytes that contain delta time info
 Info: filter bytes that contain delta time info,
-		read next byte only if the previous byte has 1 as its first digit 
+		read next byte only if the previous byte has 1 as its first digit
 */
 deltaTimeList :: [Char] -> [Char]
 deltaTimeList [] = []
@@ -91,7 +91,7 @@ Args: a list of bytes
 Output: a delta time value and its length in bytes
 */
 deltaTime :: [Char] -> (Int,Int)
-deltaTime l 
+deltaTime l
 	#! deltaL = deltaTimeList l
 	#! result = deltaByteToInt deltaL
 	= (result, length deltaL)
@@ -172,10 +172,10 @@ Output: a real number of frequency of an event
 Info: frequency information comes from note number
 */
 getFrequency :: Char -> Frequency
-getFrequency c 
+getFrequency c
 	#! n = toInt c
 	|n >= 0 || n <= 127 = 440.0 * 2.0 ^ (toReal(n-69) / 12.0)
-	= abort "incorrect MIDI note number"
+	= abort "incorrect MIDI note number\n"
 
 /*
 Name: getVelocity
@@ -184,7 +184,7 @@ Output: an integer of velocity value of an event
 */
 getVelocity :: Char -> Int
 getVelocity c = toInt c
-	
-	
-	
-	
+
+
+
+
