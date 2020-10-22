@@ -4,13 +4,14 @@ import Util.Constants
 import Util.ListUtils
 import Util.TypeDefs
 
-// Takes wavetable, frequency, harmonic and number of samples and gets us desired values from wavetable. 
+
+// Takes wavetable, frequency, harmonic and number of samples and gets us desired values from wavetable.
 getValues :: {Real} Frequency Int Samples -> [Real]
 getValues waveTable frequency harmonic dur = [(getValue i waveTable) \\ i <- indexes]
 where
     indexes = getIndexes frequency harmonic dur
 
-// Takes frequency harmonic and number of samples as parameters and generates list of points 
+// Takes frequency harmonic and number of samples as parameters and generates list of points
 getIndexes :: Frequency Int Samples -> [Real]
 getIndexes frequency harmonic dur = map (\x = realRem x (toReal tableSize)) (take dur [0.0, rate..])
 where

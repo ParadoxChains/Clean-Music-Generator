@@ -1,6 +1,7 @@
 definition module Util.TypeDefs
 import StdEnv
 
+
 //Frequency of note
 :: Frequency :== Real
 
@@ -18,7 +19,7 @@ import StdEnv
 
 //MIDI Instruction
 /*NB: Duration is NEITHER number of samples nor seconds.
-Each duration increment is 1/24th of a Beat, and 
+Each duration increment is 1/24th of a Beat, and
 must be converted appropriately.*/
 :: Duration :== Int
 

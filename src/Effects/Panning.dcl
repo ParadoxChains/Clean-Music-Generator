@@ -1,4 +1,4 @@
-definition module panning
+definition module Effects.Panning
 import StdEnv
 
 :: Direction= Left | Right

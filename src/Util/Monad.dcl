@@ -2,6 +2,7 @@ definition module Util.Monad
 
 import StdMaybe
 
+
 class Monad m where
   // Embed a pure expression.
   pure :: a -> m a
@@ -37,7 +38,7 @@ class Monad m where
 when :: !Bool (m a) -> m () | Monad m
 
 // Map each element of a list to a monadic action,
-// evaluate these actions from left to right, and collect the results. 
+// evaluate these actions from left to right, and collect the results.
 mapM  :: (a -> m b) ![a] -> m [b] | Monad m
 
 // Map each element of a structure to a monadic action,

@@ -4,6 +4,7 @@ import Util.TimeUtils
 import Util.ListUtils
 import Util.Constants
 
+
 :: EnvLevel = {rate :: Real
               ,level :: Real
               }
@@ -19,7 +20,7 @@ import Util.Constants
 
 
 getEnvelope :: Real GenEnv -> [Real]
-getEnvelope duration envelope = envShortened ++ envRelease 
+getEnvelope duration envelope = envShortened ++ envRelease
 where
     noteSamples = secondsToSamples duration
     sustL = toReal (hd [x.level \\ x <- envelope.levels & ind <- [1,2..(length envelope.levels)] | ind == envelope.sustainLevel])
@@ -42,4 +43,4 @@ where
     currData = {lRate = lineRate, lStart = prevLevel-lineRate*diff, lEnd = x.level}
     levelLength = currData.lEnd - currData.lStart
     llst = currData.lEnd - (levelLength-currData.lRate*(toReal(floor(levelLength/currData.lRate))))
-    newDiff = (currData.lEnd - llst) / currData.lRate   
+    newDiff = (currData.lEnd - llst) / currData.lRate

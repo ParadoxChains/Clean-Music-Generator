@@ -18,7 +18,7 @@ where
     chunkBeats = (convertDurToBeats chunk.note.duration chunk.timeSig)
 	sampleNum = noteToSamples chunkBeats chunk.timeSig chunk.tempo
 	wave = generate chunk.wave chunk.note.frequency sampleNum
-	envelope = getDAHDSR chunkBeats chunk.timeSig chunk.tempo chunk.dahdsr 
+	envelope = getDAHDSR chunkBeats chunk.timeSig chunk.tempo chunk.dahdsr
 	envByValue = [x*(toReal chunk.note.veolocity) \\ x <- envelope]
 
 

@@ -2,6 +2,7 @@ definition module Synthesis.PhaseAmplitudeConverter
 import StdEnv
 import Util.TypeDefs
 
+
 /*
 Name: generateLocal
 Arguments: localTime - Int

@@ -5,6 +5,7 @@ import Util.Constants
 import Input.ReadFile
 import Util.TypeDefs
 
+
 instance + Beat where + a b = simplifyBeat{p = (a.p*b.q)+(b.p*a.q), q = (a.q*b.q)}
 instance == Beat
 where

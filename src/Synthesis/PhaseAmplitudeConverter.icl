@@ -2,6 +2,7 @@ implementation module Synthesis.PhaseAmplitudeConverter
 import StdEnv
 import Util.TypeDefs, Util.Constants
 
+
 /*
 Name: sineTable
 Arguments: None

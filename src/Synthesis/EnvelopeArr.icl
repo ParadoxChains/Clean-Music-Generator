@@ -4,12 +4,13 @@ import Util.TimeUtils
 import Util.Constants
 import Util.ArrayUtils
 
+
 ADSRtoDAHDSR::ADSR ->DAHDSR
 ADSRtoDAHDSR adsr = {delay = 0.0, attack = adsr.att, hold = 0.0, decay = adsr.dec,
 					 sustain = adsr.sus, release = adsr.rel}
-					
+
 DAHDSRtoADSR::DAHDSR -> ADSR
-DAHDSRtoADSR dahdsr = {att = dahdsr.attack,dec = dahdsr.decay, 
+DAHDSRtoADSR dahdsr = {att = dahdsr.attack,dec = dahdsr.decay,
 					   sus = dahdsr.sustain, rel = dahdsr.release}
 
 getIndexArr :: Int -> {Int}

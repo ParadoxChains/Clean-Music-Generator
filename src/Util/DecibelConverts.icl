@@ -1,9 +1,9 @@
-implementation module Util.decibelConverts
+implementation module Util.DecibelConverts
 import StdEnv
 
 //convert power ratio to decibels
 powerToDb::Real -> Real
-powerToDb ratio 
+powerToDb ratio
 |ratio < 0.0 = abort "please write positive ratio"
 = 10.0 * (log10 ratio)
 
