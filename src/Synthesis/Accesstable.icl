@@ -15,8 +15,8 @@ where
 generateIndexes :: Frequency Int Samples -> [Real]
 generateIndexes frequency harmonic dur = map (\x = realRem x (toReal TABLE_SIZE)) (take dur [0.0, rate..])
 where
-    newRate = toReal(SAMPLING_RATE)/((toReal harmonic)*frequency)
-    rate = toReal(TABLE_SIZE)/newRate
+    new_rate = toReal(SAMPLING_RATE)/((toReal harmonic)*frequency)
+    rate = toReal(TABLE_SIZE)/new_rate
 
 // Takes Real index and wave table and gives us value at that index
 // If neccessary uses linear interpolation
