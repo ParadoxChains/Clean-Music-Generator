@@ -74,4 +74,4 @@ must be converted appropriately.*/
 :: DelayParameters :== (Real, Real)
 
 // Effect
-:: Effect = (Flanger, FlangerParameters) | (Chorus, ChorusParameters) | (Delay, DelayParameters) | (Phaser, PhaserParameters)
+//:: Effect = (Flanger, FlangerParameters) | (Chorus, ChorusParameters) | (Delay, DelayParameters) | (Phaser, PhaserParameters)

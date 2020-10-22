@@ -1,7 +1,7 @@
 definition module Agglomerator
 
 import StdEnv, StdFile
-import Input.MIDI.Chunks, Input.MIDI.Readfile
+import Input.MIDI.Chunks, Input.MIDI.ReadFile
 import Output.MiddleLayer, Output.Pcm
 import Synthesis.Accesstable, Synthesis.CasioEnvelope, Synthesis.Envelope,  Synthesis.GeneralEnvelope, Synthesis.Generate, Synthesis.BufferRender, Synthesis.Wave, Synthesis.Wavetable
 import Util.Byte, Util.Constants, Util.ListUtils, Util.Monad, Util.Rand, Util.TimeUtils, Util.TypeDefs
