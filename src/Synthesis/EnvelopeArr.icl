@@ -17,45 +17,45 @@ getIndexArr :: Int -> {Int}
 getIndexArr n = arrSeq (1,n,1)
 
 getADSR :: Beat TimeSignature Tempo ADSR -> {Real}
-getADSR beat timeSig tempo adsr = addArr shortenedEnv {endValue-(endValue*((toReal x)/(adsr.rel * (toReal SAMPLING_RATE)))) \\ x <-: (getIndexArr releaseSamples)} // Release
+getADSR beat time_sig tempo adsr = addArr shortened_env {end_value-(end_value*((toReal x)/(adsr.rel * (toReal SAMPLING_RATE)))) \\ x <-: (getIndexArr release_samples)} // Release
 where
-    noteDur = noteToSamples beat timeSig tempo
-	attackSamples = min (noteDur) (secondsToSamples adsr.att)
-	decaySamples = (min (noteDur) (secondsToSamples (adsr.att+adsr.dec))) - attackSamples
-	sustainSamples = noteDur - attackSamples - decaySamples
-	releaseSamples = secondsToSamples adsr.rel
-	halfEnv = (addArr {1.0*((toReal x)/(adsr.att * (toReal SAMPLING_RATE))) \\ x <-: (getIndexArr attackSamples)} // Attack
-	                  {1.0-(adsr.sus*((toReal x)/(adsr.dec * (toReal SAMPLING_RATE)))) \\ x <-: (getIndexArr decaySamples)})// Decay
-	wholeEnv = addArr (addArr {1.0*((toReal x)/(adsr.att * (toReal SAMPLING_RATE))) \\ x <-: (getIndexArr attackSamples)} // Attack
-	                          {1.0-(adsr.sus*((toReal x)/(adsr.dec * (toReal SAMPLING_RATE)))) \\ x <-: (getIndexArr decaySamples)})// Decay
-	                   {adsr.sus \\ x <-: (getIndexArr sustainSamples)} // Sustain
-	shortenedEnv = takeArr noteDur wholeEnv
-	endValue | noteDur == 0 = 0.0
-			 | noteDur <= attackSamples = 1.0*((toReal (noteDur))/(adsr.att * (toReal SAMPLING_RATE)))
-			 | noteDur <= attackSamples+decaySamples = 1.0-(adsr.sus*((toReal (noteDur-attackSamples))/(adsr.dec * (toReal SAMPLING_RATE))))
+    note_dur = noteToSamples beat time_sig tempo
+	attack_samples = min (note_dur) (secondsToSamples adsr.att)
+	decay_samples = (min (note_dur) (secondsToSamples (adsr.att+adsr.dec))) - attack_samples
+	sustain_samples = note_dur - attack_samples - decay_samples
+	release_samples = secondsToSamples adsr.rel
+	half_env = (addArr {1.0*((toReal x)/(adsr.att * (toReal SAMPLING_RATE))) \\ x <-: (getIndexArr attack_samples)} // Attack
+	                  {1.0-(adsr.sus*((toReal x)/(adsr.dec * (toReal SAMPLING_RATE)))) \\ x <-: (getIndexArr decay_samples)})// Decay
+	whole_env = addArr (addArr {1.0*((toReal x)/(adsr.att * (toReal SAMPLING_RATE))) \\ x <-: (getIndexArr attack_samples)} // Attack
+	                          {1.0-(adsr.sus*((toReal x)/(adsr.dec * (toReal SAMPLING_RATE)))) \\ x <-: (getIndexArr decay_samples)})// Decay
+	                   {adsr.sus \\ x <-: (getIndexArr sustain_samples)} // Sustain
+	shortened_env = takeArr note_dur whole_env
+	end_value | note_dur == 0 = 0.0
+			 | note_dur <= attack_samples = 1.0*((toReal (note_dur))/(adsr.att * (toReal SAMPLING_RATE)))
+			 | note_dur <= attack_samples+decay_samples = 1.0-(adsr.sus*((toReal (note_dur-attack_samples))/(adsr.dec * (toReal SAMPLING_RATE))))
 			 = adsr.sus
 
 getDAHDSR :: Beat TimeSignature Tempo DAHDSR -> {Real}
-getDAHDSR beat timeSig tempo dahdsr = addArr shortenedEnv {endValue-(endValue*((toReal x)/(dahdsr.release * (toReal SAMPLING_RATE)))) \\ x <-: (getIndexArr releaseSamples)} // Release
+getDAHDSR beat time_sig tempo dahdsr = addArr shortened_env {end_value-(end_value*((toReal x)/(dahdsr.release * (toReal SAMPLING_RATE)))) \\ x <-: (getIndexArr release_samples)} // Release
 where
-    noteDur = noteToSamples beat timeSig tempo
-    delaySamples = min (noteDur) (secondsToSamples dahdsr.delay)
-	attackSamples = (min (noteDur) (secondsToSamples (dahdsr.attack+dahdsr.delay))) - delaySamples
-	holdSamples = (min (noteDur) (secondsToSamples (dahdsr.attack+dahdsr.delay+dahdsr.hold))) - delaySamples - attackSamples
-	decaySamples = (min (noteDur) (secondsToSamples (dahdsr.attack+dahdsr.delay+dahdsr.hold+dahdsr.decay))) - attackSamples - delaySamples - holdSamples
-	sustainSamples = (noteDur) - attackSamples - delaySamples - holdSamples - decaySamples
-	releaseSamples = secondsToSamples dahdsr.release
-	wholeEnv = addArr (addArr {0.0 \\ x <-: (getIndexArr delaySamples)} // Delay
-	                           {1.0*((toReal x)/(dahdsr.attack * (toReal SAMPLING_RATE))) \\ x <-: (getIndexArr attackSamples)}) // Attack
+    note_dur = noteToSamples beat time_sig tempo
+    delaySamples = min (note_dur) (secondsToSamples dahdsr.delay)
+	attack_samples = (min (note_dur) (secondsToSamples (dahdsr.attack+dahdsr.delay))) - delaySamples
+	holdSamples = (min (note_dur) (secondsToSamples (dahdsr.attack+dahdsr.delay+dahdsr.hold))) - delaySamples - attack_samples
+	decay_samples = (min (note_dur) (secondsToSamples (dahdsr.attack+dahdsr.delay+dahdsr.hold+dahdsr.decay))) - attack_samples - delaySamples - holdSamples
+	sustain_samples = (note_dur) - attack_samples - delaySamples - holdSamples - decay_samples
+	release_samples = secondsToSamples dahdsr.release
+	whole_env = addArr (addArr {0.0 \\ x <-: (getIndexArr delaySamples)} // Delay
+	                           {1.0*((toReal x)/(dahdsr.attack * (toReal SAMPLING_RATE))) \\ x <-: (getIndexArr attack_samples)}) // Attack
 	                  (addArr {1.0 \\ x <-: (getIndexArr holdSamples)} // Hold
-	                          (addArr {1.0-(dahdsr.sustain*((toReal x)/(dahdsr.decay * (toReal SAMPLING_RATE)))) \\ x <-: (getIndexArr decaySamples)} // Decay
-	                                  {dahdsr.sustain \\ x <-: (getIndexArr sustainSamples)})) // Sustain
-	shortenedEnv = takeArr noteDur wholeEnv
-	endValue | noteDur == 0 = 0.0
-			 | noteDur <= delaySamples = 0.0
-			 | noteDur <= delaySamples+attackSamples = 1.0*((toReal (noteDur-delaySamples))/(dahdsr.attack * (toReal SAMPLING_RATE)))
-			 | noteDur <= delaySamples+attackSamples+holdSamples = 1.0
-			 | noteDur <= delaySamples+attackSamples+holdSamples+decaySamples = 1.0-(dahdsr.sustain*((toReal (noteDur-delaySamples-attackSamples-holdSamples))/(dahdsr.decay * (toReal SAMPLING_RATE))))
+	                          (addArr {1.0-(dahdsr.sustain*((toReal x)/(dahdsr.decay * (toReal SAMPLING_RATE)))) \\ x <-: (getIndexArr decay_samples)} // Decay
+	                                  {dahdsr.sustain \\ x <-: (getIndexArr sustain_samples)})) // Sustain
+	shortened_env = takeArr note_dur whole_env
+	end_value | note_dur == 0 = 0.0
+			 | note_dur <= delaySamples = 0.0
+			 | note_dur <= delaySamples+attack_samples = 1.0*((toReal (note_dur-delaySamples))/(dahdsr.attack * (toReal SAMPLING_RATE)))
+			 | note_dur <= delaySamples+attack_samples+holdSamples = 1.0
+			 | note_dur <= delaySamples+attack_samples+holdSamples+decay_samples = 1.0-(dahdsr.sustain*((toReal (note_dur-delaySamples-attack_samples-holdSamples))/(dahdsr.decay * (toReal SAMPLING_RATE))))
 			 = dahdsr.sustain
 
 applyEnvelope :: [Real] {Real} -> {Real}
