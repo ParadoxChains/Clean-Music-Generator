@@ -22,7 +22,7 @@ SIMPLE_MIDI = "simple.mid"
 FURELISESHORT_MIDI :: String
 FURELISESHORT_MIDI = "FurElise-Short.mid"
 
-FURELISE_MIDI :: String 
+FURELISE_MIDI :: String
 FURELISE_MIDI = "FurElise.mid"
 
 importMIDI :: String -> String
@@ -49,10 +49,13 @@ Bits = ThirtyTwo
 diagOut :: String
 diagOut = "./diag01.txt"
 
+InputMIDI :: String
+InputMIDI = FURELISESHORT_MIDI
+
 
 //NO GO ZONE
 //Don't change this Start line.
-Start w = LetsGo (importMIDI FURELISESHORT_MIDI) outputWave EnvProfile WavType Bits w
+Start w = LetsGo (importMIDI InputMIDI) outputWave EnvProfile WavType Bits w
 
 listMIDIs :: [String]
 listMIDIs = [importMIDI SIMPLE_MIDI, importMIDI FURELISESHORT_MIDI, importMIDI FURELISE_MIDI]
