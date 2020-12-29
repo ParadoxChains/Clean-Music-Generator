@@ -5,4 +5,4 @@ import StdEnv
 import Input.MIDI.Chunks
 import Util.ListUtils, Util.TypeDefs
 
-convStrToFreq :: String -> Frequency
+convStrToFreq :: !String -> Frequency

@@ -5,11 +5,11 @@ import StdEnv
 import Input.MIDI.Chunks
 import Util.ListUtils, Util.TypeDefs
 
-convStrToFreq :: String -> Frequency
+convStrToFreq :: !String -> Frequency
 convStrToFreq input = getFrequency(toChar(parseString input))
 
 
-parseString :: String -> Int
+parseString :: !String -> Int
 parseString input = result
 where
     inputList = strToList input
@@ -21,7 +21,7 @@ where
     flats = length(filter ((==)'b') modifiers)
     result = (x+sharps-flats)+(12*(octave+1))
 
-convertNoteName :: Char -> Int
+convertNoteName :: !Char -> Int
 convertNoteName 'C' = 0
 convertNoteName 'D' = 2
 convertNoteName 'E' = 4

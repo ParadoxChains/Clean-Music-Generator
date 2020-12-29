@@ -2,7 +2,7 @@ implementation module Util.ListUtils
 import StdEnv
 
 // Rotate a list N places to the left.
-shiftLeft :: [a] Int -> [a]
+shiftLeft :: [a] !Int -> [a]
 shiftLeft [] _ = []
 shiftLeft x 0 = x
 shiftLeft x y = (drop shift x) ++ (take shift x)
@@ -13,13 +13,13 @@ where
 
 // Old floor function
 
-floor :: Real -> Int
+floor :: !Real -> Int
 floor r
 | toReal (toInt r) > r = (toInt r) - 1
 = toInt r
 
 // rem for Real numbers
-realRem :: Real Real -> Real
+realRem :: !Real !Real -> Real
 realRem a b = b * abs(c - toReal(floor c))
 where
     c = a / b
@@ -37,5 +37,5 @@ sumAll [] = []
 sumAll [x] = x
 sumAll [x:xs] = sumLists x (sumAll xs)
 
-strToList :: String -> [Char]
+strToList :: !String -> [Char]
 strToList arr = [x\\x<-:arr]

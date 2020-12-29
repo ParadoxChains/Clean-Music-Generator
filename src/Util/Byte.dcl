@@ -22,4 +22,4 @@ fromBytes :: !Signedness !Endianness ![Byte] -> Int
 readBytes :: !*File -> ([Byte], !*File)
 
 // Writes a list of bytes into a file
-writeBytes :: ![Byte] !*File -> *File
+writeBytes :: [Byte] !*File -> *File
