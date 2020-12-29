@@ -38,7 +38,7 @@ where
 numberOfSamples :: NoteChunk Int -> Int
 numberOfSamples x dur = (noteToSamples (convertDurToBeats dur x.timeSig) x.timeSig x.tempo) + release_samples
 where
-	release_samples = (secondsToSamples x.dahdsr.release) + 1
+	release_samples = (secondsToSamples x.dahdsr.release)
 
 normalizeList :: [Real] Real -> [Real]
 normalizeList track peak = [x/safe_peak \\ x <- track]
@@ -51,7 +51,7 @@ where
     x = hd chunk_list
 	bs = (noteToSamples (convertDurToBeats (x.timeSig.barVal * 4 * 24) x.timeSig) x.timeSig x.tempo)
     total_samples = maxList [numberOfSamples x (x.note.initialTime+x.note.duration) \\ x <- chunk_list]
-    rendered_track = flatten [renderBuffer (i*bs) (max ((i+1)*bs) total_samples) (filter (inInterval (i*bs) (max ((i+1)*bs) total_samples)) chunk_list) \\ i <- [0,1..(total_samples/bs)]]
+    rendered_track = flatten [renderBuffer (i*bs) (min ((i+1)*bs) total_samples) (filter (inInterval (i*bs) (min ((i+1)*bs) total_samples)) chunk_list) \\ i <- [0,1..(total_samples/bs)]]
     normalized = normalizeList rendered_track (maxList [abs x \\ x <- rendered_track])
 
 
