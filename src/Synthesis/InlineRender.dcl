@@ -8,31 +8,31 @@ import Synthesis.Generate
 import Input.MIDI.ReadFile
 
 
-:: NoteChunk = { note :: Note
-               , wave :: Wave
-               , timeSig :: TimeSignature
-               , tempo :: Tempo
-               , dahdsr :: DAHDSR
+:: NoteChunk = { note :: !Note
+               , wave :: !Wave
+               , timeSig :: !TimeSignature
+               , tempo :: !Tempo
+               , dahdsr :: !DAHDSR
                }
 
 :: ChannelProfile = {
-                        wavType :: Wave,
-                        envelope :: DAHDSR
+                        wavType :: !Wave,
+                        envelope :: !DAHDSR
                     }
 
 // Generate sample of silence
-generateSilence :: Int -> [Real]
+generateSilence :: !Int -> [Real]
 
 //Render notes to get samples
-render :: [Note] ChannelProfile -> [Real]
+render :: [Note] !ChannelProfile -> [Real]
 
 //------------------------------------------------------------------
 
 // Lenght of timeline
-renderTotalSamples :: [Note] ChannelProfile -> Int
+renderTotalSamples :: ![Note] !ChannelProfile -> Int
 
 // Number of rendered values
-totalRendered :: [Note] ChannelProfile -> Int
+totalRendered :: ![Note] !ChannelProfile -> Int
 
 // Can you get that list and send me txt? :) (For simple, FurElise-Short, FurElise and liz-raph02)
-renderData :: [Note] ChannelProfile -> [(Int,Int)]
+renderData :: [Note] !ChannelProfile -> [(Int,Int)]

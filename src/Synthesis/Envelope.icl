@@ -4,15 +4,15 @@ import Util.TimeUtils
 import Util.Constants
 
 
-ADSRtoDAHDSR::ADSR ->DAHDSR
+ADSRtoDAHDSR::!ADSR ->DAHDSR
 ADSRtoDAHDSR adsr = {delay = 0.0, attack = adsr.att, hold = 0.0, decay = adsr.dec,
 					sustain = adsr.sus, release = adsr.rel}
 
-DAHDSRtoADSR::DAHDSR->ADSR
+DAHDSRtoADSR::!DAHDSR->ADSR
 DAHDSRtoADSR dahdsr = {att = dahdsr.attack,dec = dahdsr.decay,
 							sus = dahdsr.sustain, rel = dahdsr.release}
 
-getADSR :: Beat TimeSignature Tempo ADSR -> [Real]
+getADSR :: !Beat !TimeSignature !Tempo !ADSR -> [Real]
 getADSR beat time_sig tempo adsr = shortened_env ++ [end_value-(end_value*((toReal x)/(adsr.rel * (toReal SAMPLING_RATE)))) \\ x <- [1,2..release_samples]] // Release
 where
 	note_dur = noteToSamples beat time_sig tempo
@@ -29,7 +29,7 @@ where
 			 | note_dur <= attack_samples+decay_samples = 1.0-(adsr.sus*((toReal (note_dur-attack_samples))/(adsr.dec * (toReal SAMPLING_RATE))))
 			 = adsr.sus
 
-getDAHDSR :: Beat TimeSignature Tempo DAHDSR -> [Real]
+getDAHDSR :: !Beat !TimeSignature !Tempo !DAHDSR -> [Real]
 getDAHDSR beat time_sig tempo dahdsr = shortened_env ++ [end_value-(end_value*((toReal x)/(dahdsr.release * (toReal SAMPLING_RATE)))) \\ x <- [1,2..release_samples]] // Release
 where
     note_dur = noteToSamples beat time_sig tempo
@@ -52,7 +52,7 @@ where
 			 | note_dur <= delay_samples+attack_samples+hold_samples+decay_samples = 1.0-(dahdsr.sustain*((toReal (note_dur-delay_samples-attack_samples-hold_samples))/(dahdsr.decay * (toReal SAMPLING_RATE))))
 			 = dahdsr.sustain
 
-getLocalDAHDSR :: Int Beat TimeSignature Tempo DAHDSR -> Real
+getLocalDAHDSR :: !Int !Beat !TimeSignature !Tempo !DAHDSR -> Real
 getLocalDAHDSR index beat time_sig tempo dahdsr
 | index <= delay_samples = 0.0
 | index <= delay_samples+attack_samples = 1.0*((toReal (index-delay_samples))/(dahdsr.attack * (toReal SAMPLING_RATE)))
