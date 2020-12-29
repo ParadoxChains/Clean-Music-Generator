@@ -9,4 +9,4 @@ import Util.Byte
   , bytesPerSample :: !Int // Number of bytes in each sample
   }
 
-writePcmWav :: !PcmWavParams ![Byte] !*File -> *File
+writePcmWav :: !PcmWavParams [Byte] !*File -> *File
