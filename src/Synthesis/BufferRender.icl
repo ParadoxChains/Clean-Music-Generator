@@ -49,9 +49,9 @@ renderAux :: [NoteChunk] -> [Real]
 renderAux chunk_list = normalized
 where
     x = hd chunk_list
-	bs = (noteToSamples (convertDurToBeats (x.timeSig.barVal * 4 * 24) x.timeSig) x.timeSig x.tempo)
+	bs = 8192
     total_samples = maxList [numberOfSamples x (x.note.initialTime+x.note.duration) \\ x <- chunk_list]
-    rendered_track = flatten [renderBuffer (i*bs) (max ((i+1)*bs) total_samples) (filter (inInterval (i*bs) (max ((i+1)*bs) total_samples)) chunk_list) \\ i <- [0,1..(total_samples/bs)]]
+    rendered_track = flatten [renderBuffer (i*bs) (max ((i+1)*bs) total_samples) (filter (inInterval (i*bs) (min ((i+1)*bs) total_samples)) chunk_list) \\ i <- [0,1..(total_samples/bs)]]
     normalized = normalizeList rendered_track (maxList [abs x \\ x <- rendered_track])
 
 
