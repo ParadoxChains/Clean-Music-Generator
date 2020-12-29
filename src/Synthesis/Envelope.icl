@@ -57,7 +57,7 @@ getLocalDAHDSR index beat time_sig tempo dahdsr
 | index <= delay_samples = 0.0
 | index <= delay_samples+attack_samples = 1.0*((toReal (index-delay_samples))/(dahdsr.attack * (toReal SAMPLING_RATE)))
 | index <= delay_samples+attack_samples+hold_samples = 1.0
-| index <= decay_samples+attack_samples+hold_samples+decay_samples = 1.0-((1.0-dahdsr.sustain)*((toReal (index-(delay_samples+attack_samples+hold_samples)))/(dahdsr.decay * (toReal SAMPLING_RATE))))
+| index <= decay_samples+attack_samples+hold_samples+decay_samples = 1.0-((1.0-dahdsr.sustain)*((toReal (index-(decay_samples+attack_samples+hold_samples)))/(dahdsr.decay * (toReal SAMPLING_RATE))))
 | index <= note_dur = dahdsr.sustain
 | index <= note_dur+release_samples = end_value-(end_value*((toReal (index - note_dur))/(dahdsr.release * (toReal SAMPLING_RATE))))
 = 0.0
