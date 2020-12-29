@@ -42,15 +42,15 @@ must be converted appropriately.*/
 
 :: Tempo :== Real
 
-:: Time = {minutes :: Real
-          ,seconds :: Real
+:: Time = {minutes :: !Real
+          ,seconds :: !Real
           }
 
-:: TimeSignature = {barVal :: Int
-                   ,noteVal :: Int}
+:: TimeSignature = {barVal :: !Int
+                   ,noteVal :: !Int}
 
-:: Beat = {p :: Int,
-           q :: Int}
+:: Beat = {p :: !Int,
+           q :: !Int}
 
 // Strating time of a time signature event and time signature
 :: TSEvent :== (InitialTime, TimeSignature)
