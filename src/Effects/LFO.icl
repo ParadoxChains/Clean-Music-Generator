@@ -43,19 +43,6 @@ where
     restrictedPhaseValue | currentPhaseValue > 0.0 = currentPhaseValue = 0.0
 
 
-fastRippleLFOEF :: LFOProfile
-fastRippleLFOEF = LFO 1.0 Sine 5.0
-
-slowRippleLFOEF :: LFOProfile
-slowRippleLFOEF = LFO 10.0 Sine 0.5
-
-tremeloLFOEF :: LFOProfile
-tremeloLFOEF = PhasedLFO 2.0 1.0 Sine 10.0 FreePhase
-
-rippleLFOEF :: LFOProfile
-rippleLFOEF = ReversePhasedLFO 1.1 5.0 Sine 20.0
-
-
 applyLFO :: [Real] LFOProfile Real -> [Real]
 applyLFO ls prof mix = [(curr * (getLocalLFO i prof) * mix) + (curr * (1.0 - mix)) \\ curr <- ls & i <- [1,2..]]
 
