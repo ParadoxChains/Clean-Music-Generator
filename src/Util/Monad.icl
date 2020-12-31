@@ -25,7 +25,7 @@ mapM_ f xs = go xs where
     go xs >>>
     pure ()
 
-replicateM :: !Int !(m a) -> m [a] | Monad m
+replicateM :: !Int (m a) -> m [a] | Monad m
 replicateM i m = go i where
   go i
     | i <= 0 = pure []
@@ -33,7 +33,7 @@ replicateM i m = go i where
       go (i - 1) >>= \xs.
       pure [x:xs]
 
-replicateM_ :: !Int !(m a) -> m () | Monad m
+replicateM_ :: !Int (m a) -> m () | Monad m
 replicateM_ i m = go i where
   go i
     | i <= 0 = pure ()

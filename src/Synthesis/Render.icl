@@ -8,11 +8,11 @@ import Synthesis.Generate
 import Input.MIDI.ReadFile
 
 
-generateSilence :: Int -> [Real]
+generateSilence :: !Int -> [Real]
 generateSilence silence_samples = [0.0 \\ x <- [1,2..silence_samples]]
 
 
-renderNoteChunk :: NoteChunk -> [Real]
+renderNoteChunk :: !NoteChunk -> [Real]
 renderNoteChunk chunk = applyEnvelope wave env_by_value
 where
     chunk_beats = (convertDurToBeats chunk.note.duration chunk.timeSig)
@@ -22,7 +22,7 @@ where
 	env_by_value = [x*(toReal chunk.note.veolocity) \\ x <- envelope]
 
 
-numberOfSamples :: NoteChunk Int -> Int
+numberOfSamples :: !NoteChunk !Int -> Int
 numberOfSamples x dur = (noteToSamples (convertDurToBeats dur x.timeSig) x.timeSig x.tempo) + release_samples
 where
 	release_samples = floor (1.0 / (toReal secondsToSamples x.dahdsr.release)) + 1
@@ -44,12 +44,12 @@ where
 	note_sum = [(sum [arr.[ind] \\ arr <- rendered_track_arr]) \\ ind <- [0,1..(total_samples-1)]]
 	normalized = normalizeList note_sum
 
-render :: [Note] ChannelProfile -> [Real]
+render :: [Note] !ChannelProfile -> [Real]
 render note_list chan_prof = renderAux chunk_list
 where
 	chunk_list = [noteToChunk nt chan_prof \\ nt <- note_list]
 
-noteToChunk :: Note ChannelProfile -> NoteChunk
+noteToChunk :: !Note !ChannelProfile -> NoteChunk
 noteToChunk nt chan_prof = {note = nt, wave = chan_prof.wavType, timeSig = nt.ts, tempo = nt.temp, dahdsr = chan_prof.envelope}
 where
 	ts = {barVal = 1, noteVal = 1}

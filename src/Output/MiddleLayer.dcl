@@ -3,8 +3,8 @@ import Util.TypeDefs
 import StdEnv
 
 
-transformOneChannel :: [Real] Real BitVersion -> [Byte]
+transformOneChannel :: [Real] !Real !BitVersion -> [Byte]
 
-transformTwoChannels :: [[Real]] Real BitVersion -> [[Byte]]
+transformTwoChannels :: [[Real]] !Real !BitVersion -> [[Byte]]
 
-translatingBitVersion :: BitVersion -> Int
+translatingBitVersion :: !BitVersion -> Int

@@ -5,18 +5,18 @@ import Util.Constants
 import Util.ArrayUtils
 
 
-ADSRtoDAHDSR::ADSR ->DAHDSR
+ADSRtoDAHDSR::!ADSR ->DAHDSR
 ADSRtoDAHDSR adsr = {delay = 0.0, attack = adsr.att, hold = 0.0, decay = adsr.dec,
 					 sustain = adsr.sus, release = adsr.rel}
 
-DAHDSRtoADSR::DAHDSR -> ADSR
+DAHDSRtoADSR::!DAHDSR -> ADSR
 DAHDSRtoADSR dahdsr = {att = dahdsr.attack,dec = dahdsr.decay,
 					   sus = dahdsr.sustain, rel = dahdsr.release}
 
-getIndexArr :: Int -> {Int}
+getIndexArr :: !Int -> {Int}
 getIndexArr n = arrSeq (1,n,1)
 
-getADSR :: Beat TimeSignature Tempo ADSR -> {Real}
+getADSR :: !Beat !TimeSignature !Tempo !ADSR -> {Real}
 getADSR beat time_sig tempo adsr = addArr shortened_env {end_value-(end_value*((toReal x)/(adsr.rel * (toReal SAMPLING_RATE)))) \\ x <-: (getIndexArr release_samples)} // Release
 where
     note_dur = noteToSamples beat time_sig tempo
@@ -35,7 +35,7 @@ where
 			 | note_dur <= attack_samples+decay_samples = 1.0-(adsr.sus*((toReal (note_dur-attack_samples))/(adsr.dec * (toReal SAMPLING_RATE))))
 			 = adsr.sus
 
-getDAHDSR :: Beat TimeSignature Tempo DAHDSR -> {Real}
+getDAHDSR :: !Beat !TimeSignature !Tempo !DAHDSR -> {Real}
 getDAHDSR beat time_sig tempo dahdsr = addArr shortened_env {end_value-(end_value*((toReal x)/(dahdsr.release * (toReal SAMPLING_RATE)))) \\ x <-: (getIndexArr release_samples)} // Release
 where
     note_dur = noteToSamples beat time_sig tempo
@@ -58,5 +58,5 @@ where
 			 | note_dur <= delaySamples+attack_samples+holdSamples+decay_samples = 1.0-(dahdsr.sustain*((toReal (note_dur-delaySamples-attack_samples-holdSamples))/(dahdsr.decay * (toReal SAMPLING_RATE))))
 			 = dahdsr.sustain
 
-applyEnvelope :: [Real] {Real} -> {Real}
+applyEnvelope :: ![Real] !{Real} -> {Real}
 applyEnvelope wave envelope = {x*e \\ x <- wave & e <-: envelope}

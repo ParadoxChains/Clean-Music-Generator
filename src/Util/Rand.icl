@@ -19,7 +19,7 @@ l :== 18
 
 shiftRight m n :== (m >> n) bitand (0x7FFFFFFF >> (n-1))
 
-initrand :: Int *{# Int} -> *{# Int}
+initrand :: !Int !*{# Int} -> !*{# Int}
 initrand seed mt 
 	| seed==0 = abort "initrand: seed must not be 0\n"
 	= init_i 0 { mt & [0] = seed bitand 0xffffffff}
@@ -44,7 +44,7 @@ where
 		#! y = y bitxor (shiftRight y l)
 		= [ y : gr_mti (inc mti) mt]
 	
-	new_mti :: Int *{# Int} -> *{# Int}
+	new_mti :: !Int !*{# Int} -> !*{# Int}
 	new_mti k mt
 		| k==n = mt 
 		#! (mtk, mt) = mt![k]

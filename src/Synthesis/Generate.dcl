@@ -9,4 +9,4 @@ Input: Wave type, Frequency, Number of samples
 Output: Generated wave
 Interface for 'wave' function from Generate.dcl
 */
-generate :: Wave Frequency Samples -> [Real]
+generate :: !Wave !Frequency !Samples -> [Real]

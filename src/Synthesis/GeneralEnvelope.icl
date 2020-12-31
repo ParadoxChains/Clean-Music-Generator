@@ -5,21 +5,21 @@ import Util.ListUtils
 import Util.Constants
 
 
-:: EnvLevel = {rate :: Real
-              ,level :: Real
+:: EnvLevel = {rate :: !Real
+              ,level :: !Real
               }
 
-:: LineData = {lRate :: Real
-              ,lStart :: Real
-              ,lEnd :: Real
+:: LineData = {lRate :: !Real
+              ,lStart :: !Real
+              ,lEnd :: !Real
               }
 
 :: GenEnv = {levels :: [EnvLevel]
-            ,sustainLevel :: Int
+            ,sustainLevel :: !Int
             }
 
 
-getEnvelope :: Real GenEnv -> [Real]
+getEnvelope :: !Real !GenEnv -> [Real]
 getEnvelope duration envelope = env_shortened ++ env_release
 where
     note_samples = secondsToSamples duration
@@ -31,10 +31,10 @@ where
     env_release_data = parseData (drop envelope.sustainLevel envelope.levels) (last env_shortened) 0.0
     env_release = flatten [generateLine data \\ data <- env_release_data]
 
-generateLine :: LineData -> [Real]
+generateLine :: !LineData -> [Real]
 generateLine data = [data.lStart+data.lRate,data.lStart+2.0*data.lRate..data.lEnd]
 
-parseData :: [EnvLevel] Real Real -> [LineData]
+parseData :: [EnvLevel] !Real !Real -> [LineData]
 parseData [] _ _ = []
 parseData [x:xs] prev_level diff = [curr_data] ++ (parseData xs x.level new_diff)
 where

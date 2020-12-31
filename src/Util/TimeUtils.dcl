@@ -7,19 +7,19 @@ instance == Beat
 instance zero Beat
 
 // Gets Time and converts to seconds
-timeToSeconds :: Time -> Real
+timeToSeconds :: !Time -> Real
 
 // Gets seconds and returns number of samples
-secondsToSamples :: Real -> Int
+secondsToSamples :: !Real -> Int
 
 // Gets time and returns number of samples
-timeToSamples :: Time -> Int
+timeToSamples :: !Time -> Int
 
 // Gets notelength, time signature and tempo and returns number of samples
-noteToSamples :: Beat TimeSignature Tempo -> Int
+noteToSamples :: !Beat !TimeSignature !Tempo -> Int
 
-simplifyBeat :: Beat -> Beat
+simplifyBeat :: !Beat -> Beat
 
-convertDurToBeats :: Duration TimeSignature -> Beat
+convertDurToBeats :: !Duration !TimeSignature -> Beat
 
-convertBeatsToDur :: Beat TimeSignature -> Duration
+convertBeatsToDur :: !Beat !TimeSignature -> Duration

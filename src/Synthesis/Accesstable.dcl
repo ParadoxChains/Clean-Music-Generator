@@ -7,4 +7,4 @@ import Util.TypeDefs
 Name: get
 Input: wave_table, Harmonics, Amplitudes, Frequency, Number of Samples
 */
-get :: {Real} [Real] [Real] Frequency Samples -> [[Real]]
+get :: !{Real} [Real] [Real] !Frequency !Samples -> [[Real]]

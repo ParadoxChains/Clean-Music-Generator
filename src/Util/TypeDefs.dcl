@@ -42,36 +42,36 @@ must be converted appropriately.*/
 
 :: Tempo :== Real
 
-:: Time = {minutes :: Real
-          ,seconds :: Real
+:: Time = {minutes :: !Real
+          ,seconds :: !Real
           }
 
-:: TimeSignature = {barVal :: Int
-                   ,noteVal :: Int}
+:: TimeSignature = {barVal :: !Int
+                   ,noteVal :: !Int}
 
-:: Beat = {p :: Int,
-           q :: Int}
+:: Beat = {p :: !Int,
+           q :: !Int}
 
 // Strating time of a time signature event and time signature
-:: TSEvent :== (InitialTime, TimeSignature)
+:: TSEvent :== (!InitialTime, !TimeSignature)
 
 // A list of time signature events
 :: TSEvents :== [TSEvent]
 
 // Starting time of a tempo event and the tempo value
-:: TPEvent :== (InitialTime, Int)
+:: TPEvent :== (!InitialTime, !Int)
 
 // A list of tempo events
 :: TPEvents :== [TPEvent]
 
 // Flanger Parameters
-:: FlangerParameters :== (Real, Real, Real)
+:: FlangerParameters :== (!Real, !Real, !Real)
 
 // Chorus Parameters
-:: ChorusParameters :== (Real, Real, Real, Real)
+:: ChorusParameters :== (!Real, !Real, !Real, !Real)
 
 // Delay Parameters
-:: DelayParameters :== (Real, Real)
+:: DelayParameters :== (!Real, !Real)
 
 // Effect
 //:: Effect = (Flanger, FlangerParameters) | (Chorus, ChorusParameters) | (Delay, DelayParameters) | (Phaser, PhaserParameters)
