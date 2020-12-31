@@ -15,7 +15,7 @@ testArr2 :: *{Int}
 testArr2 = {1,2,3}
 
 /*Function to generate an array sequence
-Arguments: 
+Arguments:
     Tuple containing: (Start, End, Increment)*/
 arrSeq :: !(!Int,!Int,!Int) -> *(a Int) | Array a Int
 arrSeq (start,end,inc)
@@ -75,9 +75,9 @@ stackArr arr1 arr2 index
 
 //Array utilities
 addArrAux :: !Int !{Real} !{Real} -> Real
-addArrAux x a b 
-	| (x >= (size a)) = b.[x-(size a)]
-	= a.[x]
+addArrAux x a b
+    | (x >= (size a)) = b.[x-(size a)]
+    = a.[x]
 
 // ++
 addArr :: !{Real} !{Real} -> {Real}
@@ -88,10 +88,10 @@ lastArr :: !{Real} -> Real
 lastArr a = a.[(size a) - 1]
 
 // take
-takeArr :: !Int !{Real} -> {Real} 
+takeArr :: !Int !{Real} -> {Real}
 takeArr x a
-	| x >= (size a) = a
-	= {a.[ind] \\ ind <- [0,1..((size a) - 1)]}
+    | x >= (size a) = a
+    = {a.[ind] \\ ind <- [0,1..((size a) - 1)]}
 
 //list to array
 listToArr :: ![a] -> {a}

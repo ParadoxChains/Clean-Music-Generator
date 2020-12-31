@@ -12,10 +12,10 @@ Info: check if current is a header chunk
 */
 isHeader :: ![Char] -> Bool
 isHeader l
-	|length l < 4 = False
-	#! type = toString (take 4 l)
-	|type == "MThd" = True
-	= False
+    |length l < 4 = False
+    #! type = toString (take 4 l)
+    |type == "MThd" = True
+    = False
 
 /*
 Name: isTrack
@@ -25,10 +25,10 @@ Info: check if current is a track chunk
 */
 isTrack :: ![Char] -> Bool
 isTrack l
-	|length l < 4 = False
-	#! type = toString (take 4 l)
-	|type == "MTrk" = True
-	= False
+    |length l < 4 = False
+    #! type = toString (take 4 l)
+    |type == "MTrk" = True
+    = False
 
 /*
 Name: trackChunkLen
@@ -65,24 +65,24 @@ Info: delta time --  the number of 'ticks' from the previous event
 deltaByteToInt :: ![Char] -> Int
 deltaByteToInt [] = 0
 deltaByteToInt [c:cs]
-	#! len = length cs
-	#! n = toInt c
-	| n > 128 = (n-128) * 2 ^ (7 * len) + deltaByteToInt cs
-	= n * 2 ^ (7 * len) + deltaByteToInt cs
+    #! len = length cs
+    #! n = toInt c
+    | n > 128 = (n-128) * 2 ^ (7 * len) + deltaByteToInt cs
+    = n * 2 ^ (7 * len) + deltaByteToInt cs
 
 /*
 Name: deltaTimeList
 Args: a list of bytes
 Output: a list of bytes that contain delta time info
 Info: filter bytes that contain delta time info,
-		read next byte only if the previous byte has 1 as its first digit
+        read next byte only if the previous byte has 1 as its first digit
 */
 deltaTimeList :: [Char] -> [Char]
 deltaTimeList [] = []
 deltaTimeList [c:cs]
-	#! d = toInt c
-	|d < 128 = [c]
-	= [c:deltaTimeList cs]
+    #! d = toInt c
+    |d < 128 = [c]
+    = [c:deltaTimeList cs]
 
 /*
 Name: deltaTime
@@ -91,9 +91,9 @@ Output: a delta time value and its length in bytes
 */
 deltaTime :: ![Char] -> (!Int,!Int)
 deltaTime l
-	#! deltaL = deltaTimeList l
-	#! result = deltaByteToInt deltaL
-	= (result, length deltaL)
+    #! deltaL = deltaTimeList l
+    #! result = deltaByteToInt deltaL
+    = (result, length deltaL)
 
 /*
 Name: firstHalfStatus
@@ -172,9 +172,9 @@ Info: frequency information comes from note number
 */
 getFrequency :: !Char -> Frequency
 getFrequency c
-	#! n = toInt c
-	|n >= 0 || n <= 127 = 440.0 * 2.0 ^ (toReal(n - 69) / 12.0)
-	= abort "incorrect MIDI note number\n"
+    #! n = toInt c
+    |n >= 0 || n <= 127 = 440.0 * 2.0 ^ (toReal(n - 69) / 12.0)
+    = abort "incorrect MIDI note number\n"
 
 /*
 Name: getVelocity
