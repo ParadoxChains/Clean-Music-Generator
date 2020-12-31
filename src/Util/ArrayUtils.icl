@@ -17,7 +17,7 @@ testArr2 = {1,2,3}
 /*Function to generate an array sequence
 Arguments: 
     Tuple containing: (Start, End, Increment)*/
-arrSeq :: (Int,Int,Int) -> *(a Int) | Array a Int
+arrSeq :: !(!Int,!Int,!Int) -> *(a Int) | Array a Int
 arrSeq (start,end,inc)
 | (start < end) <> (inc > 0) = arrSeq (start,end,(-1 * inc))
 #!len = ((end-start+1)/inc)
@@ -25,7 +25,7 @@ arrSeq (start,end,inc)
 /*where
     len = ((end-start+1)/inc)*/
 
-arrSeqAux :: (Int,Int,Int) Int Int *(a Int) -> *(a Int) | Array a Int
+arrSeqAux :: !(!Int,!Int,!Int) !Int !Int !*(a Int) -> *(a Int) | Array a Int
 //arrSeqAux (start,end,inc) len index arr = {arr & [i]=elem \\ elem <- [start,(start+inc)..end] & i <- [0..(len-1)]}
 
 arrSeqAux (start,end,inc) len index arr
@@ -34,14 +34,14 @@ arrSeqAux (start,end,inc) len index arr
 
 /*Function to reverse an entire array.
 Arguments: Array*/
-reverseArr :: *(a e) -> *(a e) | Array a e
+reverseArr :: !*(a e) -> *(a e) | Array a e
 reverseArr a
     # (l, a) = usize a
     = reverseArrAux a 0 (l - 1)
 
 /*Function to reverse a portion of an array.
 Arguments: Array StartIndex EndIndex*/
-reverseArrAux :: *(a e) Int Int -> *(a e) | Array a e
+reverseArrAux :: !*(a e) !Int !Int -> *(a e) | Array a e
 reverseArrAux a i n
     #! st = a.[i]
     #!(en,a) = replace a n st
@@ -51,7 +51,7 @@ reverseArrAux a i n
 
 /*Function to circle rotate an array.
 Arguments: Array nRotations sizeOfArray*/
-shiftArr :: *(a e) Int -> *(a e) | Array a e
+shiftArr :: !*(a e) !Int -> *(a e) | Array a e
 shiftArr a i
     #!(l,a) = usize a
     = reverseArrAux (reverseArrAux (reverseArrAux a 0 (i-1)) i (l-1)) 0 (l-1)
@@ -74,25 +74,25 @@ stackArr arr1 arr2 index
 = stackArr arr2 arr1 (-1 * index)*/
 
 //Array utilities
-addArrAux :: Int {Real} {Real} -> Real
+addArrAux :: !Int !{Real} !{Real} -> Real
 addArrAux x a b 
 	| (x >= (size a)) = b.[x-(size a)]
 	= a.[x]
 
 // ++
-addArr :: {Real} {Real} -> {Real}
+addArr :: !{Real} !{Real} -> {Real}
 addArr a b = { addArrAux x a b \\ x <- [0,1..((size a) + (size b) - 1)]}
 
 // last
-lastArr :: {Real} -> Real
+lastArr :: !{Real} -> Real
 lastArr a = a.[(size a) - 1]
 
 // take
-takeArr :: Int {Real} -> {Real} 
+takeArr :: !Int !{Real} -> {Real} 
 takeArr x a
 	| x >= (size a) = a
 	= {a.[ind] \\ ind <- [0,1..((size a) - 1)]}
 
 //list to array
-listToArr :: [a] -> {a}
+listToArr :: ![a] -> {a}
 listToArr l = {x \\ x<-l}

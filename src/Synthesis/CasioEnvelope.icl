@@ -5,7 +5,7 @@ import Util.Constants
 import Util.ListUtils
 
 
-getCasioCZ :: Real CasioCZ -> [Real]
+getCasioCZ :: !Real !CasioCZ -> [Real]
 getCasioCZ note_dur casio = shortened_env ++ release_env
 where
     note_samples = secondsToSamples note_dur
@@ -40,7 +40,7 @@ where
 	release_env = (fst line6) ++ (fst line7) ++ (fst line8)
 
 
-generateLine :: Real Real Real -> ([Real], Real)
+generateLine :: !Real !Real !Real -> ([Real], !Real)
 generateLine rt level1 level2 = (line, lst)
 where
 	line = [level1+rt,level1+2.0*rt..level2]

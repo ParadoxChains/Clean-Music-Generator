@@ -12,7 +12,7 @@ import Util.Byte
 
 :: Parser a = Parser (State -> Result (!a, !State))
 
-runParser :: !(Parser a) !State -> Result (!a, !State)
+runParser :: (Parser a) !State -> Result (!a, !State)
 runParser (Parser p) s = p s
 
 instance Monad Parser where
@@ -21,44 +21,44 @@ instance Monad Parser where
     p s0 >>= \(a, s1).
     runParser (f a) s1
 
-parse :: !(Parser a) ![Char] -> Result a
+parse :: (Parser a) ![Char] -> Result a
 parse (Parser p) cs = fst <$> p { pos = 0, rest = cs }
 
-parseWithRest :: !(Parser a) ![Char] -> Result (!a, !String)
+parseWithRest :: (Parser a) ![Char] -> Result (!a, !String)
 parseWithRest (Parser p) cs
   = (\(a, s). (a, {c \\ c <- s.rest})) <$> p { pos = 0, rest = cs }
 
 
-fail :: !String -> Parser a
+fail :: String -> Parser a
 fail e = Parser \s. Err (toString s.pos +++ ": " +++ e)
 
-(<|>) infixl 3 :: !(Parser a) (Parser a) -> Parser a
+(<|>) infixl 3 :: (Parser a) (Parser a) -> Parser a
 (<|>) (Parser p) (Parser q) = Parser \s. case p s of
   Err e0 -> case q s of
     Err e1 -> Err (e0 +++ "\n" +++ e1)
     r      -> r
   r      -> r
 
-(<?>) infix 0 :: !(Parser a) String -> Parser a
+(<?>) infix 0 :: (Parser a) String -> Parser a
 (<?>) (Parser p) e = Parser \s. case p s of
   Err _ -> Err (toString s.pos +++ ": " +++ e)
   r     -> r
 
-lookAhead :: !(Parser a) -> Parser a
+lookAhead :: (Parser a) -> Parser a
 lookAhead (Parser p) = Parser \s. case p s of
   Err e     -> Err e
   Ok (a, _) -> pure (a, s)
 
-notFollowedBy :: !(Parser a) -> Parser ()
+notFollowedBy :: (Parser a) -> Parser ()
 notFollowedBy (Parser p) = Parser \s. case p s of
   Err _ -> pure ((), s)
   _     -> Err "failed notFollowedBy"
 
 
-optional :: !(Parser a) -> Parser (Maybe a)
+optional :: (Parser a) -> Parser (Maybe a)
 optional p = Just <$> p <|> pure Nothing
 
-between :: !(Parser open) !(Parser close) !(Parser a) -> Parser a
+between :: (Parser open) (Parser close) (Parser a) -> Parser a
 between open close p = open >>> p <* close
 
 choice :: [Parser a] -> Parser a
@@ -70,19 +70,19 @@ many p = go id where
     Nothing -> pure (f [])
     Just x  -> go \xs. f [x:xs]
 
-manyTill :: (Parser a) !(Parser end) -> Parser ([a], end)
+manyTill :: (Parser a) (Parser end) -> Parser ([a], end)
 manyTill p end = go id where
   go f = optional end >>= \done. case done of
     Nothing    -> p >>= \x. go \xs. f [x:xs]
     Just done` -> pure (f [], done`)
 
-some :: !(Parser a) -> Parser [a]
+some :: (Parser a) -> Parser [a]
 some p =
   p >>= \x.
   many p >>= \xs.
   pure [x:xs]
 
-someTill :: !(Parser a) !(Parser end) -> Parser ([a], end)
+someTill :: (Parser a) (Parser end) -> Parser ([a], end)
 someTill p end =
   p >>= \x.
   manyTill p end >>= \(xs, y).
@@ -95,7 +95,7 @@ err u e = fail ("unexpected " +++ u +++ ", expecting " +++ e)
 get :: Parser State
 get = Parser \s. pure (s, s)
 
-put :: State -> Parser ()
+put :: !State -> Parser ()
 put s = Parser \_. pure ((), s)
 
 
@@ -109,7 +109,7 @@ anyChar = get >>= \s. case s.rest of
   []     -> err "eof" "any char"
   [c:cs] -> put { pos = s.pos + 1, rest = cs } >>> pure c
 
-satisfy :: !(Char -> Bool) -> Parser Char
+satisfy :: (Char -> Bool) -> Parser Char
 satisfy p = get >>= \s. case s.rest of
   []     -> err "eof" "character satisfying the predicate"
   [c:cs] | p c -> put { pos = s.pos + 1, rest = cs } >>> pure c
@@ -134,7 +134,7 @@ decimal = go <?> "expecting integer" where
   go = foldl step 0 <$> some (satisfy isDigit)
   step a c = a * 10 + toInt (toString c)
 
-signed :: !(Parser Int) -> Parser Int
+signed :: (Parser Int) -> Parser Int
 signed p = (id <$ char '+' <|> (~) <$ char '-' <|> pure id) <*> p
 
 binint :: !Signedness !Endianness !Int -> Parser Int
