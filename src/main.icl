@@ -16,48 +16,48 @@ Output: String
 Used to set the constant of the input file.
 */
 
-SIMPLE_MIDI :: String
-SIMPLE_MIDI = "simple.mid"
+// SIMPLE_MIDI :: String
+SIMPLE_MIDI :== "simple.mid"
 
-FURELISESHORT_MIDI :: String
-FURELISESHORT_MIDI = "FurElise-Short.mid"
+// FURELISESHORT_MIDI :: String
+FURELISESHORT_MIDI :== "FurElise-Short.mid"
 
-FURELISE_MIDI :: String
-FURELISE_MIDI = "FurElise.mid"
+// FURELISE_MIDI :: String
+FURELISE_MIDI :== "FurElise.mid"
 
 importMIDI :: String -> String
 importMIDI name = "./Input/MIDI/sample_input/" +++ name
 
-outputWave :: String
-outputWave = "./diag.wav"
+// outputWave :: String
+outputWave :== "./diag.wav"
 
 
-EnvProfile :: ADSR
-EnvProfile = {
+// EnvProfile :: ADSR
+EnvProfile :== {
                 att = 0.01,
                 dec = 0.05,
                 sus = 0.5,
                 rel = 0.8
              }
 
-WavType :: Wave
-WavType = Square
+// WavType :: Wave
+WavType :== Square
 
-Bits :: BitVersion
-Bits = ThirtyTwo
+// Bits :: BitVersion
+Bits :== ThirtyTwo
 
-diagOut :: String
-diagOut = "./diag01.txt"
+// diagOut :: String
+diagOut :== "./diag01.txt"
 
-InputMIDI :: String
-InputMIDI = FURELISESHORT_MIDI
+// InputMIDI :: String
+InputMIDI :== FURELISESHORT_MIDI
 
 
 //NO GO ZONE
 //Don't change this Start line.
 Start w = LetsGo (importMIDI InputMIDI) outputWave EnvProfile WavType Bits w
 
-listMIDIs :: [String]
-listMIDIs = [importMIDI SIMPLE_MIDI, importMIDI FURELISESHORT_MIDI, importMIDI FURELISE_MIDI]
+// listMIDIs :: [String]
+listMIDIs :== [importMIDI SIMPLE_MIDI, importMIDI FURELISESHORT_MIDI, importMIDI FURELISE_MIDI]
 
 //Start w = Diagnostics listMIDIs diagOut EnvProfile WavType Bits w

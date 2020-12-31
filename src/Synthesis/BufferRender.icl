@@ -10,10 +10,10 @@ import Input.MIDI.ReadFile
 import Synthesis.PhaseAmplitudeConverter
 
 
-generateSilence :: Int -> [Real]
+generateSilence :: !Int -> [Real]
 generateSilence silence_samples = [0.0 \\ x <- [1,2..silence_samples]]
 
-renderIndex :: Int NoteChunk -> Real
+renderIndex :: !Int !NoteChunk -> Real
 renderIndex global_time chunk
 | local_time < 0  = 0.0
 = envelope * wave * (toReal chunk.note.veolocity)
@@ -24,12 +24,12 @@ where
     wave = generateLocal local_time chunk.wave chunk.note.frequency
     envelope = getLocalDAHDSR local_time chunk_beats chunk.timeSig chunk.tempo chunk.dahdsr
 
-renderBuffer :: Int Int [NoteChunk] -> [Real]
+renderBuffer :: !Int !Int [NoteChunk] -> [Real]
 renderBuffer left right chunk_list = rendered_track
 where
     rendered_track = [sum [renderIndex x chunk \\ chunk <- chunk_list] \\ x <-[left,(left+1)..right]];
 
-inInterval :: Int Int NoteChunk -> Bool
+inInterval :: !Int !Int !NoteChunk -> Bool
 inInterval left right chunk
 | note_right < left = False
 | note_left > right = False
@@ -38,12 +38,12 @@ where
     note_left = noteToSamples (convertDurToBeats chunk.note.initialTime chunk.timeSig) chunk.timeSig chunk.tempo
     note_right = numberOfSamples chunk (chunk.note.initialTime+chunk.note.duration)
 
-numberOfSamples :: NoteChunk Int -> Int
+numberOfSamples :: !NoteChunk !Int -> Int
 numberOfSamples x dur = (noteToSamples (convertDurToBeats dur x.timeSig) x.timeSig x.tempo) + release_samples
 where
 	release_samples = (secondsToSamples x.dahdsr.release) + 1
 
-normalizeList :: [Real] Real -> [Real]
+normalizeList :: [Real] !Real -> [Real]
 normalizeList track peak = [x/safe_peak \\ x <- track]
 where
 	safe_peak | peak == 0.0 = 1.0 = peak;
@@ -58,10 +58,10 @@ where
     normalized = normalizeList rendered_track (maxList [abs x \\ x <- rendered_track])
 
 
-render :: [Note] ChannelProfile -> [Real]
+render :: [Note] !ChannelProfile -> [Real]
 render note_list chan_prof = renderAux chunk_list
 where
 	chunk_list = [noteToChunk nt chan_prof \\ nt <- note_list]
 
-noteToChunk :: Note ChannelProfile -> NoteChunk
+noteToChunk :: !Note !ChannelProfile -> NoteChunk
 noteToChunk nt chan_prof = {note = nt, wave = chan_prof.wavType, timeSig = nt.ts, tempo = nt.temp, dahdsr = chan_prof.envelope}

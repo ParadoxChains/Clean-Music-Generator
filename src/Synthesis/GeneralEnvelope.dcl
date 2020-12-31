@@ -1,12 +1,12 @@
 definition module Synthesis.GeneralEnvelope
 
 
-:: EnvLevel = {rate :: Real
-              ,level :: Real
+:: EnvLevel = {rate :: !Real
+              ,level :: !Real
               }
 
 :: GenEnv = {levels :: [EnvLevel]
-            ,sustainLevel :: Int
+            ,sustainLevel :: !Int
             }
 
-getEnvelope :: Real GenEnv -> [Real]
+getEnvelope :: !Real !GenEnv -> [Real]

@@ -19,7 +19,7 @@ toBytesUnsignedLE i n = go i n where
     | i <= 0 = []
              = [toChar (n bitand 255) : go (i - 1) (n >> 8)]
 
-toBytesSigned :: !(Int Int -> [Byte]) !Int !Int -> [Byte]
+toBytesSigned :: (Int Int -> [Byte]) !Int !Int -> [Byte]
 toBytesSigned f i n
   | n >= 0 = f i n
            = map complement (f i (~(n + 1)))
@@ -30,7 +30,7 @@ fromBytesUnsignedBE bs = foldl (\n b. toInt b bitor (n << 8)) 0 bs
 fromBytesUnsignedLE :: ![Byte] -> Int
 fromBytesUnsignedLE bs = foldr (\b n. toInt b bitor (n << 8)) 0 bs
 
-fromBytesSigned :: !([Byte] -> Int) ![Byte] -> Int
+fromBytesSigned :: ([Byte] -> Int) ![Byte] -> Int
 fromBytesSigned f bs
   #! n = f bs
   #! p = 1 << ((length bs << 3) - 1)
@@ -61,7 +61,7 @@ readBytes f
     | not b = (cs, f)
     = go [c:cs] f
 
-writeBytes :: ![Byte] !*File -> *File
+writeBytes :: [Byte] !*File -> *File
 writeBytes []     f = f
 writeBytes [b:bs] f 
   #! f = fwritec b f

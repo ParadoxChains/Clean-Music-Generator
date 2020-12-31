@@ -5,4 +5,4 @@ Name: wavetable
 Input: Amplitude
 Output: One period of sine wave.
 */
-wavetable :: Real -> {Real} 
+wavetable :: !Real -> {Real} 

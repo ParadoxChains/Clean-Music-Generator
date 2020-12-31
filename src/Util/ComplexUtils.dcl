@@ -1,6 +1,6 @@
 definition module Util.ComplexUtils
 
-:: Complex = {real :: Real, imaginary :: Real}
+:: Complex = {real :: !Real, imaginary :: !Real}
 
 /*
 Name: instance +

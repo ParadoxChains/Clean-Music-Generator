@@ -1,13 +1,13 @@
 definition module Util.ListUtils
 
 // Rotate a list N places to the left.
-shiftLeft :: [a] Int -> [a]
+shiftLeft :: [a] !Int -> [a]
 
 // floor function
-floor :: Real -> Int
+floor :: !Real -> Int
 
 // rem for Real numbers
-realRem :: Real Real -> Real
+realRem :: !Real !Real -> Real
 
 // sums up two lists
 sumLists :: [Real] [Real] -> [Real]
@@ -20,4 +20,4 @@ sumAll :: [[Real]] -> [Real]
 
 
 //array to list
-strToList :: String -> [Char]
+strToList :: !String -> [Char]

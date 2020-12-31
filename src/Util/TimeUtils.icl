@@ -21,35 +21,35 @@ instance == Direction
 		(==) Right Right =True
 		(==) _ _ = False
 
-timeToSeconds :: Time -> Real
+timeToSeconds :: !Time -> Real
 timeToSeconds t = t.minutes*60.0 + t.seconds
 
-secondsToSamples :: Real -> Int
+secondsToSamples :: !Real -> Int
 secondsToSamples seconds = floor (seconds * (toReal SAMPLING_RATE))
 
-timeToSamples :: Time -> Int
+timeToSamples :: !Time -> Int
 timeToSamples t = secondsToSamples (timeToSeconds t)
 
-noteToSamples :: Beat TimeSignature Tempo -> Int
+noteToSamples :: !Beat !TimeSignature !Tempo -> Int
 noteToSamples b timeSig t = secondsToSamples totalTime
 where
 	beats = ((toReal (b.p*timeSig.noteVal)) / (toReal b.q * 4.0))
 	beatLength = 60.0 / t
 	totalTime = beats * beatLength
 
-simplifyBeat :: Beat -> Beat
+simplifyBeat :: !Beat -> Beat
 simplifyBeat x = {p = (x.p)/g, q = (x.q)/g}
 where
     g = gcd x.p x.q
 
-convertDurToBeats :: Duration TimeSignature -> Beat
+convertDurToBeats :: !Duration !TimeSignature -> Beat
 convertDurToBeats x {barVal = b, noteVal = n} = newBeat
 where
     single = 24*n
     tempBeat = {p = x, q = single}
     newBeat = simplifyBeat tempBeat
 
-convertBeatsToDur :: Beat TimeSignature -> Duration
+convertBeatsToDur :: !Beat !TimeSignature -> Duration
 convertBeatsToDur {p = x, q = y} {barVal = b, noteVal = n} = final
 where
     single = toReal(24*n)
