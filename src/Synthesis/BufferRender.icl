@@ -30,7 +30,10 @@ where
     rendered_track = [sum [renderIndex x chunk \\ chunk <- chunk_list] \\ x <-[left,(left+1)..right]];
 
 inInterval :: !Int !Int !NoteChunk -> Bool
-inInterval left right chunk = (note_left <= right) && (note_right >= left)
+inInterval left right chunk
+| note_right < left = False
+| note_left > right = False
+= True
 where
     note_left = noteToSamples (convertDurToBeats chunk.note.initialTime chunk.timeSig) chunk.timeSig chunk.tempo
     note_right = numberOfSamples chunk (chunk.note.initialTime+chunk.note.duration)
