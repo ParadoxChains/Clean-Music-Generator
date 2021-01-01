@@ -18,21 +18,11 @@ sineTableSize = 2205
 
 generateLocal :: !Int !Wave !Frequency -> Real
 generateLocal _ Silence _ = 0.0
-generateLocal localIndex Sine freq = sampleOut
+generateLocal localIndex Sine freq = sin actualPhase
 where
     cycleSize = (toReal SAMPLING_RATE)/freq
     tableSize = sineTableSize
     actualPhase = (((toReal localIndex))/cycleSize) * (toReal tableSize)
-    phase = toInt actualPhase
-    decimals = (toReal phase) - actualPhase
-    a | phase == 0 = sineTable.[tableSize rem tableSize] = sineTable.[phase rem tableSize]
-    b = sineTable.[phase rem tableSize]
-    c = sineTable.[(phase + 1) rem tableSize]
-    d = sineTable.[(phase + 2) rem tableSize]
-    x = 0.5 * (c-a)
-    y = a - (2.5*b) + (2.0*c) - (0.5*d)
-    z = (0.5*(d-a)) + (1.5*(b-c))
-    sampleOut = (((((z*decimals)+y)*decimals)+x)*decimals)+b
 
 generateLocal localIndex Square freq = sampleOut
 where
