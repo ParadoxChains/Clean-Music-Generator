@@ -16,10 +16,10 @@ where
 instance zero Beat where zero = {p=0,q=1}
 
 instance == Direction
-	where
-		(==) Left Left= True
-		(==) Right Right =True
-		(==) _ _ = False
+    where
+        (==) Left Left= True
+        (==) Right Right =True
+        (==) _ _ = False
 
 timeToSeconds :: !Time -> Real
 timeToSeconds t = t.minutes*60.0 + t.seconds
@@ -33,9 +33,9 @@ timeToSamples t = secondsToSamples (timeToSeconds t)
 noteToSamples :: !Beat !TimeSignature !Tempo -> Int
 noteToSamples b timeSig t = secondsToSamples totalTime
 where
-	beats = ((toReal (b.p*timeSig.noteVal)) / (toReal b.q * 4.0))
-	beatLength = 60.0 / t
-	totalTime = beats * beatLength
+    beats = ((toReal (b.p*timeSig.noteVal)) / (toReal b.q * 4.0))
+    beatLength = 60.0 / t
+    totalTime = beats * beatLength
 
 simplifyBeat :: !Beat -> Beat
 simplifyBeat x = {p = (x.p)/g, q = (x.q)/g}

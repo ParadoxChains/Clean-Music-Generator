@@ -13,47 +13,47 @@ import Util.Monad.Parser
 :: Mode = Major | Minor | Other_Mode
 
 // Text String: information of a tag; Element String: what kind of element is this
-//:: XML = Text String | Element String [ElementAttribute] [XML] 
-:: XML = Text String | Element String [XML] 
+//:: XML = Text String | Element String [ElementAttribute] [XML]
+:: XML = Text String | Element String [XML]
 :: ElementAttribute =
-	{
-		name :: String,
-		value :: String
-	}
+    {
+        name :: String,
+        value :: String
+    }
 
-:: Key = 
-	{
-		fifths :: Fifths,
-		mode :: Mode
-	}
+:: Key =
+    {
+        fifths :: Fifths,
+        mode :: Mode
+    }
 
-:: Pitch = 
-	{
-		step :: Step,
-		alter :: Int,
-		octave :: Octave
-	}
-	
-:: Attributes = 
-	{
-		divisions :: Divisions,
-		key :: Key,
-		time :: TimeSignature
-	}
-		
-:: Note = 
-	{
-		pitch :: Pitch,
-		duration :: Duration,
-		type :: Note_type
-	}
-	
-:: Measure = 
-	{
-		attributes :: [Attributes],
-		notes :: [Note]
-	}
-	
+:: Pitch =
+    {
+        step :: Step,
+        alter :: Int,
+        octave :: Octave
+    }
+
+:: Attributes =
+    {
+        divisions :: Divisions,
+        key :: Key,
+        time :: TimeSignature
+    }
+
+:: Note =
+    {
+        pitch :: Pitch,
+        duration :: Duration,
+        type :: Note_type
+    }
+
+:: Measure =
+    {
+        attributes :: [Attributes],
+        notes :: [Note]
+    }
+
 :: MusicXML :== [Measure]
 
 dropWhiteSpace :: Parser ()
@@ -82,7 +82,7 @@ parseFile :: Parser XML
 
 getNote :: XML -> Note
 
-getNotes :: [XML] -> [Note]	
+getNotes :: [XML] -> [Note]
 
 getAttribute :: XML -> Attributes
 
