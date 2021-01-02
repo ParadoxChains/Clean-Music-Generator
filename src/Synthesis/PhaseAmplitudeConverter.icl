@@ -22,7 +22,7 @@ generateLocal localIndex Sine freq = sin actualPhase
 where
     cycleSize = (toReal SAMPLING_RATE)/freq
     tableSize = sineTableSize
-    actualPhase = (((toReal localIndex))/cycleSize) * (toReal tableSize)
+    actualPhase = (((toReal localIndex))/cycleSize) * 2.0 * PI
 
 generateLocal localIndex Square freq = sampleOut
 where
