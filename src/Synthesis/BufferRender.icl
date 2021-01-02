@@ -41,7 +41,7 @@ where
 numberOfSamples :: !NoteChunk !Int -> Int
 numberOfSamples x dur = (noteToSamples (convertDurToBeats dur x.timeSig) x.timeSig x.tempo) + release_samples
 where
-	release_samples = (secondsToSamples x.dahdsr.release) + 1
+	release_samples = (secondsToSamples x.dahdsr.release)
 
 normalizeList :: [Real] !Real -> [Real]
 normalizeList track peak = [x/safe_peak \\ x <- track]
