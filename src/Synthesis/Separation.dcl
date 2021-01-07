@@ -1,10 +1,10 @@
-definition module Synthesis.Seperation
+definition module Synthesis.Separation
 import StdEnv
 import Util.Constants
 
 
 /*--------------------------------------------
-Seperation takes list of reals the sound that should be
+Separation takes list of reals the sound that should be
 modified into two signals for left and right ears
 ----------------------------------------------*/
-seperation :: [Real] !Real -> ([Real],[Real])
+separation :: [Real] !Real -> ([Real],[Real])

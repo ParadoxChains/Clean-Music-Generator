@@ -15,7 +15,7 @@ getLocalLFO index (PhasedLFO phase amp waveShape freq phaseMode)
     = amp * restrictedPhaseValue * (generateLocal index waveShape freq)
 where
     currentPhaseValue = (abs phase) * (toReal index) / (toReal SAMPLING_RATE)
-    restrictedPhaseValue | ((isFree phaseMode) || currentPhaseValue < 1.0) = currentPhaseValue = 1.0 
+    restrictedPhaseValue | ((isFree phaseMode) || currentPhaseValue < 1.0) = currentPhaseValue = 1.0
 getLocalLFO index (ReversePhasedLFO phase amp waveShape freq)
     = amp * restrictedPhaseValue * (generateLocal index waveShape freq)
 where
@@ -47,12 +47,12 @@ applyLFO :: [Real] LFOProfile Real -> [Real]
 applyLFO ls prof mix = [(curr * (getLocalLFO i prof) * mix) + (curr * (1.0 - mix)) \\ curr <- ls & i <- [1,2..]]
 
 applyLocalLFO :: Int Real LFOProfile Real -> Real
-applyLocalLFO indx val prof mix = (val * (getLocalLFO indx prof) * mix) + (val * (1.0 - mix)) 
+applyLocalLFO indx val prof mix = val * (getLocalLFO indx prof) * mix + val * (1.0 - mix)
 
 applyDualLFO :: [Real] DualLFOProfile Real -> [Real]
 applyDualLFO ls prof mix = [(curr * (getLocalDualLFO i prof) * mix) + (curr * (1.0 - mix)) \\ curr <- ls & i <- [1,2..]]
 
 applyLocalDualLFO :: Int Real LFOProfile Real -> Real
-applyLocalDualLFO indx val prof mix = (val * (getLocalLFO indx prof) * mix) + (val * (1.0 - mix)) 
+applyLocalDualLFO indx val prof mix = (val * (getLocalLFO indx prof) * mix) + (val * (1.0 - mix))
 
 

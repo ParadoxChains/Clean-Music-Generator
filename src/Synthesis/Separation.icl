@@ -1,16 +1,16 @@
-implementation module Synthesis.Seperation
+implementation module Synthesis.Separation
 import StdEnv
 import Util.Constants
 
 
 
 /*--------------------------------------------
-Seperation takes list of reals the sound that should be
+Separation takes list of reals the sound that should be
 modified into two signals for left and right ears
 ----------------------------------------------*/
 
-seperation :: [Real] !Real -> ([Real],[Real])
-seperation orig_samples amt = result
+separation :: [Real] !Real -> ([Real],[Real])
+separation orig_samples amt = result
 where
 
   c_dist =sqrt( 2.0*(HALF_HEAD^2.0) - 2.0*(HALF_HEAD^2.0)*cos( (1.0-amt) * 90.0))
