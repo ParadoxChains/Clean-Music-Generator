@@ -81,8 +81,8 @@ where
 
 
 panningStereo :: [Real] [Real] Real Real Direction->([Real],[Real])
-panningStereo wave_l wave_r pan_val mix dir  = ( map (\(dry, wet) = (mix*wet) + ((1.0-mix)*dry)) [ (d,w) \\ d<-wave_l & w<-wet_left],
-                                                map (\(dry, wet) = (mix*wet) + ((1.0-mix)*dry)) [ (d,w) \\ d<-wave_r & w<-wet_right])
+panningStereo wave_l wave_r pan_val mix dir  = ( map (\(dry, wet) = mix*wet + (1.0-mix)*dry) [ (d,w) \\ d<-wave_l & w<-wet_left],
+                                                map (\(dry, wet) = mix*wet + (1.0-mix)*dry) [ (d,w) \\ d<-wave_r & w<-wet_right])
 where
     waves = ampPanStereoCircular wave_l wave_r pan_val dir
     w_l=fst waves
