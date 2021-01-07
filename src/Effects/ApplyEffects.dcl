@@ -11,4 +11,4 @@ import Effects.Flanger
 
 applyEffects :: Wave [Effect] -> Wave
 
-applyEffect Wave Effect -> Wave
+applyEffect :: Wave Effect -> Wave
