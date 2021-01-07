@@ -18,7 +18,7 @@ where
   c_loudness = 0.5 + 0.5*(1.0- (  b_dist/HALF_HEAD ) )
   c_phase_off = toReal(SAMPLING_RATE) * (c_dist/SOUND_SPEED)
 
-  b_loudness = 0.5 + 0.5*(1.0 - (  c_dist/HALF_HEAD.75 ) )
+  b_loudness = 0.5 + 0.5*(1.0 - (  c_dist/HALF_HEAD ) )
   b_phase_off = toReal(SAMPLING_RATE) * (b_dist/SOUND_SPEED)
   c_samples =  repeatn (toInt((c_phase_off - (min c_phase_off b_phase_off)))) 0.0 ++ (map (\x = x*c_loudness) orig_samples)
 
