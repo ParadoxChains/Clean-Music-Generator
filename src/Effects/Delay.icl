@@ -6,7 +6,7 @@ import Synthesis.Wave
 import Util.TypeDefs
 
 
-applyDelay :: Wave DelayParameters -> Wave
-applyDelay wave (ts, delay) = [0 \\ i <- [0..N]] + wave
+applyDelay :: Wave Parameters -> Wave
+applyDelay wave [ts, delay] = [0 \\ i <- [0..N]] + wave
 where
     N = delay / ts

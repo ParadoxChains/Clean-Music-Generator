@@ -4,4 +4,4 @@ import Util.TypeDefs
 
 // Applying flanger to given Wave
 // Parameters: (A, rate, manual)
-applyFlanger :: Wave FlangerParameters -> Wave
+applyFlanger :: Wave Parameters -> Wave

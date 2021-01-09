@@ -64,17 +64,9 @@ must be converted appropriately.*/
 // A list of tempo events
 :: TPEvents :== [TPEvent]
 
-// Flanger Parameters
-:: FlangerParameters :== (!Real, !Real, !Real)
-
-// Chorus Parameters
-:: ChorusParameters :== (!Real, !Real, !Real, !Real)
-
-// Delay Parameters
-:: DelayParameters :== (!Real, !Real)
-
 // Effect
-//:: Effect = (Flanger, FlangerParameters) | (Chorus, ChorusParameters) | (Delay, DelayParameters) | (Phaser, PhaserParameters)
+:: Parameters :== [!Real]
+:: Effect = Flanger | Chorus | Delay | Phaser
 
 // Direction for Panning
 :: Direction= Left | Right
