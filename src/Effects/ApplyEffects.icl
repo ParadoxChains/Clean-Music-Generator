@@ -8,9 +8,9 @@ import Effects.Chorus
 import Effects.Delay
 import Effects.Flanger
 
-applyEffects :: Wave [Effect] -> Wave
+applyEffects :: Wave [(Effect, Parameters)] -> Wave
 applyEffects wave [] = wave
-applyEffects wave [effect: effects] = applyEffects (applyEffect wave effect) effects
+applyEffects wave [(effect, parameters): effects] = applyEffects (applyEffect wave effect parameters) effects
 
 applyEffect :: Wave Effect Parameters -> Wave
 applyEffect wave Chorus parameters = applyChorus wave parameters
