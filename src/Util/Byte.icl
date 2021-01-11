@@ -14,10 +14,9 @@ toBytesUnsignedBE i n = go i n [] where
              = go (i - 1) (n >> 8) [toChar (n bitand 255) : bs]
 
 toBytesUnsignedLE :: !Int !Int -> [Byte]
-toBytesUnsignedLE i n = go i n where
-  go i n
-    | i <= 0 = []
-             = [toChar (n bitand 255) : go (i - 1) (n >> 8)]
+toBytesUnsignedLE i n
+  | i <= 0 = []
+           = [toChar (n bitand 255) : toBytesUnsignedLE (i - 1) (n >> 8)]
 
 toBytesSigned :: (Int Int -> [Byte]) !Int !Int -> [Byte]
 toBytesSigned f i n
@@ -63,6 +62,6 @@ readBytes f
 
 writeBytes :: [Byte] !*File -> *File
 writeBytes []     f = f
-writeBytes [b:bs] f 
+writeBytes [b:bs] f
   #! f = fwritec b f
   = writeBytes bs f
